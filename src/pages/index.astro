@@ -1,11 +1,49 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
+import FaqSchema from '../components/FaqSchema.astro';
 import { site, whatsappLink, mailtoLink } from '../data/site';
 
-const title = "Tamara Men Salon — Premium Men's Grooming in Doha, Qatar";
+const title = "Men's Salon in Doha, Qatar | Tamara Men Salon — Haircuts & Hot Towel Shaves";
 const description =
-  "Tamara Men Salon — precision haircuts, hot towel shaves, beard styling and premium men's grooming in Doha, Qatar. Walk in or book an appointment today.";
+  "Top-rated men's salon in Doha, Qatar on B Ring Road. Precision haircuts, hot towel shaves, beard sculpting and grooming — book online or walk in. Open Mon–Sat 9 AM–8 PM.";
+const keywords =
+  "men's salon Doha, barbershop Qatar, haircut Doha, hot towel shave, beard trim Doha, barber B Ring Road, men's grooming Qatar, kids haircut Doha, straight razor shave, Tamara Men Salon";
+
+const faqs = [
+  {
+    q: 'Where is Tamara Men Salon located in Doha?',
+    a: "Tamara Men Salon is on B Ring Road, Street 220, Building 100, Zone 15, Unit 1 in Al Doha Jadeed, Doha, Qatar. Plus code 7GGM+2X6.",
+  },
+  {
+    q: 'What are your opening hours?',
+    a: 'We are open Monday to Saturday from 9 AM to 8 PM, and Sunday from 9 AM to 6 PM. Walk-ins are welcome any time we are open.',
+  },
+  {
+    q: 'Do you accept walk-ins or do I need an appointment?',
+    a: 'Walk-ins are always welcome. To guarantee your preferred time and barber, book through our online form or message us on WhatsApp.',
+  },
+  {
+    q: 'How do I book an appointment at Tamara Men Salon?',
+    a: 'Use the booking form on this page or send us a WhatsApp message at +974 7077 5905 with your preferred service, date and time. We confirm bookings within minutes.',
+  },
+  {
+    q: 'What services do you offer?',
+    a: "We offer precision haircuts (classic, deluxe, buzz, and kids' cuts), hot towel straight razor shaves, beard trims and sculpting, mustache trims, hair color, full facials and hair wash & blow services for men.",
+  },
+  {
+    q: 'How much does a haircut cost?',
+    a: "Pricing is honest and flat-rate in Qatari Riyal (QAR). Classic cuts start from QAR 15 (buzz) and QAR 25 (classic). Deluxe haircuts and hot towel shaves are QAR 35. See the full pricing menu on this page.",
+  },
+  {
+    q: 'Do you cut kids hair?',
+    a: "Yes. We offer kids' haircuts at QAR 20 and our barbers are great with little clients.",
+  },
+  {
+    q: 'Are you the best men salon in Doha?',
+    a: "Our clients tell us we're up there. We carry a 5.0★ rating on Google with dozens of reviews and earn it daily through careful work and a friendly chair-side experience.",
+  },
+];
 
 const pricing = [
   {
@@ -70,7 +108,8 @@ const gallery = [
   'https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?w=900&q=80&auto=format&fit=crop',
 ];
 ---
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} keywords={keywords}>
+  <FaqSchema items={faqs} slot="head" />
 
   <!-- HERO -->
   <section id="home" class="relative overflow-hidden bg-cream-50">
@@ -89,9 +128,12 @@ const gallery = [
               نحن نعرف <span class="text-gold-500">ستايلك</span><br />أفضل من أي أحد
             </h1>
           </span>
-          <p class="mt-6 max-w-xl text-base sm:text-lg text-ink-soft font-sans leading-relaxed mx-auto lg:mx-0" data-i18n-en="Step into Tamara Men Salon for a tailored grooming experience — sharp cuts, hot towel shaves, and beard styling delivered by master barbers in the heart of Doha." data-i18n-ar="تفضل إلى صالون تمارا للرجال لتجربة عناية فاخرة — قصات دقيقة، حلاقة بالمناشف الساخنة، وتنسيق اللحية على يد أمهر الحلاقين في قلب الدوحة.">
-            Step into Tamara Men Salon for a tailored grooming experience — sharp cuts, hot towel shaves,
-            and beard styling delivered by master barbers in the heart of Doha.
+          <p class="mt-4 max-w-xl text-base text-charcoal-700 font-display italic mx-auto lg:mx-0" data-i18n-en="Doha's top-rated men's salon on B Ring Road" data-i18n-ar="صالون رجالي رائد على طريق الدائري ب، الدوحة">
+            Doha's top-rated men's salon on B Ring Road
+          </p>
+          <p class="mt-4 max-w-xl text-base sm:text-lg text-ink-soft font-sans leading-relaxed mx-auto lg:mx-0" data-i18n-en="Step into Tamara Men Salon for a tailored grooming experience — sharp haircuts, hot towel shaves, and beard styling delivered by master barbers in the heart of Doha, Qatar." data-i18n-ar="تفضل إلى صالون تمارا للرجال لتجربة عناية فاخرة — قصات دقيقة، حلاقة بالمناشف الساخنة، وتنسيق اللحية على يد أمهر الحلاقين في قلب الدوحة، قطر.">
+            Step into Tamara Men Salon for a tailored grooming experience — sharp haircuts, hot towel shaves,
+            and beard styling delivered by master barbers in the heart of Doha, Qatar.
           </p>
 
           <!-- Google rating badge (compact, in hero) -->
@@ -124,7 +166,9 @@ const gallery = [
             <div class="absolute -inset-3 border border-gold-500"></div>
             <img
               src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=85&auto=format&fit=crop"
-              alt="Barber giving a precision cut at Tamara Men Salon"
+              alt="Master barber giving a precision men's haircut at Tamara Men Salon in Doha, Qatar"
+              width="900"
+              height="1125"
               class="relative h-full w-full object-cover"
               loading="eager"
               fetchpriority="high"
@@ -181,14 +225,18 @@ const gallery = [
           <div class="grid grid-cols-2 gap-3">
             <img
               src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80&auto=format&fit=crop"
-              alt="Barber chair detail"
+              alt="Classic barber chair inside Tamara Men Salon, B Ring Road Doha"
+              width="600"
+              height="800"
               class="aspect-[3/4] w-full object-cover"
               loading="lazy"
               decoding="async"
             />
             <img
               src="https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=600&q=80&auto=format&fit=crop"
-              alt="Barber tools laid out"
+              alt="Professional barber tools — clippers, straight razor and combs at Tamara Men Salon Doha"
+              width="600"
+              height="800"
               class="aspect-[3/4] w-full object-cover translate-y-8"
               loading="lazy"
               decoding="async"
@@ -278,7 +326,9 @@ const gallery = [
           <a href={src} target="_blank" rel="noopener noreferrer" class="group relative overflow-hidden block">
             <img
               src={src}
-              alt={`Tamara Men Salon work ${i + 1}`}
+              alt={`Men's haircut and grooming work ${i + 1} at Tamara Men Salon, Doha Qatar`}
+              width="900"
+              height="900"
               class="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
               decoding="async"
@@ -310,7 +360,9 @@ const gallery = [
             <div class="relative overflow-hidden">
               <img
                 src={member.image}
-                alt={member.name}
+                alt={`${member.name} — ${member.role} at Tamara Men Salon, Doha`}
+                width="800"
+                height="1067"
                 class="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
                 decoding="async"
@@ -373,7 +425,9 @@ const gallery = [
             <div class="relative aspect-[16/10] overflow-hidden">
               <img
                 src={cat.image}
-                alt={cat.key}
+                alt={`${cat.key} services at Tamara Men Salon — premium men's grooming in Doha, Qatar`}
+                width="800"
+                height="500"
                 class="absolute inset-0 h-full w-full object-cover"
                 loading="lazy"
                 decoding="async"
@@ -437,6 +491,33 @@ const gallery = [
           <Icon name="google" size={18} />
           <span data-i18n-en="Leave a Review" data-i18n-ar="اكتب تقييماً">Leave a Review</span>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="bg-cream-50 py-20 lg:py-24 border-t border-charcoal-100/60">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <p class="eyebrow" data-i18n-en="Questions" data-i18n-ar="الأسئلة">Questions</p>
+        <h2 class="mt-3 h-section" data-i18n-en="Frequently Asked" data-i18n-ar="الأسئلة الشائعة">Frequently Asked</h2>
+        <p class="mt-4 text-ink-soft" data-i18n-en="Everything you need to know before your first visit to Tamara Men Salon in Doha." data-i18n-ar="كل ما تحتاج معرفته قبل زيارتك الأولى لصالون تمارا للرجال في الدوحة.">
+          Everything you need to know before your first visit to Tamara Men Salon in Doha.
+        </p>
+      </div>
+
+      <div class="mt-12 divide-y divide-charcoal-100">
+        {faqs.map((item, i) => (
+          <details class="group py-5" open={i === 0}>
+            <summary class="flex items-start justify-between gap-4 cursor-pointer list-none">
+              <h3 class="font-condensed uppercase tracking-wide text-base sm:text-lg text-charcoal-800 group-open:text-gold-600 transition-colors">
+                {item.q}
+              </h3>
+              <span class="shrink-0 mt-1 h-6 w-6 inline-flex items-center justify-center text-gold-500 transition-transform group-open:rotate-45 text-xl leading-none">+</span>
+            </summary>
+            <p class="mt-3 text-ink-soft leading-relaxed text-[15px]">{item.a}</p>
+          </details>
+        ))}
       </div>
     </div>
   </section>
@@ -788,6 +869,16 @@ const gallery = [
         if (notes) lines.push('• Notes: ' + notes);
 
         var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n'));
+
+        // Fire a GA4 conversion event so booking opens are tracked
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'booking_submit', {
+            event_category: 'engagement',
+            event_label: service,
+            value: 1,
+          });
+        }
+
         window.open(url, '_blank', 'noopener,noreferrer');
       });
     })();
