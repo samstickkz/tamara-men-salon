@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import type { BlogPost } from '../data/marketing';
+
+interface Props { post: BlogPost; hue?: 'blue' | 'yellow' | 'navy' }
+const { post, hue = 'blue' } = Astro.props;
+
+const palette = {
+  blue:   { bg: 'bg-brand-600',  fg: 'text-white', dots: 'rgba(255,255,255,0.35)' },
+  yellow: { bg: 'bg-accent-400', fg: 'text-ink',   dots: 'rgba(11,23,51,0.18)' },
+  navy:   { bg: 'bg-navy-600',   fg: 'text-white', dots: 'rgba(255,255,255,0.30)' },
+}[hue];
+---
+<a href={post.slug} class="group block rounded-3xl overflow-hidden bg-white shadow-lg hover:shadow-2xl transition-shadow border border-slate-100">
+  <div class={`relative aspect-[10/6] ${palette.bg} ${palette.fg} overflow-hidden`}>
+    <svg viewBox="0 0 400 240" class="absolute inset-0 w-full h-full" aria-hidden="true">
+      <g fill={palette.dots}>
+        <circle cx="40" cy="50" r="22"/>
+        <circle cx="340" cy="60" r="14"/>
+        <circle cx="360" cy="180" r="20"/>
+        <circle cx="60" cy="200" r="16"/>
+        <circle cx="160" cy="120" r="6"/>
+        <circle cx="280" cy="140" r="8"/>
+      </g>
+    </svg>
+    <div class="relative h-full p-6 flex flex-col justify-between">
+      <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur text-xs font-bold uppercase tracking-wider w-fit">
+        {post.category}
+      </span>
+      <Icon name="arrowRight" size={32} class="self-end group-hover:translate-x-1 transition-transform" />
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex items-center gap-3 text-xs text-ink-muted">
+      <span class="flex items-center gap-1.5">
+        <Icon name="clock" size={14} />
+        {post.readTime}
+      </span>
+      <span class="text-slate-300">|</span>
+      <span>{post.date}</span>
+    </div>
+    <h3 class="mt-3 font-display text-lg font-bold text-ink leading-snug group-hover:text-brand-600 transition-colors">
+      {post.title}
+    </h3>
+    <p class="mt-2 text-sm text-ink-soft leading-relaxed">{post.excerpt}</p>
+    <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand-600 group-hover:gap-2.5 transition-all">
+      Read More
+      <Icon name="arrowRight" size={14} />
+    </span>
+  </div>
+</a>

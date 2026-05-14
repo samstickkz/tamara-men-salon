@@ -1,0 +1,556 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import ServiceCard from '../components/ServiceCard.astro';
+import AreaCard from '../components/AreaCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import Faq from '../components/Faq.astro';
+import FaqSchema from '../components/FaqSchema.astro';
+import CloudDivider from '../components/CloudDivider.astro';
+import Bubbles from '../components/Bubbles.astro';
+import HeroIllustration from '../components/HeroIllustration.astro';
+import AboutIllustration from '../components/AboutIllustration.astro';
+import ServiceDetailIllustration from '../components/ServiceDetailIllustration.astro';
+import PricingCard from '../components/PricingCard.astro';
+import HourlyCard from '../components/HourlyCard.astro';
+import TeamCard from '../components/TeamCard.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import BlogCard from '../components/BlogCard.astro';
+import BookingBanner from '../components/BookingBanner.astro';
+import BrandCard from '../components/BrandCard.astro';
+import { services } from '../data/services';
+import { areas } from '../data/areas';
+import { homeFaqs } from '../data/faqs';
+import { site } from '../data/site';
+import { plans, hourlyPlans, team, projects, blogPosts } from '../data/marketing';
+import { brands } from '../data/brands';
+
+const title = 'Professional Cleaning Services in Doha, Qatar | Tamara Cleaning';
+const description =
+  'Trusted cleaning company in Doha, Qatar — villa, apartment, office, deep, and specialist cleaning across all of Qatar. Vetted teams, eco-friendly products, WhatsApp booking.';
+
+const aboutBullets = [
+  "We Don't Cut Corners, We Clean Them",
+  'Bringing Freshness To Your Doorstep',
+  'Where Cleanliness Meets Perfection',
+];
+
+const featuredServices = services.slice(0, 5);
+const featured = featuredServices[1] ?? featuredServices[0];
+
+const testimonials = [
+  {
+    quote:
+      'Tamara have been cleaning our villa weekly for months and the consistency is what stands out — the same crew, the same standards every visit.',
+    name: 'Aisha A.',
+    role: 'Villa owner, Al Waab',
+  },
+  {
+    quote:
+      'We switched our office contract to Tamara after a difficult experience with our previous provider. The building looks noticeably better every morning.',
+    name: 'Mohammed K.',
+    role: 'Office manager, West Bay',
+  },
+  {
+    quote:
+      'Booked a move-out deep clean and got the full deposit back from our landlord. Worth every riyal.',
+    name: 'Sara L.',
+    role: 'Apartment tenant, The Pearl',
+  },
+];
+
+const blogHues: Array<'blue' | 'yellow' | 'navy'> = ['blue', 'yellow', 'navy'];
+---
+<BaseLayout title={title} description={description}>
+  <FaqSchema slot="head" items={homeFaqs} />
+
+  <!-- ============= HERO ============= -->
+  <section class="relative isolate overflow-hidden bg-brand-600 text-white">
+    <Bubbles class="absolute -top-10 -right-16 w-[460px] h-[600px]" variant="light" />
+    <Bubbles class="absolute -bottom-10 -left-16 w-[380px] h-[500px]" variant="light" />
+
+    <div class="container-page relative pt-12 pb-32 sm:pt-16 sm:pb-44 lg:pt-20 lg:pb-52">
+      <div class="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr]">
+        <div class="relative z-10">
+          <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-accent-300">
+            <span class="inline-block h-px w-8 bg-accent-300"></span>
+            Cleaning Services
+          </p>
+          <h1 class="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
+            Cleaning with Care<br/>Every Time
+          </h1>
+          <p class="mt-6 text-lg text-white/85 max-w-xl leading-relaxed">
+            This includes basic cleaning tasks in homes such as dusting, vacuuming, mopping floors,
+            cleaning bathrooms, kitchens — and the deep-clean routines Qatar villas and apartments
+            actually need.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
+            <a
+              href="/services"
+              class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-brand-700 font-bold uppercase tracking-wide text-sm shadow-lg hover:bg-accent-300 hover:text-ink transition-colors"
+            >
+              Discover More
+              <Icon name="arrowRight" size={16} />
+            </a>
+            <a
+              href={`tel:${site.phoneIntl}`}
+              class="inline-flex items-center gap-3 text-white hover:text-accent-300 transition-colors"
+            >
+              <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-accent-300">
+                <Icon name="phone" size={20} />
+              </span>
+              <span class="font-bold text-lg tracking-wide">{site.phone}</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center justify-center -z-10" aria-hidden="true">
+            <div class="h-[78%] w-[78%] rounded-full bg-white/15 blur-2xl"></div>
+          </div>
+          <HeroIllustration />
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-0 left-0 right-0 leading-none">
+      <CloudDivider fill="#ffffff" />
+    </div>
+  </section>
+
+  <!-- ============= ABOUT ============= -->
+  <section class="relative isolate bg-white py-16 sm:py-24">
+    <div class="container-page relative grid items-center gap-12 lg:grid-cols-[1fr_1.05fr]">
+      <div class="relative">
+        <AboutIllustration />
+        <span class="absolute -bottom-4 -left-2 hidden sm:inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent-400 text-ink shadow-lg" aria-hidden="true">
+          <Icon name="sparkle" size={28} />
+        </span>
+      </div>
+
+      <div>
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          About Us
+        </p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink leading-[1.1]">
+          Let Us Handle the Mess<br/>
+          <span class="text-brand-600">You Enjoy the Clean</span>
+        </h2>
+        <p class="mt-6 text-lg text-ink-soft leading-relaxed">
+          Deep cleaning services go beyond regular maintenance cleaning to tackle areas
+          that are often overlooked, such as baseboards, behind appliances, inside
+          cabinets, and other hard-to-reach corners — exactly where Qatar's fine dust hides.
+        </p>
+
+        <ul class="mt-8 space-y-3">
+          {
+            aboutBullets.map((b) => (
+              <li class="flex items-center gap-3 p-3 rounded-xl bg-brand-50 border border-brand-100">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
+                  <Icon name="check" size={16} />
+                </span>
+                <span class="font-semibold text-ink">{b}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <a
+            href="/about"
+            class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+          >
+            Read More
+            <Icon name="arrowRight" size={16} />
+          </a>
+          <a
+            href={site.ownerLinkedIn}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex items-center gap-3 group/owner"
+            aria-label={`${site.owner} on LinkedIn`}
+          >
+            <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-100 text-accent-700 font-bold group-hover/owner:bg-brand-600 group-hover/owner:text-white transition-colors">
+              {site.owner.split(' ').map((n) => n[0]).join('')}
+            </span>
+            <div class="leading-tight">
+              <div class="font-bold text-ink group-hover/owner:text-brand-600 transition-colors">{site.owner}</div>
+              <div class="text-sm text-ink-muted">Founder · LinkedIn ↗</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= SERVICES ============= -->
+  <section class="relative isolate bg-slate-50 py-16 sm:py-24">
+    <div class="container-page relative">
+      <div class="text-center">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Services
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink">
+          We Provide Service For You
+        </h2>
+      </div>
+
+      <div class="mt-12 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
+        {
+          featuredServices.map((s) => {
+            const active = s.slug === featured.slug;
+            return (
+              <a
+                href={`/services/${s.slug}`}
+                class:list={[
+                  'group p-6 rounded-2xl border text-center transition-all',
+                  active
+                    ? 'bg-brand-600 text-white border-brand-600 shadow-xl scale-[1.02]'
+                    : 'bg-white border-slate-200 hover:border-brand-300 hover:shadow-md text-ink',
+                ]}
+              >
+                <span
+                  class:list={[
+                    'inline-flex h-14 w-14 items-center justify-center rounded-xl',
+                    active ? 'bg-white/15 text-accent-300' : 'bg-brand-50 text-brand-600 group-hover:bg-brand-600 group-hover:text-white',
+                  ]}
+                  aria-hidden="true"
+                >
+                  <Icon name={s.icon} size={28} />
+                </span>
+                <h3 class:list={[
+                  'mt-4 font-display text-sm sm:text-base font-bold uppercase tracking-wide',
+                  active ? 'text-white' : 'text-ink',
+                ]}>
+                  {s.shortTitle}
+                </h3>
+              </a>
+            );
+          })
+        }
+      </div>
+
+      <div class="mt-10 relative overflow-hidden rounded-3xl bg-brand-600 text-white shadow-2xl">
+        <Bubbles class="absolute -top-6 -right-6 w-[440px] h-[440px]" variant="light" />
+        <Bubbles class="absolute -bottom-10 -left-10 w-[300px] h-[300px]" variant="light" />
+        <div class="relative grid gap-8 lg:grid-cols-[1.3fr_1fr] items-center p-8 sm:p-12">
+          <div>
+            <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-accent-300">
+              <span class="inline-block h-px w-8 bg-accent-300"></span>
+              Featured
+            </p>
+            <h3 class="mt-3 font-display text-3xl sm:text-4xl font-extrabold leading-tight">
+              {featured.title}
+            </h3>
+            <p class="mt-4 text-white/85 leading-relaxed max-w-xl">
+              {featured.metaDescription}
+            </p>
+
+            <div class="mt-6 flex flex-wrap items-center gap-6">
+              <div class="relative">
+                <div class="inline-flex h-28 w-28 items-center justify-center rounded-full bg-accent-500 text-ink font-extrabold shadow-lg ring-8 ring-white/15">
+                  <div class="text-center leading-tight">
+                    <div class="text-3xl">300<span class="text-base">+</span></div>
+                    <div class="text-[10px] uppercase tracking-widest">Jobs</div>
+                  </div>
+                </div>
+              </div>
+              <a
+                href={`/services/${featured.slug}`}
+                class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-brand-700 hover:bg-accent-300 hover:text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+              >
+                Learn More
+                <Icon name="arrowRight" size={16} />
+              </a>
+            </div>
+          </div>
+          <div class="relative">
+            <ServiceDetailIllustration />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href="/services"
+          class="inline-flex items-center gap-2 text-brand-700 font-bold hover:gap-3 transition-all"
+        >
+          See all 11 services
+          <Icon name="arrowRight" size={18} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= TEAM ============= -->
+  <section class="relative isolate bg-white py-16 sm:py-24">
+    <div class="container-page relative">
+      <div class="text-center">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Our Team Member
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink">
+          Our Professional Expert Team
+        </h2>
+        <p class="mt-4 max-w-2xl mx-auto text-ink-soft">
+          The people behind every visit — vetted, trained, and proud of the work.
+        </p>
+      </div>
+
+      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {team.map((m) => <TeamCard member={m} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= PROJECTS ============= -->
+  <section class="relative isolate bg-slate-50 py-16 sm:py-24">
+    <div class="container-page relative">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+            <span class="inline-block h-px w-8 bg-brand-600"></span>
+            Latest Projects
+          </p>
+          <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink leading-tight">
+            Recent Completed Projects
+          </h2>
+        </div>
+        <p class="lg:max-w-md text-ink-soft">
+          A snapshot of the homes, towers and offices across Qatar we've delivered for over the past month.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {projects.map((p) => <ProjectCard project={p} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= PRICING ============= -->
+  <section class="relative isolate bg-white py-16 sm:py-24" id="pricing">
+    <div class="container-page relative" data-pricing-root>
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Pricing Plans
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink">
+          Choose Your Pricing Plan
+        </h2>
+        <p class="mt-4 text-ink-soft">
+          Transparent flat-rate pricing. No per-hour surprises, supplies always included.
+          Custom quotes available on WhatsApp.
+        </p>
+
+        <!-- Billing toggle -->
+        <div class="mt-8 inline-flex flex-wrap items-center gap-1 p-1 rounded-full bg-slate-100 border border-slate-200 shadow-inner" role="tablist" aria-label="Billing period">
+          <button
+            type="button"
+            data-billing="hourly"
+            class="px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all text-ink-soft hover:text-ink"
+            aria-selected="false"
+            role="tab"
+          >
+            Hourly
+          </button>
+          <button
+            type="button"
+            data-billing="monthly"
+            class="px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-brand-600 text-white shadow-md"
+            aria-selected="true"
+            role="tab"
+          >
+            Monthly
+          </button>
+          <button
+            type="button"
+            data-billing="annual"
+            class="px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all text-ink-soft hover:text-ink"
+            aria-selected="false"
+            role="tab"
+          >
+            Annually <span class="ml-1 px-2 py-0.5 rounded-full bg-accent-400 text-ink text-[10px]">Save 10%</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Subscription plans (monthly + annual share these cards) -->
+      <div class="mt-14 grid gap-8 lg:grid-cols-3 items-stretch" data-grid-subscription>
+        {plans.map((plan) => <PricingCard plan={plan} />)}
+      </div>
+
+      <!-- Hourly tiers (separate grid, shown when Hourly is selected) -->
+      <div class="mt-14 grid gap-8 lg:grid-cols-3 items-stretch hidden" data-grid-hourly>
+        {hourlyPlans.map((plan) => <HourlyCard plan={plan} />)}
+      </div>
+
+      <p class="mt-10 text-center text-sm text-ink-muted" data-note-subscription>
+        Subscription plans bundle 4 visits per month with the same crew rotation. Prices are starting estimates in QAR for Greater Doha. Outlying areas may include a small travel fee — quoted up front.
+      </p>
+      <p class="mt-10 text-center text-sm text-ink-muted hidden" data-note-hourly>
+        Hourly bookings have a 1-hour minimum — pay only for the time you use. Rates are starting estimates in QAR for Greater Doha. Custom multi-visit packages available — WhatsApp us.
+      </p>
+    </div>
+
+    <script is:inline>
+      (function () {
+        const root = document.querySelector('[data-pricing-root]');
+        if (!root) return;
+        const buttons = root.querySelectorAll('[data-billing]');
+        const subscriptionGrid = root.querySelector('[data-grid-subscription]');
+        const hourlyGrid = root.querySelector('[data-grid-hourly]');
+        const noteSub = root.querySelector('[data-note-subscription]');
+        const noteHour = root.querySelector('[data-note-hourly]');
+
+        const apply = (mode) => {
+          // Toggle button visual state
+          buttons.forEach((b) => {
+            const active = b.dataset.billing === mode;
+            b.setAttribute('aria-selected', String(active));
+            if (active) {
+              b.classList.add('bg-brand-600', 'text-white', 'shadow-md');
+              b.classList.remove('text-ink-soft');
+            } else {
+              b.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
+              b.classList.add('text-ink-soft');
+            }
+          });
+
+          // Swap grids
+          if (subscriptionGrid && hourlyGrid) {
+            const showHourly = mode === 'hourly';
+            subscriptionGrid.classList.toggle('hidden', showHourly);
+            subscriptionGrid.classList.toggle('grid', !showHourly);
+            hourlyGrid.classList.toggle('hidden', !showHourly);
+            hourlyGrid.classList.toggle('grid', showHourly);
+          }
+          if (noteSub) noteSub.classList.toggle('hidden', mode === 'hourly');
+          if (noteHour) noteHour.classList.toggle('hidden', mode !== 'hourly');
+
+          // Subscription price switch
+          root.querySelectorAll('[data-price-monthly]').forEach((el) => {
+            el.classList.toggle('hidden', mode !== 'monthly');
+            el.classList.toggle('flex', mode === 'monthly');
+          });
+          root.querySelectorAll('[data-price-annual]').forEach((el) => {
+            el.classList.toggle('hidden', mode !== 'annual');
+            el.classList.toggle('flex', mode === 'annual');
+          });
+          root.querySelectorAll('[data-bill-monthly]').forEach((el) => {
+            el.classList.toggle('hidden', mode !== 'monthly');
+          });
+          root.querySelectorAll('[data-bill-annual]').forEach((el) => {
+            el.classList.toggle('hidden', mode !== 'annual');
+          });
+        };
+        buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.billing)));
+        apply('monthly');
+      })();
+    </script>
+  </section>
+
+  <!-- ============= BOOKING ============= -->
+  <BookingBanner />
+
+  <!-- ============= AREAS ============= -->
+  <section class="py-16 sm:py-24 bg-white">
+    <div class="container-page">
+      <SectionHeading
+        eyebrow="Where we work"
+        title="Service areas across Qatar"
+        intro="From the towers of West Bay and The Pearl to the family compounds of Al Wakrah and Al Khor — we cover all major Qatar communities."
+      />
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          areas.map((area) => (
+            <AreaCard href={`/areas/${area.slug}`} name={area.name} description={area.blurb} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= TESTIMONIALS ============= -->
+  <section class="relative isolate py-16 sm:py-24 bg-slate-50">
+    <div class="container-page relative">
+      <SectionHeading
+        eyebrow="Customer stories"
+        title="What our clients say about us"
+        intro="Real feedback from villa owners, tenants, and office managers across Doha."
+        center
+      />
+
+      <div class="mt-12 grid gap-5 md:grid-cols-3">
+        {
+          testimonials.map((t) => (
+            <TestimonialCard quote={t.quote} name={t.name} role={t.role} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= BLOG ============= -->
+  <section class="relative isolate bg-white py-16 sm:py-24">
+    <div class="container-page relative">
+      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
+        <div>
+          <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+            <span class="inline-block h-px w-8 bg-brand-600"></span>
+            Latest News and Blog
+          </p>
+          <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink leading-tight">
+            Read our tips and stories
+          </h2>
+        </div>
+        <a
+          href="#"
+          class="inline-flex items-center gap-2 text-brand-700 font-bold hover:gap-3 transition-all"
+        >
+          See all posts
+          <Icon name="arrowRight" size={18} />
+        </a>
+      </div>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {blogPosts.map((p, i) => <BlogCard post={p} hue={blogHues[i % blogHues.length]} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============= OTHER BRANDS ============= -->
+  <section class="py-16 sm:py-24 bg-slate-50">
+    <div class="container-page">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          From The Same Team
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink">
+          Other ventures by Samuel Daniel
+        </h2>
+        <p class="mt-4 text-ink-soft">
+          The trust we earned cleaning your home extends to the other companies we run.
+          Take a look — you might find something useful.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 lg:grid-cols-2 items-stretch">
+        {brands.map((b) => <BrandCard brand={b} />)}
+      </div>
+    </div>
+  </section>
+
+  <Faq items={homeFaqs} intro="Quick answers to the questions we get most often on WhatsApp." />
+</BaseLayout>

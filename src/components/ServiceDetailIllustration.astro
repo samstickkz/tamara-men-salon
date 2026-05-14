@@ -1,0 +1,53 @@
+---
+// Worker-with-mop illustration for the highlighted service-detail card on the
+// home services section.
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 360 360"
+  class="w-full h-auto"
+  role="img"
+  aria-label="Cleaning professional mopping the floor"
+>
+  <defs>
+    <linearGradient id="sd-uniform" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DBE6FE"/>
+    </linearGradient>
+  </defs>
+  <ellipse cx="180" cy="320" rx="140" ry="14" fill="rgba(0,0,0,0.25)"/>
+  <!-- mop stick -->
+  <rect x="240" y="60" width="8" height="180" fill="#0B1733"/>
+  <!-- mop head -->
+  <rect x="216" y="240" width="56" height="14" rx="4" fill="#FFCA1F"/>
+  <path d="M220 254 q4 30 -8 50 M232 254 q2 35 -6 56 M244 254 v60 M256 254 q-2 35 6 56 M268 254 q-4 30 8 50" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+  <!-- body -->
+  <g transform="translate(80,40)">
+    <!-- legs -->
+    <rect x="40" y="220" width="32" height="80" rx="10" fill="#0B1733"/>
+    <rect x="78" y="220" width="32" height="80" rx="10" fill="#0B1733"/>
+    <rect x="34" y="290" width="46" height="14" rx="6" fill="#1A4ADB"/>
+    <rect x="78" y="290" width="46" height="14" rx="6" fill="#1A4ADB"/>
+    <!-- top -->
+    <path d="M10 100 L10 230 L140 230 L140 100 C 140 60, 110 40, 75 40 C 40 40, 10 60, 10 100 Z" fill="url(#sd-uniform)"/>
+    <path d="M55 50 L95 50 L95 78 L75 90 L55 78 Z" fill="#1E5BFB"/>
+    <!-- arms -->
+    <rect x="-20" y="100" width="40" height="120" rx="14" fill="url(#sd-uniform)" transform="rotate(-12 0 160)"/>
+    <rect x="130" y="100" width="40" height="120" rx="14" fill="url(#sd-uniform)" transform="rotate(20 150 160)"/>
+    <!-- gloves -->
+    <circle cx="-5" cy="220" r="20" fill="#FFCA1F"/>
+    <circle cx="170" cy="220" r="20" fill="#FFCA1F"/>
+    <!-- head -->
+    <ellipse cx="75" cy="30" rx="38" ry="40" fill="#F2C998"/>
+    <path d="M40 22 q14 -28 70 -10 q-4 -22 -36 -24 q-38 -2 -34 34 z" fill="#0B1733"/>
+    <circle cx="62" cy="32" r="3" fill="#0B1733"/>
+    <circle cx="90" cy="32" r="3" fill="#0B1733"/>
+    <path d="M60 50 q15 12 30 0" stroke="#0B1733" stroke-width="3" fill="none" stroke-linecap="round"/>
+  </g>
+  <!-- bubbles -->
+  <g fill="none" stroke="#FFFFFF" stroke-width="2" opacity="0.85">
+    <circle cx="60" cy="80" r="14"/>
+    <circle cx="40" cy="160" r="10"/>
+    <circle cx="320" cy="120" r="16"/>
+  </g>
+</svg>

@@ -1,0 +1,96 @@
+---
+import Icon from './Icon.astro';
+import type { Plan } from '../data/marketing';
+
+interface Props { plan: Plan }
+const { plan } = Astro.props;
+const popular = plan.popular ?? false;
+const annualTotal = plan.annual * 12;
+const monthlyTotal = plan.monthly * 12;
+const annualSavings = monthlyTotal - annualTotal;
+---
+<article
+  data-pricing-card
+  class:list={[
+    'relative flex flex-col h-full rounded-3xl p-8 sm:p-10 transition-transform',
+    popular
+      ? 'bg-brand-600 text-white shadow-2xl lg:-translate-y-4 ring-4 ring-accent-400'
+      : 'bg-white text-ink border border-slate-200 shadow-lg hover:shadow-xl',
+  ]}
+>
+  {plan.badge && (
+    <span
+      class:list={[
+        'absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wider',
+        popular ? 'bg-accent-500 text-ink' : 'bg-brand-50 text-brand-700',
+      ]}
+    >
+      {plan.badge}
+    </span>
+  )}
+
+  <header>
+    <h3 class:list={[
+      'font-display text-xl font-bold uppercase tracking-wide',
+      popular ? 'text-accent-300' : 'text-brand-600',
+    ]}>
+      {plan.name}
+    </h3>
+
+    <div class="mt-4">
+      <div class="flex items-baseline gap-2" data-price-monthly>
+        <span class="font-display text-5xl font-extrabold">{plan.monthly}</span>
+        <span class:list={['text-sm font-medium', popular ? 'text-white/80' : 'text-ink-muted']}>
+          {plan.unit}
+        </span>
+      </div>
+      <div class="hidden items-baseline gap-2" data-price-annual>
+        <span class="font-display text-5xl font-extrabold">{plan.annual}</span>
+        <span class:list={['text-sm font-medium', popular ? 'text-white/80' : 'text-ink-muted']}>
+          {plan.unit}
+        </span>
+      </div>
+      <p class:list={['mt-2 text-xs font-medium', popular ? 'text-accent-300' : 'text-brand-600']}>
+        <span data-bill-monthly>Billed monthly · QAR {plan.monthly * 12}/yr</span>
+        <span data-bill-annual class="hidden">
+          Billed yearly · QAR {annualTotal}/yr · Save QAR {annualSavings}
+        </span>
+      </p>
+    </div>
+
+    <p class:list={['mt-4 leading-relaxed', popular ? 'text-white/85' : 'text-ink-soft']}>
+      {plan.description}
+    </p>
+  </header>
+
+  <ul class="mt-7 space-y-3 flex-1">
+    {
+      plan.features.map((f) => (
+        <li class="flex items-start gap-3">
+          <span
+            class:list={[
+              'inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full',
+              popular ? 'bg-accent-500 text-ink' : 'bg-brand-50 text-brand-700',
+            ]}
+          >
+            <Icon name="check" size={14} />
+          </span>
+          <span class:list={['text-sm', popular ? 'text-white' : 'text-ink-soft']}>{f}</span>
+        </li>
+      ))
+    }
+  </ul>
+
+  <a
+    href={plan.cta.href}
+    class:list={[
+      'mt-8 inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold uppercase tracking-wide text-sm shadow-md transition-colors',
+      popular
+        ? 'bg-accent-500 hover:bg-accent-400 text-ink'
+        : 'bg-brand-600 hover:bg-brand-700 text-white',
+    ]}
+  >
+    {plan.cta.label}
+    <Icon name="arrowRight" size={16} />
+  </a>
+</article>

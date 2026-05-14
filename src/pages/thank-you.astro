@@ -1,0 +1,60 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Bubbles from '../components/Bubbles.astro';
+
+const title = 'Thanks! We received your message | Tamara Cleaning';
+const description = 'Your message reached the Tamara Cleaning team. We will reply on WhatsApp within a few hours during opening times.';
+
+// Match Astro.url.searchParams when the page is server-rendered; on prerender
+// the value comes from the client via the inline script below.
+const formName = Astro.url.searchParams.get('form') ?? '';
+
+const variants: Record<string, { title: string; body: string }> = {
+  contact: {
+    title: 'Thanks — your message is on its way',
+    body: 'We will reply by email or WhatsApp within a few hours during opening times.',
+  },
+  booking: {
+    title: 'Got it — your quote request is in',
+    body: 'Our coordinator will WhatsApp you within an hour during opening times with a flat-rate quote.',
+  },
+  careers: {
+    title: 'Application received',
+    body: 'Our HR coordinator will WhatsApp you within 24 hours to set up a chat.',
+  },
+};
+
+const v = variants[formName] ?? {
+  title: 'Thanks — we received your message',
+  body: 'We will be in touch shortly.',
+};
+---
+<BaseLayout title={title} description={description} noindex>
+  <section class="relative isolate overflow-hidden bg-brand-600 text-white py-20 sm:py-28">
+    <Bubbles class="absolute -top-10 -right-12 w-[440px] h-[560px]" variant="light" />
+    <Bubbles class="absolute -bottom-16 -left-12 w-[360px] h-[460px]" variant="light" />
+    <div class="container-page relative max-w-2xl text-center">
+      <div class="inline-flex h-20 w-20 items-center justify-center rounded-full bg-accent-500 text-ink shadow-2xl mb-6">
+        <Icon name="check" size={36} />
+      </div>
+      <h1 class="font-display text-3xl sm:text-5xl font-extrabold leading-tight">
+        {v.title}
+      </h1>
+      <p class="mt-5 text-lg text-white/85 leading-relaxed">
+        {v.body}
+      </p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
+        <WhatsAppButton variant="inverse" size="lg" label="Open WhatsApp" />
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent-500 hover:bg-accent-400 text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+        >
+          <Icon name="home" size={18} />
+          Back to home
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

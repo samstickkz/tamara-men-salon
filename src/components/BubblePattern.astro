@@ -1,0 +1,44 @@
+---
+// Full-section repeating bubble pattern. Drop into a `relative` parent and
+// position absolutely with `inset-0`. Light/dark variants for backgrounds.
+interface Props {
+  class?: string;
+  variant?: 'light' | 'dark' | 'subtle';
+  opacity?: number;
+}
+const { class: className = '', variant = 'subtle', opacity = 1 } = Astro.props;
+
+const config = {
+  light: { stroke: 'rgba(255,255,255,0.55)', fill: 'rgba(255,255,255,0.12)' },
+  dark:  { stroke: 'rgba(30,91,251,0.40)',  fill: 'rgba(30,91,251,0.10)' },
+  subtle:{ stroke: 'rgba(30,91,251,0.22)',  fill: 'rgba(30,91,251,0.04)' },
+}[variant];
+---
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  class={`pointer-events-none ${className}`}
+  style={`opacity:${opacity}`}
+  aria-hidden="true"
+  preserveAspectRatio="xMidYMid slice"
+>
+  <defs>
+    <pattern id={`bubbles-${variant}`} x="0" y="0" width="320" height="320" patternUnits="userSpaceOnUse">
+      <g fill={config.fill} stroke={config.stroke} stroke-width="1.4">
+        <circle cx="32" cy="48" r="28"/>
+        <circle cx="120" cy="20" r="10"/>
+        <circle cx="200" cy="80" r="22"/>
+        <circle cx="280" cy="40" r="14"/>
+        <circle cx="60" cy="160" r="18"/>
+        <circle cx="160" cy="200" r="30"/>
+        <circle cx="260" cy="180" r="12"/>
+        <circle cx="40" cy="260" r="22"/>
+        <circle cx="140" cy="290" r="14"/>
+        <circle cx="240" cy="270" r="20"/>
+        <circle cx="300" cy="240" r="8"/>
+        <circle cx="100" cy="100" r="6"/>
+        <circle cx="220" cy="140" r="8"/>
+      </g>
+    </pattern>
+  </defs>
+  <rect width="100%" height="100%" fill={`url(#bubbles-${variant})`}/>
+</svg>

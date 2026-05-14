@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+import type { TeamMember } from '../data/marketing';
+
+interface Props { member: TeamMember }
+const { member } = Astro.props;
+
+const palette = {
+  blue:   { bg: 'bg-brand-100',  text: 'text-brand-700' },
+  yellow: { bg: 'bg-accent-100', text: 'text-accent-700' },
+  navy:   { bg: 'bg-navy-100',   text: 'text-navy-700' },
+  sand:   { bg: 'bg-sand-100',   text: 'text-navy-700' },
+}[member.hue];
+
+const Wrapper = member.link ? 'a' : 'div';
+const wrapperProps = member.link
+  ? { href: member.link, target: '_blank', rel: 'noopener noreferrer', 'aria-label': `${member.name} on LinkedIn` }
+  : {};
+---
+<article class="relative group">
+  <Wrapper class="block" {...wrapperProps}>
+    <!-- Avatar disc -->
+    <div class="relative mx-auto aspect-square w-full max-w-[240px] overflow-hidden rounded-full bg-slate-100 shadow-lg group-hover:shadow-xl transition-shadow">
+      <div class:list={[palette.bg, 'absolute inset-0']}></div>
+      <!-- decorative bubbles inside circle -->
+      <svg viewBox="0 0 240 240" class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <g fill="rgba(255,255,255,0.35)">
+          <circle cx="40" cy="50" r="22"/>
+          <circle cx="200" cy="40" r="12"/>
+          <circle cx="210" cy="180" r="18"/>
+          <circle cx="30" cy="190" r="14"/>
+        </g>
+      </svg>
+      <!-- silhouette avatar -->
+      <svg viewBox="0 0 240 240" class="absolute inset-0 w-full h-full" aria-hidden="true">
+        <ellipse cx="120" cy="240" rx="120" ry="80" fill="rgba(11,23,51,0.18)"/>
+        <circle cx="120" cy="98" r="48" fill="#FFFFFF"/>
+        <path d="M40 240 L40 200 C 40 162 78 140 120 140 C 162 140 200 162 200 200 L 200 240 Z" fill="#FFFFFF"/>
+      </svg>
+      <!-- initials -->
+      <div class={`absolute inset-0 flex items-center justify-center ${palette.text}`}>
+        <span class="font-display text-5xl font-extrabold drop-shadow-sm">{member.initials}</span>
+      </div>
+    </div>
+
+    <!-- name plate -->
+    <div class="relative -mt-6 mx-auto w-[88%] rounded-2xl bg-white shadow-xl p-5 text-center border border-slate-100 group-hover:border-brand-200 transition-colors">
+      <h3 class="font-display text-lg font-bold text-ink">{member.name}</h3>
+      <p class="text-sm font-semibold text-brand-600 uppercase tracking-wider mt-0.5">{member.role}</p>
+      <p class="mt-3 text-sm text-ink-soft leading-relaxed">{member.fact}</p>
+      {
+        member.link && (
+          <p class="mt-3 inline-flex items-center gap-1.5 text-xs font-bold text-brand-700 uppercase tracking-wider">
+            View profile
+            <Icon name="arrowRight" size={12} />
+          </p>
+        )
+      }
+    </div>
+  </Wrapper>
+</article>

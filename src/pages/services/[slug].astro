@@ -1,0 +1,178 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Bubbles from '../../components/Bubbles.astro';
+import Icon from '../../components/Icon.astro';
+import WhatsAppButton from '../../components/WhatsAppButton.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import AreaCard from '../../components/AreaCard.astro';
+import ServiceCard from '../../components/ServiceCard.astro';
+import Faq from '../../components/Faq.astro';
+import CtaBanner from '../../components/CtaBanner.astro';
+import PageHero from '../../components/PageHero.astro';
+import ServiceSchema from '../../components/ServiceSchema.astro';
+import FaqSchema from '../../components/FaqSchema.astro';
+import BreadcrumbSchema from '../../components/BreadcrumbSchema.astro';
+import { services, type Service } from '../../data/services';
+import { areas } from '../../data/areas';
+import { serviceBody } from '../../data/serviceContent';
+import { serviceFaqs } from '../../data/faqs';
+
+export async function getStaticPaths() {
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+interface Props { service: Service }
+const { service } = Astro.props;
+
+const body = serviceBody[service.slug] ?? '';
+const faqs = serviceFaqs[service.slug] ?? [];
+
+const currentIdx = services.findIndex((s) => s.slug === service.slug);
+const related = [
+  services[(currentIdx + 1) % services.length],
+  services[(currentIdx + 2) % services.length],
+  services[(currentIdx + 3) % services.length],
+];
+
+const whatsappMsg = `Hello Tamara Cleaning, I'd like a quote for ${service.shortTitle}.`;
+---
+<BaseLayout title={service.metaTitle} description={service.metaDescription}>
+  <ServiceSchema slot="head" name={service.shortTitle} description={service.metaDescription} slug={service.slug} />
+  {faqs.length > 0 && <FaqSchema slot="head" items={faqs} />}
+  <BreadcrumbSchema
+    slot="head"
+    items={[
+      { name: 'Home', href: '/' },
+      { name: 'Services', href: '/services' },
+      { name: service.shortTitle, href: `/services/${service.slug}` },
+    ]}
+  />
+
+  <PageHero
+    eyebrow="Cleaning Service"
+    title={service.title}
+    intro={service.tagline}
+    iconName={service.icon}
+    crumbs={[
+      { name: 'Home', href: '/' },
+      { name: 'Services', href: '/services' },
+      { name: service.shortTitle },
+    ]}
+  >
+    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+      <WhatsAppButton variant="inverse" size="lg" label="Get A Quote" message={whatsappMsg} />
+      <a
+        href="/contact"
+        class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-accent-500 hover:bg-accent-400 text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+      >
+        Contact Form
+        <Icon name="arrowRight" size={16} />
+      </a>
+    </div>
+  </PageHero>
+
+  <!-- Service highlights strip floating over cloud divider -->
+  <section class="relative -mt-16 sm:-mt-20 z-10">
+    <div class="container-page">
+      <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 p-2 bg-white rounded-2xl shadow-2xl">
+        {
+          service.highlights.map((h) => (
+            <li class="flex items-start gap-3 p-4 rounded-xl hover:bg-brand-50 transition-colors">
+              <span class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-accent-500 text-ink">
+                <Icon name="check" size={16} />
+              </span>
+              <span class="text-sm font-semibold text-ink">{h}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Body content -->
+  <section class="relative isolate py-16 sm:py-20 bg-white">
+    <div class="container-page relative grid gap-12 lg:grid-cols-[1.6fr_1fr]">
+      <article class="prose-clean" set:html={body}></article>
+      <aside class="space-y-5 lg:sticky lg:top-32 lg:self-start">
+        <div class="relative overflow-hidden p-6 rounded-2xl bg-brand-600 text-white shadow-xl">
+          <Bubbles class="absolute -top-10 -right-10 w-[320px] h-[400px]" variant="light" />
+          <Bubbles class="absolute -bottom-12 -left-10 w-[240px] h-[320px]" variant="light" />
+          <div class="relative">
+            <h2 class="font-display text-xl font-bold">Ready to book?</h2>
+            <p class="mt-2 text-white/90 text-sm">
+              Send us a few photos on WhatsApp and we will price the job in minutes.
+            </p>
+            <div class="mt-4">
+              <WhatsAppButton variant="inverse" full label="WhatsApp Us" message={whatsappMsg} />
+            </div>
+          </div>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+          <h2 class="font-display text-base font-bold text-ink uppercase tracking-wide">What's included</h2>
+          <ul class="mt-4 space-y-2 text-sm">
+            {
+              service.highlights.map((h) => (
+                <li class="flex items-start gap-2">
+                  <span class="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600 mt-0.5">
+                    <Icon name="check" size={12} />
+                  </span>
+                  <span class="text-ink-soft">{h}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- Service areas -->
+  <section class="relative isolate py-16 bg-slate-50">
+    <div class="container-page relative">
+      <SectionHeading
+        eyebrow="Where we work"
+        title={`${service.shortTitle} across all major Qatar communities`}
+        intro="From Doha and Lusail to The Pearl, West Bay, Al Wakrah, Al Rayyan and Al Khor."
+      />
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          areas.map((area) => (
+            <AreaCard href={`/areas/${area.slug}`} name={area.name} description={area.blurb} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  {faqs.length > 0 && (
+    <Faq items={faqs} heading={`${service.shortTitle} — FAQ`} />
+  )}
+
+  <!-- Related services -->
+  <section class="relative isolate py-16 sm:py-20 bg-white">
+    <div class="container-page relative">
+      <SectionHeading
+        eyebrow="You may also need"
+        title="Related cleaning services"
+        intro="Combine services in a single visit to save time and money."
+      />
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          related.map((s) => (
+            <ServiceCard
+              href={`/services/${s.slug}`}
+              title={s.shortTitle}
+              description={s.tagline}
+              icon={s.icon}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner />
+</BaseLayout>

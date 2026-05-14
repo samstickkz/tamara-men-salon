@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+
+interface Props {
+  name: string;
+  description: string;
+  slug: string;
+  areaServed?: string;
+}
+const { name, description, slug, areaServed = 'Qatar' } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  serviceType: name,
+  name,
+  description,
+  url: `${site.url}/services/${slug}`,
+  provider: { '@id': `${site.url}#business` },
+  areaServed: { '@type': 'Country', name: areaServed },
+  audience: { '@type': 'Audience', audienceType: 'Homes, offices, and businesses in Qatar' },
+  offers: {
+    '@type': 'Offer',
+    priceCurrency: 'QAR',
+    availability: 'https://schema.org/InStock',
+    url: `${site.url}/services/${slug}`,
+  },
+};
+---
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

@@ -1,0 +1,168 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import CtaBanner from '../components/CtaBanner.astro';
+import PageHero from '../components/PageHero.astro';
+import AboutIllustration from '../components/AboutIllustration.astro';
+import TeamCard from '../components/TeamCard.astro';
+import BreadcrumbSchema from '../components/BreadcrumbSchema.astro';
+import { site } from '../data/site';
+import { team } from '../data/marketing';
+
+const title = 'About Tamara Cleaning Services | Doha, Qatar Cleaning Company';
+const description = `Tamara Cleaning Services is a Doha-based cleaning company founded by ${site.owner}. CR ${site.cr}. Vetted crews, eco-friendly products, serving all of Qatar.`;
+
+const values = [
+  { icon: 'shield',  title: 'Trust',        body: 'Vetted, document-verified cleaners. Branded uniforms and IDs. You always know who is in your space.' },
+  { icon: 'sparkle', title: 'Consistency',  body: 'The same crew rotates through your property on recurring plans, so standards never reset.' },
+  { icon: 'check',   title: 'Transparency', body: 'Flat-rate pricing with a clear scope. No hidden charges, no surprise extras at the end of a visit.' },
+  { icon: 'star',    title: 'Care',         body: 'We treat every villa, apartment and office as if it were our own. Small details make the biggest difference.' },
+];
+
+const stats = [
+  { value: '300+', label: 'Cleans completed' },
+  { value: '4.9★', label: 'Average rating' },
+  { value: '24h',  label: 'WhatsApp response' },
+  { value: '7',    label: 'Areas served' },
+];
+---
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema
+    slot="head"
+    items={[{ name: 'Home', href: '/' }, { name: 'About', href: '/about' }]}
+  />
+
+  <PageHero
+    eyebrow="About Us"
+    title="The local Doha team behind every spotless property"
+    intro="A small, focused cleaning company built around one promise — same crew, same scope, same standard, every visit."
+    iconName="sparkle"
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'About' }]}
+  />
+
+  <!-- Stats strip floating over divider -->
+  <section class="relative -mt-16 sm:-mt-20 z-10">
+    <div class="container-page">
+      <ul class="grid grid-cols-2 lg:grid-cols-4 p-2 bg-white rounded-2xl shadow-2xl">
+        {
+          stats.map((s) => (
+            <li class="text-center p-4 sm:p-6 border-l first:border-l-0 border-slate-100">
+              <div class="font-display text-3xl sm:text-4xl font-extrabold text-brand-600">{s.value}</div>
+              <div class="mt-1 text-xs uppercase tracking-wider text-ink-muted font-semibold">{s.label}</div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Story -->
+  <section class="relative isolate py-16 sm:py-24 bg-white">
+    <div class="container-page relative grid gap-12 lg:grid-cols-[1fr_1.05fr] items-start">
+      <div class="relative">
+        <AboutIllustration />
+        <span class="absolute -bottom-4 -left-2 hidden sm:inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent-400 text-ink shadow-lg" aria-hidden="true">
+          <Icon name="sparkle" size={28} />
+        </span>
+      </div>
+
+      <div>
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Our Story
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink leading-tight">
+          Built in Doha, for Doha
+        </h2>
+        <div class="mt-6 prose-clean">
+          <p>
+            Tamara Cleaning Services was founded in {site.established} by {site.owner}, a Doha resident who
+            built the company after years of hearing the same complaints from friends and neighbours —
+            inconsistent crews, no-shows, surprise charges, and standards that drifted after the first
+            visit. We started small, with one promise: every customer gets the same crew, the same scope,
+            and the same standard, every time.
+          </p>
+          <p>
+            That commitment shapes how we hire, how we schedule, and how we price. Every cleaner is
+            interviewed in person, document-verified for legal work status in Qatar, and shadowed on at
+            least three jobs before they handle a property alone.
+          </p>
+          <h3>Built for Qatar</h3>
+          <p>
+            Cleaning in Qatar is not the same as cleaning in cooler, less dusty climates. Fine desert
+            dust settles on every flat surface every few days. Hard water leaves limescale faster.
+            Compound villas and tower apartments have very different access patterns. Our standard
+            operating procedures are written for these realities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Company details + Values -->
+  <section class="relative isolate py-16 sm:py-24 bg-slate-50">
+    <div class="container-page relative grid gap-10 lg:grid-cols-[1fr_1.6fr]">
+      <aside>
+        <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+          <h3 class="font-display text-lg font-bold text-ink">Company details</h3>
+          <dl class="mt-4 space-y-3 text-sm">
+            <div><dt class="font-medium text-ink-muted">Legal name</dt><dd class="text-ink">{site.legalName}</dd></div>
+            <div><dt class="font-medium text-ink-muted">Owner</dt><dd class="text-ink">{site.owner}</dd></div>
+            <div><dt class="font-medium text-ink-muted">Commercial Registration</dt><dd class="text-ink">CR {site.cr}</dd></div>
+            <div><dt class="font-medium text-ink-muted">Established</dt><dd class="text-ink">{site.established}</dd></div>
+            <div><dt class="font-medium text-ink-muted">Legal form</dt><dd class="text-ink">Limited Liability Company (One Person)</dd></div>
+            <div><dt class="font-medium text-ink-muted">Head office</dt><dd class="text-ink">Doha, Qatar</dd></div>
+            <div><dt class="font-medium text-ink-muted">Area served</dt><dd class="text-ink">All of Qatar</dd></div>
+          </dl>
+        </div>
+      </aside>
+
+      <div>
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Our Values
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink leading-tight">
+          Four principles, every visit
+        </h2>
+        <div class="mt-8 grid gap-5 sm:grid-cols-2">
+          {
+            values.map((v) => (
+              <div class="p-6 bg-white rounded-2xl border border-slate-200 hover:border-brand-300 hover:shadow-lg transition-all">
+                <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                  <Icon name={v.icon} size={24} />
+                </span>
+                <h3 class="mt-5 font-display text-lg font-bold text-ink">{v.title}</h3>
+                <p class="mt-2 text-sm text-ink-soft leading-relaxed">{v.body}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="relative isolate py-16 sm:py-24 bg-white">
+    <div class="container-page relative">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          The Team
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink">
+          Meet the people behind every visit
+        </h2>
+      </div>
+      <div class="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {team.map((m) => <TeamCard member={m} />)}
+      </div>
+    </div>
+  </section>
+
+  <CtaBanner
+    title="Want to work with a local team you can trust?"
+    subtitle="Reach out on WhatsApp or email — we will reply within a few hours during opening times."
+  />
+</BaseLayout>

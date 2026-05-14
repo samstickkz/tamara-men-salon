@@ -1,0 +1,66 @@
+---
+import Icon from './Icon.astro';
+import Bubbles from './Bubbles.astro';
+import CloudDivider from './CloudDivider.astro';
+
+interface Crumb { name: string; href?: string }
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  crumbs: Crumb[];
+  iconName?: string; // optional decorative icon next to eyebrow
+}
+const { eyebrow, title, intro, crumbs, iconName } = Astro.props;
+---
+<section class="relative isolate overflow-hidden bg-brand-600 text-white">
+  <Bubbles class="absolute -top-10 -right-12 w-[440px] h-[560px]" variant="light" />
+  <Bubbles class="absolute -bottom-16 -left-12 w-[360px] h-[460px]" variant="light" />
+
+  <div class="container-page relative pt-14 pb-32 sm:pt-20 sm:pb-44">
+    <nav class="text-sm" aria-label="Breadcrumb">
+      <ol class="flex items-center gap-2 flex-wrap text-white/80">
+        {
+          crumbs.map((c, i) => (
+            <>
+              {i > 0 && <li aria-hidden="true" class="text-white/40">/</li>}
+              <li>
+                {c.href ? (
+                  <a href={c.href} class="hover:text-accent-300 transition-colors">{c.name}</a>
+                ) : (
+                  <span class="text-white">{c.name}</span>
+                )}
+              </li>
+            </>
+          ))
+        }
+      </ol>
+    </nav>
+
+    {
+      eyebrow && (
+        <p class="mt-6 inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-accent-300">
+          {iconName && (
+            <span class="inline-flex h-5 w-5 items-center justify-center rounded-full bg-accent-300/15">
+              <Icon name={iconName} size={14} />
+            </span>
+          )}
+          <span class="inline-block h-px w-8 bg-accent-300"></span>
+          {eyebrow}
+        </p>
+      )
+    }
+
+    <h1 class="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] max-w-3xl">
+      {title}
+    </h1>
+    {intro && (
+      <p class="mt-5 text-lg sm:text-xl text-white/85 max-w-2xl leading-relaxed">{intro}</p>
+    )}
+    <slot />
+  </div>
+
+  <div class="absolute bottom-0 left-0 right-0 leading-none">
+    <CloudDivider fill="#ffffff" />
+  </div>
+</section>

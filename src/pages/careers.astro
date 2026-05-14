@@ -1,0 +1,374 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import PageHero from '../components/PageHero.astro';
+import Bubbles from '../components/Bubbles.astro';
+import BreadcrumbSchema from '../components/BreadcrumbSchema.astro';
+import { site } from '../data/site';
+
+const title = 'Careers at Tamara Cleaning Services | Jobs in Doha, Qatar';
+const description = `Apply to join the Tamara Cleaning crew in Doha, Qatar. Cleaner, supervisor, and team-lead roles. Fair pay, regular schedule, branded uniforms, training provided. CR ${site.cr}.`;
+
+const benefits = [
+  {
+    icon: 'check',
+    title: 'Fair, on-time pay',
+    body: 'Salaries paid on the same date every month. Overtime tracked and paid for any extra hours worked.',
+  },
+  {
+    icon: 'clock',
+    title: 'Regular schedule',
+    body: 'Stable weekly routes — you know your customers, days, and locations in advance. No last-minute scrambles.',
+  },
+  {
+    icon: 'sparkle',
+    title: 'Supplies & uniform provided',
+    body: 'Branded uniform, gloves, mask, microfibre kit and all chemicals provided by Tamara. You bring yourself.',
+  },
+  {
+    icon: 'shield',
+    title: 'Training & growth',
+    body: 'Three-job shadow before working alone. Senior cleaners are first in line for team-lead roles.',
+  },
+  {
+    icon: 'star',
+    title: 'Same-crew rotations',
+    body: 'You work with the same colleagues and customers most weeks — better for everyone\'s standards.',
+  },
+  {
+    icon: 'phone',
+    title: 'Reachable coordinator',
+    body: 'Our coordinator is on WhatsApp from before sunrise until late evening. Schedule, leave, or questions — answered.',
+  },
+];
+
+const roles = [
+  {
+    title: 'Cleaner — Residential',
+    type: 'Full-time / Part-time',
+    body: 'Apartment and villa cleaning routes across Doha, Lusail, The Pearl. Experience preferred but training provided.',
+  },
+  {
+    title: 'Cleaner — Commercial',
+    type: 'Full-time, evening shift',
+    body: 'Office and clinic rotations in West Bay and Al Sadd. Evening or early-morning shifts.',
+  },
+  {
+    title: 'Specialist — Deep / Post-construction',
+    type: 'Full-time',
+    body: 'For experienced cleaners who can lead deep cleans, post-construction handovers, and sofa/carpet extraction.',
+  },
+  {
+    title: 'Team Lead / Supervisor',
+    type: 'Full-time',
+    body: 'Coordinate a 3-cleaner crew, manage on-site customer communication, photo-walkthrough QA at the end of each visit.',
+  },
+];
+---
+<BaseLayout title={title} description={description}>
+  <BreadcrumbSchema
+    slot="head"
+    items={[{ name: 'Home', href: '/' }, { name: 'Careers', href: '/careers' }]}
+  />
+
+  <PageHero
+    eyebrow="Join Our Team"
+    title="Work with the cleaning team Doha trusts"
+    intro="We're hiring cleaners, specialists, and team leads across Qatar. Fair pay, regular schedule, training provided, branded uniform — and a coordinator who actually picks up the phone."
+    iconName="sparkle"
+    crumbs={[{ name: 'Home', href: '/' }, { name: 'Careers' }]}
+  >
+    <div class="mt-8 flex flex-col sm:flex-row gap-3">
+      <a
+        href="#apply"
+        class="inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-accent-500 hover:bg-accent-400 text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+      >
+        Apply Now
+        <Icon name="arrowRight" size={16} />
+      </a>
+      <WhatsAppButton
+        variant="inverse"
+        size="lg"
+        label="WhatsApp HR"
+        message="Hello Tamara Cleaning, I'm interested in joining the team."
+      />
+    </div>
+  </PageHero>
+
+  <!-- Stats / quick facts -->
+  <section class="relative -mt-16 sm:-mt-20 z-10">
+    <div class="container-page">
+      <ul class="grid grid-cols-2 lg:grid-cols-4 p-2 bg-white rounded-2xl shadow-2xl">
+        <li class="text-center p-4 sm:p-6 border-l first:border-l-0 border-slate-100">
+          <div class="font-display text-2xl sm:text-3xl font-extrabold text-brand-600">Doha-based</div>
+          <div class="mt-1 text-xs uppercase tracking-wider text-ink-muted font-semibold">CR {site.cr}</div>
+        </li>
+        <li class="text-center p-4 sm:p-6 border-l border-slate-100">
+          <div class="font-display text-2xl sm:text-3xl font-extrabold text-brand-600">7-day</div>
+          <div class="mt-1 text-xs uppercase tracking-wider text-ink-muted font-semibold">Schedule visibility</div>
+        </li>
+        <li class="text-center p-4 sm:p-6 border-l border-slate-100">
+          <div class="font-display text-2xl sm:text-3xl font-extrabold text-brand-600">Paid</div>
+          <div class="mt-1 text-xs uppercase tracking-wider text-ink-muted font-semibold">Training & overtime</div>
+        </li>
+        <li class="text-center p-4 sm:p-6 border-l border-slate-100">
+          <div class="font-display text-2xl sm:text-3xl font-extrabold text-brand-600">Same crew</div>
+          <div class="mt-1 text-xs uppercase tracking-wider text-ink-muted font-semibold">Stable routes</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Why work with us -->
+  <section class="py-16 sm:py-24 bg-white">
+    <div class="container-page">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Why Work With Us
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink">
+          A real job, not a temp gig
+        </h2>
+        <p class="mt-4 text-ink-soft">
+          We're a registered Doha company building a long-term cleaning team. Here's what you get.
+        </p>
+      </div>
+
+      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {
+          benefits.map((b) => (
+            <div class="p-6 bg-white rounded-2xl border border-slate-200 hover:border-brand-300 hover:shadow-lg transition-all">
+              <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
+                <Icon name={b.icon} size={24} />
+              </span>
+              <h3 class="mt-5 font-display text-lg font-bold text-ink">{b.title}</h3>
+              <p class="mt-2 text-sm text-ink-soft leading-relaxed">{b.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Open roles -->
+  <section class="py-16 sm:py-24 bg-slate-50">
+    <div class="container-page">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+          Open Roles
+          <span class="inline-block h-px w-8 bg-brand-600"></span>
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink">
+          Roles we're hiring for right now
+        </h2>
+      </div>
+
+      <div class="mt-12 grid gap-5 sm:grid-cols-2">
+        {
+          roles.map((r) => (
+            <div class="p-6 bg-white rounded-2xl border border-slate-200 hover:border-brand-300 hover:shadow-lg transition-all">
+              <div class="flex items-start justify-between gap-3 flex-wrap">
+                <h3 class="font-display text-lg font-bold text-ink">{r.title}</h3>
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-accent-100 text-accent-700 text-xs font-bold uppercase tracking-wider">
+                  {r.type}
+                </span>
+              </div>
+              <p class="mt-3 text-sm text-ink-soft leading-relaxed">{r.body}</p>
+              <a
+                href="#apply"
+                class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-brand-700 hover:gap-2.5 transition-all"
+              >
+                Apply for this role
+                <Icon name="arrowRight" size={14} />
+              </a>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="mt-8 text-center text-sm text-ink-muted">
+        Don't see a role that fits? Apply anyway — we keep CVs on file and reach out when a relevant slot opens up.
+      </p>
+    </div>
+  </section>
+
+  <!-- Application form -->
+  <section class="relative isolate py-16 sm:py-24 bg-brand-600 text-white" id="apply">
+    <Bubbles class="absolute -top-10 -right-12 w-[420px] h-[520px]" variant="light" />
+    <Bubbles class="absolute -bottom-12 -left-12 w-[340px] h-[440px]" variant="light" />
+    <div class="container-page relative grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+      <div>
+        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-accent-300">
+          <span class="inline-block h-px w-8 bg-accent-300"></span>
+          Apply
+        </p>
+        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold leading-tight">
+          Send your application
+        </h2>
+        <p class="mt-5 text-white/85 leading-relaxed max-w-md">
+          Fill the form and our HR coordinator will respond on WhatsApp — usually
+          within 24 hours. If you have a CV, you can attach it below. Not required.
+        </p>
+
+        <ul class="mt-8 space-y-3 max-w-md">
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-500 text-ink">
+              <Icon name="check" size={14} />
+            </span>
+            <span class="text-white/90">Open to all nationalities legally working in Qatar</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-500 text-ink">
+              <Icon name="check" size={14} />
+            </span>
+            <span class="text-white/90">QID + work visa required (we can advise on transfers)</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <span class="inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-accent-500 text-ink">
+              <Icon name="check" size={14} />
+            </span>
+            <span class="text-white/90">Basic English helpful; Arabic a plus</span>
+          </li>
+        </ul>
+
+        <div class="mt-8">
+          <WhatsAppButton
+            variant="inverse"
+            label="Prefer to chat? WhatsApp HR"
+            message="Hello Tamara Cleaning, I'm interested in joining the team."
+          />
+        </div>
+      </div>
+
+      <form
+        name="careers"
+        method="POST"
+        enctype="multipart/form-data"
+        action="/api/submit"
+        class="relative bg-white text-ink rounded-3xl p-6 sm:p-8 shadow-2xl space-y-4"
+      >
+        <input type="hidden" name="form-name" value="careers" />
+        <p class="hidden">
+          <label>Don't fill this out: <input name="bot-field" /></label>
+        </p>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Full name *</span>
+            <input name="name" type="text" required autocomplete="name"
+              class="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Phone / WhatsApp *</span>
+            <input name="phone" type="tel" required autocomplete="tel" placeholder="+974 ..."
+              class="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Email</span>
+          <input name="email" type="email" autocomplete="email"
+            class="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none" />
+        </label>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Role you're applying for *</span>
+            <select name="role" required
+              class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none">
+              <option value="">Choose a role</option>
+              <option value="Cleaner — Residential">Cleaner — Residential</option>
+              <option value="Cleaner — Commercial">Cleaner — Commercial</option>
+              <option value="Specialist — Deep / Post-construction">Specialist — Deep / Post-construction</option>
+              <option value="Team Lead / Supervisor">Team Lead / Supervisor</option>
+              <option value="Other / Not sure">Other / Not sure</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Availability *</span>
+            <select name="availability" required
+              class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none">
+              <option value="">Choose availability</option>
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Weekends only">Weekends only</option>
+              <option value="Evenings only">Evenings only</option>
+              <option value="Flexible">Flexible</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Cleaning experience</span>
+            <select name="experience"
+              class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none">
+              <option value="None — willing to learn">None — willing to learn</option>
+              <option value="Less than 1 year">Less than 1 year</option>
+              <option value="1–3 years">1–3 years</option>
+              <option value="3–5 years">3–5 years</option>
+              <option value="5+ years">5+ years</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Visa status *</span>
+            <select name="visa" required
+              class="mt-1 block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none">
+              <option value="">Choose status</option>
+              <option value="QID — already in Qatar">QID — already in Qatar</option>
+              <option value="QID with NOC available">QID with NOC available</option>
+              <option value="Visa transfer needed">Visa transfer needed</option>
+              <option value="Outside Qatar — need sponsorship">Outside Qatar — need sponsorship</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Languages</span>
+            <input name="languages" type="text" placeholder="e.g. English, Arabic, Hindi"
+              class="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none" />
+          </label>
+          <label class="block">
+            <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Currently in</span>
+            <input name="location" type="text" placeholder="e.g. Doha — Bin Mahmoud"
+              class="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">Tell us a bit about yourself</span>
+          <textarea name="message" rows="4" placeholder="Why you want to join, relevant experience, references, etc."
+            class="mt-1 block w-full rounded-lg border border-slate-200 px-3 py-2.5 focus:border-brand-600 focus:ring-2 focus:ring-brand-100 outline-none"></textarea>
+        </label>
+
+        <label class="block">
+          <span class="text-xs font-semibold text-ink-muted uppercase tracking-wider">CV (optional, PDF or image, max 5 MB)</span>
+          <input
+            name="cv"
+            type="file"
+            accept=".pdf,.png,.jpg,.jpeg,.doc,.docx"
+            class="mt-1 block w-full text-sm text-ink file:mr-3 file:py-2.5 file:px-4 file:rounded-full file:border-0 file:bg-brand-50 file:text-brand-700 file:font-bold hover:file:bg-brand-100 cursor-pointer"
+          />
+        </label>
+
+        <button
+          type="submit"
+          class="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-accent-500 hover:bg-accent-400 text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+        >
+          Submit Application
+          <Icon name="arrowRight" size={16} />
+        </button>
+
+        <p class="text-xs text-ink-muted text-center">
+          By submitting, you agree to be contacted about your application. We keep CVs on file for 6 months.
+        </p>
+      </form>
+    </div>
+  </section>
+</BaseLayout>

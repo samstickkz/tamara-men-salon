@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import WhatsAppButton from '../components/WhatsAppButton.astro';
+import Icon from '../components/Icon.astro';
+import Bubbles from '../components/Bubbles.astro';
+
+const title = 'Page not found | Tamara Cleaning Services';
+const description = "Sorry, we couldn't find that page. Browse our services or contact Tamara Cleaning on WhatsApp.";
+---
+<BaseLayout title={title} description={description} noindex>
+  <section class="relative isolate overflow-hidden bg-brand-600 text-white py-24 sm:py-32">
+    <Bubbles class="absolute -top-10 -right-10 w-[320px] h-[400px]" variant="light" />
+    <Bubbles class="absolute -bottom-12 -left-10 w-[240px] h-[320px]" variant="light" />
+    <Bubbles class="absolute -top-12 -left-12 w-[460px] h-[460px] opacity-40" variant="light" />
+    <div class="container-page relative max-w-2xl text-center">
+      <p class="font-display text-7xl sm:text-9xl font-extrabold text-accent-300 drop-shadow-lg">404</p>
+      <h1 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold">
+        We couldn't find that page
+      </h1>
+      <p class="mt-4 text-lg text-white/85">
+        It may have moved, or the link is mistyped. Try one of these instead:
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <a
+          href="/"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-white text-brand-700 hover:bg-accent-300 hover:text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+        >
+          <Icon name="home" size={18} />
+          Back to home
+        </a>
+        <a
+          href="/services"
+          class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-accent-500 hover:bg-accent-400 text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
+        >
+          See all services
+          <Icon name="arrowRight" size={18} />
+        </a>
+        <WhatsAppButton label="Message us" />
+      </div>
+    </div>
+  </section>
+</BaseLayout>

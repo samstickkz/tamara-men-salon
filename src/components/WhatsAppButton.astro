@@ -1,0 +1,51 @@
+---
+import Icon from './Icon.astro';
+import { whatsappLink } from '../data/site';
+
+interface Props {
+  label?: string;
+  message?: string;
+  variant?: 'primary' | 'ghost' | 'inverse';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  full?: boolean;
+}
+
+const {
+  label = 'WhatsApp Us',
+  message,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  full = false,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center justify-center gap-2 font-semibold rounded-full transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brand-600';
+
+const variants = {
+  primary: 'bg-brand-600 text-white hover:bg-brand-700 shadow-soft',
+  ghost: 'bg-white/15 text-white hover:bg-white/25 backdrop-blur',
+  inverse: 'bg-white text-brand-700 hover:bg-sand-100 shadow-soft',
+};
+
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-5 py-3 text-base',
+  lg: 'px-7 py-4 text-lg',
+};
+
+const classes = [base, variants[variant], sizes[size], full ? 'w-full' : '', className]
+  .filter(Boolean)
+  .join(' ');
+---
+<a
+  href={whatsappLink(message)}
+  class={classes}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="Contact Tamara Cleaning on WhatsApp"
+>
+  <Icon name="whatsapp" size={20} />
+  <span>{label}</span>
+</a>

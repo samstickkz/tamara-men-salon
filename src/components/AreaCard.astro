@@ -1,0 +1,25 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  name: string;
+  description: string;
+}
+const { href, name, description } = Astro.props;
+---
+<a
+  href={href}
+  class="group flex items-start gap-4 p-5 bg-white rounded-2xl border border-slate-200 hover:border-brand-300 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+>
+  <span
+    class="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600 group-hover:bg-brand-600 group-hover:text-white transition-colors"
+    aria-hidden="true"
+  >
+    <Icon name="mapPin" size={22} />
+  </span>
+  <div class="min-w-0">
+    <h3 class="font-display text-base font-bold text-ink">Cleaning in {name}</h3>
+    <p class="mt-1 text-sm text-ink-soft leading-relaxed">{description}</p>
+  </div>
+</a>
