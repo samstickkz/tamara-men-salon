@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" role="img" aria-label="Stylised scooter — grand prize illustration" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#221F1B"/>
+      <stop offset="1" stop-color="#0A0908"/>
+    </linearGradient>
+    <radialGradient id="spotlight" cx="0.5" cy="0.55" r="0.5">
+      <stop offset="0" stop-color="#B89758" stop-opacity="0.35"/>
+      <stop offset="0.7" stop-color="#B89758" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#B89758" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#DCBE73"/>
+      <stop offset="0.55" stop-color="#B89758"/>
+      <stop offset="1" stop-color="#7B6234"/>
+    </linearGradient>
+    <linearGradient id="shield" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#CFA94D"/>
+      <stop offset="1" stop-color="#9A7C42"/>
+    </linearGradient>
+    <radialGradient id="lamp" cx="0.4" cy="0.4" r="0.7">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#F4ECD4"/>
+      <stop offset="1" stop-color="#9A7C42"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="750" fill="url(#bg)"/>
+  <ellipse cx="600" cy="430" rx="520" ry="240" fill="url(#spotlight)"/>
+
+  <!-- Subtle floor lines -->
+  <g stroke="#B89758" stroke-opacity="0.12" stroke-width="1">
+    <line x1="40" y1="620" x2="1160" y2="620"/>
+    <line x1="80" y1="660" x2="1120" y2="660"/>
+    <line x1="140" y1="700" x2="1060" y2="700"/>
+  </g>
+
+  <!-- Ground shadow -->
+  <ellipse cx="600" cy="615" rx="320" ry="18" fill="#000" opacity="0.55"/>
+
+  <!-- Scooter -->
+  <g transform="translate(300,255)">
+
+    <!-- Rear body / engine cowl -->
+    <path
+      d="M 70 230
+         Q 30 230 30 190
+         L 30 110
+         Q 30 55 100 50
+         L 270 50
+         Q 320 50 345 95
+         L 405 230 Z"
+      fill="url(#body)" stroke="#FBF8F1" stroke-width="3" stroke-linejoin="round"/>
+
+    <!-- Seat -->
+    <path d="M 95 50 Q 175 28 260 38 L 275 70 Q 200 60 110 70 Z"
+          fill="#161412" stroke="#E9D8A6" stroke-width="2"/>
+    <path d="M 110 52 Q 175 38 250 46" stroke="#FBF8F1" stroke-opacity="0.5" stroke-width="1" fill="none"/>
+
+    <!-- Side panel highlight -->
+    <path d="M 100 135 Q 190 115 290 135" stroke="#FBF8F1" stroke-width="2" stroke-opacity="0.55" fill="none"/>
+
+    <!-- Floor / footboard between wheels -->
+    <path d="M 140 290 L 415 290 L 435 248 L 120 248 Z"
+          fill="#1F1D1A" stroke="#B89758" stroke-width="2.5"/>
+
+    <!-- Front leg shield -->
+    <path d="M 410 230 L 470 130 L 520 150 L 470 230 Z"
+          fill="url(#shield)" stroke="#FBF8F1" stroke-width="3" stroke-linejoin="round"/>
+    <!-- Shield highlight -->
+    <path d="M 445 195 L 480 145" stroke="#FBF8F1" stroke-opacity="0.45" stroke-width="2" fill="none"/>
+
+    <!-- Steering column -->
+    <path d="M 500 145 L 540 75" stroke="#9A7C42" stroke-width="14" stroke-linecap="round"/>
+
+    <!-- Headlight -->
+    <g>
+      <circle cx="525" cy="125" r="22" fill="url(#lamp)" stroke="#9A7C42" stroke-width="3"/>
+      <circle cx="520" cy="120" r="6" fill="#FFFFFF" opacity="0.8"/>
+    </g>
+
+    <!-- Handlebar -->
+    <path d="M 540 75 L 595 50" stroke="#161412" stroke-width="9" stroke-linecap="round"/>
+    <path d="M 540 75 L 500 95" stroke="#161412" stroke-width="9" stroke-linecap="round"/>
+    <!-- Grips -->
+    <ellipse cx="597" cy="49" rx="9" ry="6" fill="#161412" stroke="#B89758" stroke-width="2"/>
+    <ellipse cx="497" cy="97" rx="9" ry="6" fill="#161412" stroke="#B89758" stroke-width="2"/>
+
+    <!-- Mirror -->
+    <path d="M 595 50 L 612 22" stroke="#161412" stroke-width="3" stroke-linecap="round"/>
+    <ellipse cx="610" cy="14" rx="13" ry="10" fill="#161412" stroke="#FBF8F1" stroke-width="2"/>
+    <ellipse cx="608" cy="11" rx="6" ry="4" fill="#7B6234"/>
+
+    <!-- TMS badge on side -->
+    <g transform="translate(140,170)">
+      <rect width="64" height="22" rx="2" fill="#161412"/>
+      <text x="32" y="16" text-anchor="middle" font-family="Oswald, Bebas Neue, Impact, sans-serif" font-size="13" fill="#B89758" letter-spacing="3" font-weight="600">TMS</text>
+    </g>
+
+    <!-- Rear exhaust -->
+    <rect x="-5" y="230" width="60" height="14" rx="3" fill="#161412" stroke="#B89758" stroke-width="2"/>
+
+    <!-- REAR WHEEL -->
+    <g transform="translate(105,320)">
+      <circle r="62" fill="#0E0D0B"/>
+      <circle r="62" fill="none" stroke="#B89758" stroke-width="4"/>
+      <circle r="54" fill="none" stroke="#161412" stroke-width="2"/>
+      <circle r="22" fill="#B89758"/>
+      <circle r="22" fill="none" stroke="#FBF8F1" stroke-width="1.5"/>
+      <circle r="8" fill="#161412"/>
+      <g stroke="#161412" stroke-width="2.5">
+        <line x1="-22" y1="0" x2="22" y2="0"/>
+        <line x1="0" y1="-22" x2="0" y2="22"/>
+        <line x1="-15.5" y1="-15.5" x2="15.5" y2="15.5"/>
+        <line x1="-15.5" y1="15.5" x2="15.5" y2="-15.5"/>
+      </g>
+    </g>
+
+    <!-- FRONT WHEEL -->
+    <g transform="translate(490,320)">
+      <circle r="62" fill="#0E0D0B"/>
+      <circle r="62" fill="none" stroke="#B89758" stroke-width="4"/>
+      <circle r="54" fill="none" stroke="#161412" stroke-width="2"/>
+      <circle r="22" fill="#B89758"/>
+      <circle r="22" fill="none" stroke="#FBF8F1" stroke-width="1.5"/>
+      <circle r="8" fill="#161412"/>
+      <g stroke="#161412" stroke-width="2.5">
+        <line x1="-22" y1="0" x2="22" y2="0"/>
+        <line x1="0" y1="-22" x2="0" y2="22"/>
+        <line x1="-15.5" y1="-15.5" x2="15.5" y2="15.5"/>
+        <line x1="-15.5" y1="15.5" x2="15.5" y2="-15.5"/>
+      </g>
+    </g>
+
+    <!-- Front fender -->
+    <path d="M 446 295 Q 490 268 534 295" stroke="#B89758" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  </g>
+
+  <!-- Sparkle accents -->
+  <g fill="#B89758">
+    <path d="M 980 150 l 5 13 l 13 5 l -13 5 l -5 13 l -5 -13 l -13 -5 l 13 -5 z"/>
+    <path d="M 1050 230 l 3 8 l 8 3 l -8 3 l -3 8 l -3 -8 l -8 -3 l 8 -3 z"/>
+    <path d="M 145 145 l 4 10 l 10 4 l -10 4 l -4 10 l -4 -10 l -10 -4 l 10 -4 z"/>
+    <path d="M 95 220 l 2 6 l 6 2 l -6 2 l -2 6 l -2 -6 l -6 -2 l 6 -2 z"/>
+    <path d="M 1090 480 l 3 8 l 8 3 l -8 3 l -3 8 l -3 -8 l -8 -3 l 8 -3 z"/>
+  </g>
+</svg>

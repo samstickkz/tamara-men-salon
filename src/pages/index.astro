@@ -482,6 +482,42 @@ const gallery = [
         </p>
       </div>
 
+      <!-- PRIZE IMAGE -->
+      <div class="mt-10 max-w-xl mx-auto">
+        <div class="relative aspect-[16/10] overflow-hidden border border-gold-500/40">
+          <img
+            src="/prize-scooter.svg"
+            alt="A premium scooter — grand prize in the Tamara Men Salon raffle"
+            width="1200"
+            height="750"
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+            decoding="async"
+          />
+          <!-- Gradient overlay for legibility -->
+          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/90 via-charcoal-900/30 to-transparent"></div>
+          <!-- Prize labels -->
+          <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6 flex items-end justify-between gap-3">
+            <div>
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-400">
+                <span data-i18n-en="Grand Prize" data-i18n-ar="الجائزة الكبرى">Grand Prize</span>
+              </p>
+              <p class="font-condensed uppercase tracking-widest text-cream-50 text-xl sm:text-2xl mt-1">
+                <span data-i18n-en="A Brand-New Scooter" data-i18n-ar="سكوتر جديد">A Brand-New Scooter</span>
+              </p>
+            </div>
+            <div class="text-right">
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-400">
+                <span data-i18n-en="Or" data-i18n-ar="أو">Or</span>
+              </p>
+              <p class="font-condensed uppercase tracking-widest text-cream-50 text-xl sm:text-2xl mt-1">
+                <span data-i18n-en="Cash Equivalent" data-i18n-ar="قيمتها نقداً">Cash Equivalent</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- FORM -->
       <form id="raffle-form" class="mt-10 max-w-xl mx-auto bg-charcoal-700/60 border border-gold-500/30 p-6 sm:p-8">
         <div class="grid sm:grid-cols-2 gap-5">
