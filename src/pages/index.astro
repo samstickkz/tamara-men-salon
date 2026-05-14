@@ -1,556 +1,795 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/Icon.astro';
-import ServiceCard from '../components/ServiceCard.astro';
-import AreaCard from '../components/AreaCard.astro';
-import TestimonialCard from '../components/TestimonialCard.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import Faq from '../components/Faq.astro';
-import FaqSchema from '../components/FaqSchema.astro';
-import CloudDivider from '../components/CloudDivider.astro';
-import Bubbles from '../components/Bubbles.astro';
-import HeroIllustration from '../components/HeroIllustration.astro';
-import AboutIllustration from '../components/AboutIllustration.astro';
-import ServiceDetailIllustration from '../components/ServiceDetailIllustration.astro';
-import PricingCard from '../components/PricingCard.astro';
-import HourlyCard from '../components/HourlyCard.astro';
-import TeamCard from '../components/TeamCard.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import BlogCard from '../components/BlogCard.astro';
-import BookingBanner from '../components/BookingBanner.astro';
-import BrandCard from '../components/BrandCard.astro';
-import { services } from '../data/services';
-import { areas } from '../data/areas';
-import { homeFaqs } from '../data/faqs';
-import { site } from '../data/site';
-import { plans, hourlyPlans, team, projects, blogPosts } from '../data/marketing';
-import { brands } from '../data/brands';
+import { site, whatsappLink, mailtoLink } from '../data/site';
 
-const title = 'Professional Cleaning Services in Doha, Qatar | Tamara Cleaning';
+const title = "Tamara Men Salon — Premium Men's Grooming in Doha, Qatar";
 const description =
-  'Trusted cleaning company in Doha, Qatar — villa, apartment, office, deep, and specialist cleaning across all of Qatar. Vetted teams, eco-friendly products, WhatsApp booking.';
+  "Tamara Men Salon — precision haircuts, hot towel shaves, beard styling and premium men's grooming in Doha, Qatar. Walk in or book an appointment today.";
 
-const aboutBullets = [
-  "We Don't Cut Corners, We Clean Them",
-  'Bringing Freshness To Your Doorstep',
-  'Where Cleanliness Meets Perfection',
+const pricing = [
+  {
+    key: 'Haircuts',
+    keyAr: 'القصات',
+    image: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800&q=80&auto=format&fit=crop',
+    items: [
+      { name: 'Classic Cut', nameAr: 'قصة كلاسيكية', price: '25' },
+      { name: 'Deluxe Cut', nameAr: 'قصة فاخرة', price: '35' },
+      { name: 'Buzz Cut', nameAr: 'قصة قصيرة', price: '15' },
+      { name: "Kids' Cut", nameAr: 'قصة للأطفال', price: '20' },
+    ],
+  },
+  {
+    key: 'Shaving',
+    keyAr: 'الحلاقة',
+    image: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80&auto=format&fit=crop',
+    items: [
+      { name: 'Beard Trim', nameAr: 'تشذيب اللحية', price: '20' },
+      { name: 'Hot Towel Shave', nameAr: 'حلاقة بالمنشفة الساخنة', price: '35' },
+      { name: 'Straight Razor Trim', nameAr: 'حلاقة بموس مستقيم', price: '25' },
+      { name: 'Mustache Trim', nameAr: 'تشذيب الشارب', price: '15' },
+    ],
+  },
+  {
+    key: 'Styling',
+    keyAr: 'التصفيف',
+    image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80&auto=format&fit=crop',
+    items: [
+      { name: 'Hair Color', nameAr: 'صبغة الشعر', price: '25' },
+      { name: 'Full Facial', nameAr: 'تنظيف بشرة كامل', price: '35' },
+      { name: 'Neck Trim', nameAr: 'تشذيب الرقبة', price: '15' },
+      { name: 'Hair Wash & Blow', nameAr: 'غسيل وتجفيف', price: '20' },
+    ],
+  },
+] as const;
+
+const team = [
+  {
+    name: 'Leon Curry',
+    role: 'Master Barber',
+    image: 'https://images.unsplash.com/photo-1620331311520-246422fd82f9?w=800&q=80&auto=format&fit=crop',
+  },
+  {
+    name: 'Anthony Huff',
+    role: 'Senior Stylist',
+    image: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80&auto=format&fit=crop',
+  },
+  {
+    name: 'Ben Parker',
+    role: 'Beard Specialist',
+    image: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=800&q=80&auto=format&fit=crop',
+  },
 ];
 
-const featuredServices = services.slice(0, 5);
-const featured = featuredServices[1] ?? featuredServices[0];
-
-const testimonials = [
-  {
-    quote:
-      'Tamara have been cleaning our villa weekly for months and the consistency is what stands out — the same crew, the same standards every visit.',
-    name: 'Aisha A.',
-    role: 'Villa owner, Al Waab',
-  },
-  {
-    quote:
-      'We switched our office contract to Tamara after a difficult experience with our previous provider. The building looks noticeably better every morning.',
-    name: 'Mohammed K.',
-    role: 'Office manager, West Bay',
-  },
-  {
-    quote:
-      'Booked a move-out deep clean and got the full deposit back from our landlord. Worth every riyal.',
-    name: 'Sara L.',
-    role: 'Apartment tenant, The Pearl',
-  },
+const gallery = [
+  'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=80&auto=format&fit=crop',
+  'https://images.unsplash.com/photo-1593702275687-f8b402bf1fb5?w=900&q=80&auto=format&fit=crop',
 ];
-
-const blogHues: Array<'blue' | 'yellow' | 'navy'> = ['blue', 'yellow', 'navy'];
 ---
 <BaseLayout title={title} description={description}>
-  <FaqSchema slot="head" items={homeFaqs} />
 
-  <!-- ============= HERO ============= -->
-  <section class="relative isolate overflow-hidden bg-brand-600 text-white">
-    <Bubbles class="absolute -top-10 -right-16 w-[460px] h-[600px]" variant="light" />
-    <Bubbles class="absolute -bottom-10 -left-16 w-[380px] h-[500px]" variant="light" />
-
-    <div class="container-page relative pt-12 pb-32 sm:pt-16 sm:pb-44 lg:pt-20 lg:pb-52">
-      <div class="grid items-center gap-10 lg:grid-cols-[1.05fr_1fr]">
-        <div class="relative z-10">
-          <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-accent-300">
-            <span class="inline-block h-px w-8 bg-accent-300"></span>
-            Cleaning Services
+  <!-- HERO -->
+  <section id="home" class="relative overflow-hidden bg-cream-50">
+    <div class="absolute inset-0 -z-10 bg-grain opacity-30"></div>
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12 lg:pt-24 lg:pb-20">
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+        <div class="lg:col-span-7 text-center lg:text-left">
+          <p class="eyebrow" data-i18n-en="Shaves & Trims" data-i18n-ar="حلاقة وتشذيب">Shaves &amp; Trims</p>
+          <span data-lang="en">
+            <h1 class="mt-4 font-condensed uppercase font-bold tracking-tight text-charcoal-800 text-5xl sm:text-6xl lg:text-7xl xl:text-[88px] leading-[0.95]">
+              We Know Your<br /><span class="text-gold-500">Style</span> Better
+            </h1>
+          </span>
+          <span data-lang="ar">
+            <h1 class="mt-4 font-condensed uppercase font-bold tracking-tight text-charcoal-800 text-5xl sm:text-6xl lg:text-7xl xl:text-[88px] leading-[1.1]">
+              نحن نعرف <span class="text-gold-500">ستايلك</span><br />أفضل من أي أحد
+            </h1>
+          </span>
+          <p class="mt-6 max-w-xl text-base sm:text-lg text-ink-soft font-sans leading-relaxed mx-auto lg:mx-0" data-i18n-en="Step into Tamara Men Salon for a tailored grooming experience — sharp cuts, hot towel shaves, and beard styling delivered by master barbers in the heart of Doha." data-i18n-ar="تفضل إلى صالون تمارا للرجال لتجربة عناية فاخرة — قصات دقيقة، حلاقة بالمناشف الساخنة، وتنسيق اللحية على يد أمهر الحلاقين في قلب الدوحة.">
+            Step into Tamara Men Salon for a tailored grooming experience — sharp cuts, hot towel shaves,
+            and beard styling delivered by master barbers in the heart of Doha.
           </p>
-          <h1 class="mt-4 font-display text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05]">
-            Cleaning with Care<br/>Every Time
-          </h1>
-          <p class="mt-6 text-lg text-white/85 max-w-xl leading-relaxed">
-            This includes basic cleaning tasks in homes such as dusting, vacuuming, mopping floors,
-            cleaning bathrooms, kitchens — and the deep-clean routines Qatar villas and apartments
-            actually need.
-          </p>
 
-          <div class="mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
-            <a
-              href="/services"
-              class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-brand-700 font-bold uppercase tracking-wide text-sm shadow-lg hover:bg-accent-300 hover:text-ink transition-colors"
-            >
-              Discover More
-              <Icon name="arrowRight" size={16} />
-            </a>
-            <a
-              href={`tel:${site.phoneIntl}`}
-              class="inline-flex items-center gap-3 text-white hover:text-accent-300 transition-colors"
-            >
-              <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-white/15 text-accent-300">
-                <Icon name="phone" size={20} />
-              </span>
-              <span class="font-bold text-lg tracking-wide">{site.phone}</span>
-            </a>
-          </div>
-        </div>
-
-        <div class="relative">
-          <div class="absolute inset-0 flex items-center justify-center -z-10" aria-hidden="true">
-            <div class="h-[78%] w-[78%] rounded-full bg-white/15 blur-2xl"></div>
-          </div>
-          <HeroIllustration />
-        </div>
-      </div>
-    </div>
-
-    <div class="absolute bottom-0 left-0 right-0 leading-none">
-      <CloudDivider fill="#ffffff" />
-    </div>
-  </section>
-
-  <!-- ============= ABOUT ============= -->
-  <section class="relative isolate bg-white py-16 sm:py-24">
-    <div class="container-page relative grid items-center gap-12 lg:grid-cols-[1fr_1.05fr]">
-      <div class="relative">
-        <AboutIllustration />
-        <span class="absolute -bottom-4 -left-2 hidden sm:inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent-400 text-ink shadow-lg" aria-hidden="true">
-          <Icon name="sparkle" size={28} />
-        </span>
-      </div>
-
-      <div>
-        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-          About Us
-        </p>
-        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink leading-[1.1]">
-          Let Us Handle the Mess<br/>
-          <span class="text-brand-600">You Enjoy the Clean</span>
-        </h2>
-        <p class="mt-6 text-lg text-ink-soft leading-relaxed">
-          Deep cleaning services go beyond regular maintenance cleaning to tackle areas
-          that are often overlooked, such as baseboards, behind appliances, inside
-          cabinets, and other hard-to-reach corners — exactly where Qatar's fine dust hides.
-        </p>
-
-        <ul class="mt-8 space-y-3">
-          {
-            aboutBullets.map((b) => (
-              <li class="flex items-center gap-3 p-3 rounded-xl bg-brand-50 border border-brand-100">
-                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-600 text-white">
-                  <Icon name="check" size={16} />
-                </span>
-                <span class="font-semibold text-ink">{b}</span>
-              </li>
-            ))
-          }
-        </ul>
-
-        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <!-- Google rating badge (compact, in hero) -->
           <a
-            href="/about"
-            class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-brand-600 hover:bg-brand-700 text-white font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
-          >
-            Read More
-            <Icon name="arrowRight" size={16} />
-          </a>
-          <a
-            href={site.ownerLinkedIn}
+            href={site.social.googleReview}
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center gap-3 group/owner"
-            aria-label={`${site.owner} on LinkedIn`}
+            class="mt-5 inline-flex items-center gap-2.5 px-3 py-2 border border-gold-500/40 bg-white/60 hover:border-gold-500 transition-colors"
           >
-            <span class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent-100 text-accent-700 font-bold group-hover/owner:bg-brand-600 group-hover/owner:text-white transition-colors">
-              {site.owner.split(' ').map((n) => n[0]).join('')}
+            <span class="text-gold-500 text-base leading-none tracking-tight" aria-hidden="true">★★★★★</span>
+            <span class="font-condensed uppercase tracking-widest text-[11px] text-charcoal-700">
+              <span class="font-bold text-gold-600">{site.rating.score}</span>
+              <span data-i18n-en={` on Google · ${site.rating.count}+ reviews`} data-i18n-ar={` على Google · ${site.rating.count}+ تقييم`}>
+                {' '}on Google · {site.rating.count}+ reviews
+              </span>
             </span>
-            <div class="leading-tight">
-              <div class="font-bold text-ink group-hover/owner:text-brand-600 transition-colors">{site.owner}</div>
-              <div class="text-sm text-ink-muted">Founder · LinkedIn ↗</div>
-            </div>
           </a>
+
+          <div class="mt-8 flex flex-col sm:flex-row gap-3 sm:items-center justify-center lg:justify-start">
+            <a href="#book" class="btn-primary">
+              <span data-i18n-en="Make an Appointment" data-i18n-ar="احجز موعدك">Make an Appointment</span>
+              <Icon name="arrowRight" size={16} class="rtl-flip" />
+            </a>
+            <a href="#pricing" class="btn-outline-dark" data-i18n-en="View Pricing" data-i18n-ar="قائمة الأسعار">View Pricing</a>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="relative aspect-[4/5] w-full max-w-md mx-auto">
+            <div class="absolute -inset-3 border border-gold-500"></div>
+            <img
+              src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=900&q=85&auto=format&fit=crop"
+              alt="Barber giving a precision cut at Tamara Men Salon"
+              class="relative h-full w-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16 grid sm:grid-cols-3 gap-px bg-gold-500/30 border border-gold-500/30">
+        <div class="bg-cream-50 px-6 py-7 flex items-start gap-4">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center border border-gold-500 text-gold-500">
+            <Icon name="mapPin" size={22} />
+          </span>
+          <div>
+            <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Address" data-i18n-ar="العنوان">Address</p>
+            <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" class="mt-1 block font-display text-lg text-charcoal-700 hover:text-gold-600" data-i18n-en="B Ring Road, Doha" data-i18n-ar="طريق الدائري ب، الدوحة">
+              B Ring Road, Doha
+            </a>
+            <p class="text-sm text-ink-soft" data-i18n-en={`${site.address.neighbourhood} · Zone 15`} data-i18n-ar="الدوحة الجديدة · منطقة 15">{site.address.neighbourhood} · Zone 15</p>
+          </div>
+        </div>
+        <div class="bg-cream-50 px-6 py-7 flex items-start gap-4">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center border border-gold-500 text-gold-500">
+            <Icon name="phone" size={22} />
+          </span>
+          <div>
+            <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Phone" data-i18n-ar="الهاتف">Phone</p>
+            <a href={`tel:${site.phoneIntl}`} class="mt-1 block font-display text-lg text-charcoal-700 hover:text-gold-600" dir="ltr">
+              {site.phone}
+            </a>
+            <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" class="text-sm text-ink-soft hover:text-gold-600" data-i18n-en="WhatsApp us" data-i18n-ar="راسلنا عبر واتساب">WhatsApp us</a>
+          </div>
+        </div>
+        <div class="bg-cream-50 px-6 py-7 flex items-start gap-4">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center border border-gold-500 text-gold-500">
+            <Icon name="clock" size={22} />
+          </span>
+          <div>
+            <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Hours" data-i18n-ar="ساعات العمل">Hours</p>
+            <p class="mt-1 font-display text-base text-charcoal-700" data-i18n-en={site.hoursDisplay.weekdays} data-i18n-ar="الإثنين–السبت: 9ص – 8م">{site.hoursDisplay.weekdays}</p>
+            <p class="text-sm text-ink-soft" data-i18n-en={site.hoursDisplay.weekend} data-i18n-ar="الأحد: 9ص – 6م">{site.hoursDisplay.weekend}</p>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============= SERVICES ============= -->
-  <section class="relative isolate bg-slate-50 py-16 sm:py-24">
-    <div class="container-page relative">
-      <div class="text-center">
-        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-          Services
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
+  <!-- ABOUT -->
+  <section id="about" class="bg-charcoal-800 text-cream-100 py-20 lg:py-28">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-5">
+          <div class="grid grid-cols-2 gap-3">
+            <img
+              src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80&auto=format&fit=crop"
+              alt="Barber chair detail"
+              class="aspect-[3/4] w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+            <img
+              src="https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=600&q=80&auto=format&fit=crop"
+              alt="Barber tools laid out"
+              class="aspect-[3/4] w-full object-cover translate-y-8"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        </div>
+        <div class="lg:col-span-7">
+          <p class="eyebrow" data-i18n-en="About Us" data-i18n-ar="من نحن">About Us</p>
+          <span data-lang="en">
+            <h2 class="mt-3 font-condensed uppercase font-bold tracking-wide text-cream-50 text-4xl sm:text-5xl lg:text-6xl leading-[1.05]">
+              A New Standard for<br />Men's Grooming in Doha
+            </h2>
+          </span>
+          <span data-lang="ar">
+            <h2 class="mt-3 font-condensed uppercase font-bold tracking-wide text-cream-50 text-3xl sm:text-4xl lg:text-5xl leading-[1.15]">
+              معيار جديد للعناية<br />الرجالية في الدوحة
+            </h2>
+          </span>
+          <p class="mt-6 text-cream-100/80 leading-relaxed">
+            Tamara Men Salon opened its doors on B Ring Road in <span class="text-gold-400">{site.established}</span> with one promise — give the men of Doha a
+            place where every haircut is treated like a portrait, and every client like a regular. From classic
+            straight razor shaves to modern fades and beard sculpting, our chairs are reserved for craftsmen who
+            care about the details.
+          </p>
+          <p class="mt-4 text-cream-100/70 leading-relaxed">
+            Walk into our shop and you'll find the smell of bay rum, the hum of clippers, hot towels on the warmer,
+            and an unhurried welcome. We don't rush. We listen. Then we work.
+          </p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#services" class="btn-outline-light" data-i18n-en="Our Services" data-i18n-ar="خدماتنا">Our Services</a>
+            <a href="#gallery" class="btn-outline-light" data-i18n-en="Our Gallery" data-i18n-ar="معرضنا">Our Gallery</a>
+            <a href="#pricing" class="btn-outline-light" data-i18n-en="Our Pricing" data-i18n-ar="أسعارنا">Our Pricing</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="bg-cream-50 py-20 lg:py-24">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="eyebrow" data-i18n-en="What We Offer" data-i18n-ar="ماذا نقدم">What We Offer</p>
+        <h2 class="mt-3 h-section" data-i18n-en="Signature Services" data-i18n-ar="خدماتنا المميزة">Signature Services</h2>
+        <p class="mt-4 text-ink-soft" data-i18n-en="From classic cuts to full grooming experiences — every service is built around what makes you look, and feel, your best." data-i18n-ar="من القصات الكلاسيكية إلى تجارب العناية الكاملة — كل خدمة مصممة لتظهر بأفضل صورة وتشعر بأفضل حال.">
+          From classic cuts to full grooming experiences — every service is built around what makes you look,
+          and feel, your best.
         </p>
-        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink">
-          We Provide Service For You
-        </h2>
       </div>
 
-      <div class="mt-12 grid gap-4 grid-cols-2 sm:grid-cols-3 lg:grid-cols-5">
-        {
-          featuredServices.map((s) => {
-            const active = s.slug === featured.slug;
-            return (
-              <a
-                href={`/services/${s.slug}`}
-                class:list={[
-                  'group p-6 rounded-2xl border text-center transition-all',
-                  active
-                    ? 'bg-brand-600 text-white border-brand-600 shadow-xl scale-[1.02]'
-                    : 'bg-white border-slate-200 hover:border-brand-300 hover:shadow-md text-ink',
-                ]}
-              >
-                <span
-                  class:list={[
-                    'inline-flex h-14 w-14 items-center justify-center rounded-xl',
-                    active ? 'bg-white/15 text-accent-300' : 'bg-brand-50 text-brand-600 group-hover:bg-brand-600 group-hover:text-white',
-                  ]}
-                  aria-hidden="true"
-                >
-                  <Icon name={s.icon} size={28} />
-                </span>
-                <h3 class:list={[
-                  'mt-4 font-display text-sm sm:text-base font-bold uppercase tracking-wide',
-                  active ? 'text-white' : 'text-ink',
-                ]}>
-                  {s.shortTitle}
-                </h3>
-              </a>
-            );
-          })
-        }
+      <div class="mt-14 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { icon: 'scissors', title: 'Precision Haircut', titleAr: 'قصة دقيقة', copy: 'Tailored to your face, hair and style — scissor cut, clipper work or a sharp fade.', copyAr: 'مصممة حسب وجهك وشعرك وأسلوبك — مقص، ماكينة، أو تدرّج حاد.' },
+          { icon: 'razor', title: 'Hot Towel Shave', titleAr: 'حلاقة بالمنشفة الساخنة', copy: 'Old-school straight razor shave with steamed towels, pre-shave oil and aftershave balm.', copyAr: 'حلاقة كلاسيكية بموس مع مناشف ساخنة، زيت قبل الحلاقة وبلسم بعدها.' },
+          { icon: 'beard', title: 'Beard Sculpting', titleAr: 'تنسيق اللحية', copy: 'Trim, line-up and condition. We shape your beard so it frames your jawline cleanly.', copyAr: 'تشذيب، تحديد وترطيب. نشكّل لحيتك لتُبرز ملامح وجهك بوضوح.' },
+          { icon: 'comb', title: 'Hair & Skin Care', titleAr: 'عناية الشعر والبشرة', copy: 'Hair color, scalp treatment, full facials and grooming products to take home.', copyAr: 'صبغة الشعر، علاج فروة الرأس، تنظيف بشرة كامل ومنتجات عناية تأخذها معك.' },
+        ].map((item) => (
+          <article class="group bg-white border border-charcoal-100 p-8 hover:border-gold-500 transition-colors">
+            <span class="inline-flex h-14 w-14 items-center justify-center border border-gold-500 text-gold-500 group-hover:bg-gold-500 group-hover:text-cream-50 transition-colors">
+              <Icon name={item.icon} size={26} />
+            </span>
+            <h3 class="mt-5 font-condensed uppercase tracking-wide text-charcoal-800 text-xl" data-i18n-en={item.title} data-i18n-ar={item.titleAr}>{item.title}</h3>
+            <p class="mt-3 text-sm text-ink-soft leading-relaxed" data-i18n-en={item.copy} data-i18n-ar={item.copyAr}>{item.copy}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="bg-charcoal-700 py-20 lg:py-24">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-10 items-end mb-12">
+        <div class="lg:col-span-7">
+          <p class="eyebrow" data-i18n-en="Our Work" data-i18n-ar="أعمالنا">Our Work</p>
+          <h2 class="mt-3 font-condensed uppercase font-bold tracking-wide text-cream-50 text-4xl sm:text-5xl lg:text-6xl leading-[1.05]" data-i18n-en="Discover Our Works" data-i18n-ar="اكتشف أعمالنا">
+            Discover Our Works
+          </h2>
+        </div>
+        <div class="lg:col-span-5 text-cream-100/75">
+          <p data-i18n-en="A snapshot of recent cuts, shaves and styling from the chairs at Tamara Men Salon." data-i18n-ar="لمحة عن أحدث القصات والحلاقات والتسريحات من كراسي صالون تمارا للرجال.">A snapshot of recent cuts, shaves and styling from the chairs at Tamara Men Salon.</p>
+        </div>
       </div>
 
-      <div class="mt-10 relative overflow-hidden rounded-3xl bg-brand-600 text-white shadow-2xl">
-        <Bubbles class="absolute -top-6 -right-6 w-[440px] h-[440px]" variant="light" />
-        <Bubbles class="absolute -bottom-10 -left-10 w-[300px] h-[300px]" variant="light" />
-        <div class="relative grid gap-8 lg:grid-cols-[1.3fr_1fr] items-center p-8 sm:p-12">
-          <div>
-            <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-accent-300">
-              <span class="inline-block h-px w-8 bg-accent-300"></span>
-              Featured
-            </p>
-            <h3 class="mt-3 font-display text-3xl sm:text-4xl font-extrabold leading-tight">
-              {featured.title}
-            </h3>
-            <p class="mt-4 text-white/85 leading-relaxed max-w-xl">
-              {featured.metaDescription}
-            </p>
+      <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+        {gallery.map((src, i) => (
+          <a href={src} target="_blank" rel="noopener noreferrer" class="group relative overflow-hidden block">
+            <img
+              src={src}
+              alt={`Tamara Men Salon work ${i + 1}`}
+              class="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+              decoding="async"
+            />
+            <span class="absolute inset-0 bg-charcoal-900/0 group-hover:bg-charcoal-900/40 transition-colors flex items-center justify-center">
+              <span class="opacity-0 group-hover:opacity-100 text-gold-400 font-condensed uppercase tracking-widest text-sm transition-opacity">View</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
 
-            <div class="mt-6 flex flex-wrap items-center gap-6">
-              <div class="relative">
-                <div class="inline-flex h-28 w-28 items-center justify-center rounded-full bg-accent-500 text-ink font-extrabold shadow-lg ring-8 ring-white/15">
-                  <div class="text-center leading-tight">
-                    <div class="text-3xl">300<span class="text-base">+</span></div>
-                    <div class="text-[10px] uppercase tracking-widest">Jobs</div>
-                  </div>
-                </div>
+  <!-- TEAM -->
+  <section id="team" class="bg-cream-50 py-20 lg:py-24">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="eyebrow" data-i18n-en="Meet the Crew" data-i18n-ar="تعرف على الفريق">Meet the Crew</p>
+        <h2 class="mt-3 h-section" data-i18n-en="Master Barbers" data-i18n-ar="حلاقون محترفون">Master Barbers</h2>
+        <p class="mt-4 text-ink-soft" data-i18n-en="A handpicked team trained in classic technique and modern styling — each barber brings years of craft to the chair." data-i18n-ar="فريق مختار بعناية، يجمع بين الأسلوب الكلاسيكي والحديث — كل حلاق يجلب سنوات من الخبرة إلى الكرسي.">
+          A handpicked team trained in classic technique and modern styling — each barber brings years of craft
+          to the chair.
+        </p>
+      </div>
+
+      <div class="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {team.map((member) => (
+          <article class="group text-center">
+            <div class="relative overflow-hidden">
+              <img
+                src={member.image}
+                alt={member.name}
+                class="aspect-[3/4] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="absolute inset-x-4 bottom-4 flex items-center justify-center gap-2 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all">
+                <a href={site.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="inline-flex h-10 w-10 items-center justify-center bg-cream-50/95 text-charcoal-800 hover:bg-gold-500 hover:text-cream-50 transition-colors">
+                  <Icon name="instagram" size={18} />
+                </a>
+                <a href={site.social.facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="inline-flex h-10 w-10 items-center justify-center bg-cream-50/95 text-charcoal-800 hover:bg-gold-500 hover:text-cream-50 transition-colors">
+                  <Icon name="facebook" size={18} />
+                </a>
               </div>
-              <a
-                href={`/services/${featured.slug}`}
-                class="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white text-brand-700 hover:bg-accent-300 hover:text-ink font-bold uppercase tracking-wide text-sm shadow-md transition-colors"
-              >
-                Learn More
-                <Icon name="arrowRight" size={16} />
-              </a>
+            </div>
+            <h3 class="mt-6 font-display text-2xl text-charcoal-800">{member.name}</h3>
+            <p class="mt-1 font-condensed uppercase tracking-widest text-xs text-gold-600">{member.role}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- STYLE BANNER -->
+  <section class="relative bg-charcoal-800 overflow-hidden">
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-30"
+      style="background-image: url('https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1600&q=70&auto=format&fit=crop')"
+    ></div>
+    <div class="relative max-w-container mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28 text-center">
+      <p class="eyebrow" data-i18n-en="Look Sharp" data-i18n-ar="إطلالة أنيقة">Look Sharp</p>
+      <h2 class="mt-3 font-condensed uppercase font-bold tracking-wide text-cream-50 text-4xl sm:text-5xl lg:text-6xl leading-[1.05]" data-i18n-en="Get the Style You Deserve!" data-i18n-ar="احصل على الإطلالة التي تستحقها!">
+        Get the Style<br class="sm:hidden" /> You Deserve!
+      </h2>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="#book" class="btn-primary">
+          <span data-i18n-en="Book a Chair" data-i18n-ar="احجز كرسيك">Book a Chair</span>
+          <Icon name="arrowRight" size={16} class="rtl-flip" />
+        </a>
+        <a href={`tel:${site.phoneIntl}`} class="btn-outline-light" dir="ltr">
+          <Icon name="phone" size={16} />
+          {site.phone}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing" class="bg-cream-50 py-20 lg:py-24">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="eyebrow" data-i18n-en="The Menu" data-i18n-ar="القائمة">The Menu</p>
+        <h2 class="mt-3 h-section" data-i18n-en="Service Pricing" data-i18n-ar="أسعار الخدمات">Service Pricing</h2>
+        <p class="mt-4 text-ink-soft" data-i18n-en="Honest, flat-rate pricing in Qatari Riyal (QAR). No hidden fees — what you see is what you pay." data-i18n-ar="أسعار ثابتة وواضحة بالريال القطري. بدون رسوم خفية — ما تراه هو ما تدفعه.">
+          Honest, flat-rate pricing in Qatari Riyal (QAR). No hidden fees — what you see is what you pay.
+        </p>
+      </div>
+
+      <div class="mt-14 grid md:grid-cols-3 gap-10">
+        {pricing.map((cat) => (
+          <div class="bg-white border border-charcoal-100 overflow-hidden">
+            <div class="relative aspect-[16/10] overflow-hidden">
+              <img
+                src={cat.image}
+                alt={cat.key}
+                class="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/85 via-charcoal-900/30 to-transparent"></div>
+              <h3 class="absolute bottom-3 left-4 right-4 font-condensed uppercase tracking-[0.25em] text-cream-50 text-xl">
+                <span data-i18n-en={cat.key} data-i18n-ar={cat.keyAr}>{cat.key}</span>
+              </h3>
+            </div>
+            <ul class="p-6 space-y-5">
+              {cat.items.map((item) => (
+                <li class="flex items-baseline gap-3">
+                  <span class="font-display text-charcoal-800 text-base" data-i18n-en={item.name} data-i18n-ar={item.nameAr}>{item.name}</span>
+                  <span class="flex-1 border-b border-dotted border-charcoal-300/60 translate-y-[-3px]"></span>
+                  <span class="font-condensed text-gold-600 text-base whitespace-nowrap" dir="ltr">QAR {item.price}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <p class="mt-12 text-center text-sm text-ink-muted" data-i18n-en="Combos and full-grooming packages available — ask your barber." data-i18n-ar="باقات كاملة وعروض مجموعة متوفرة — اسأل الحلاق.">
+        Combos and full-grooming packages available — ask your barber.
+      </p>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <section id="testimonials" class="bg-charcoal-800 text-cream-100 py-20 lg:py-28">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="eyebrow" data-i18n-en="What Clients Say" data-i18n-ar="آراء عملائنا">What Clients Say</p>
+
+      <!-- Prominent Google rating badge -->
+      <a
+        href={site.social.googleReview}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-6 inline-flex items-center gap-3 px-4 py-2.5 border border-gold-400/40 hover:border-gold-400 hover:bg-cream-50/5 transition-colors"
+      >
+        <Icon name="google" size={18} class="text-gold-400" />
+        <span class="text-gold-400 text-lg leading-none tracking-tight" aria-hidden="true">★★★★★</span>
+        <span class="font-condensed uppercase tracking-widest text-xs">
+          <span class="font-bold text-gold-400 text-base mr-1">{site.rating.score}</span>
+          <span data-i18n-en={`on Google · ${site.rating.count}+ reviews`} data-i18n-ar={`على Google · ${site.rating.count}+ تقييم`}>
+            on Google · {site.rating.count}+ reviews
+          </span>
+        </span>
+      </a>
+
+      <blockquote class="mt-8 font-display italic text-2xl sm:text-3xl leading-snug text-cream-50" data-i18n-en="&ldquo;Best barber I've ever sat with. Walked in for a quick trim and walked out feeling like a new man. The hot towel shave is worth the trip alone — every detail, dialed in.&rdquo;" data-i18n-ar="«أفضل حلاق جلست عنده. دخلت لتشذيب بسيط وخرجت بإحساس جديد. الحلاقة بالمنشفة الساخنة وحدها تستحق الزيارة — كل تفصيلة في مكانها.»">
+        "Best barber I've ever sat with. Walked in for a quick trim and walked out feeling like a new man.
+        The hot towel shave is worth the trip alone — every detail, dialed in."
+      </blockquote>
+      <footer class="mt-8">
+        <p class="font-condensed uppercase tracking-widest text-gold-400">Howard Crouse</p>
+        <p class="text-cream-100/60 text-sm mt-1" data-i18n-en="Regular client · 5★ Google review" data-i18n-ar="عميل دائم · تقييم 5★ على Google">Regular client · 5★ Google review</p>
+      </footer>
+      <div class="mt-10">
+        <a href={site.social.googleReview} target="_blank" rel="noopener noreferrer" class="btn-outline-light">
+          <Icon name="google" size={18} />
+          <span data-i18n-en="Leave a Review" data-i18n-ar="اكتب تقييماً">Leave a Review</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOOK -->
+  <section id="book" class="bg-cream-50 py-20 lg:py-24">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12">
+        <div class="lg:col-span-5">
+          <p class="eyebrow" data-i18n-en="Reserve Your Chair" data-i18n-ar="احجز كرسيك">Reserve Your Chair</p>
+          <h2 class="mt-3 h-section" data-i18n-en="Book Now" data-i18n-ar="احجز الآن">Book Now</h2>
+          <p class="mt-5 text-ink-soft leading-relaxed" data-i18n-en="Fill in the details and hit Send to WhatsApp — your request is delivered straight to our barbers, and we'll confirm your slot within minutes." data-i18n-ar="املأ التفاصيل واضغط أرسل عبر واتساب — يصل طلبك مباشرة إلى حلاقينا، ونؤكد موعدك خلال دقائق.">
+            Fill in the details and hit <span class="text-charcoal-800 font-semibold">Send to WhatsApp</span> — your
+            request is delivered straight to our barbers, and we'll confirm your slot within minutes.
+          </p>
+          <a href={`tel:${site.phoneIntl}`} class="mt-6 inline-flex items-center gap-3 font-condensed text-2xl sm:text-3xl text-gold-600 hover:text-gold-500 transition-colors" dir="ltr">
+            <Icon name="phone" size={22} />
+            {site.phone}
+          </a>
+
+          <div class="mt-8 space-y-5">
+            <div class="flex items-start gap-4">
+              <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-gold-500 text-gold-500">
+                <Icon name="mapPin" size={18} />
+              </span>
+              <div>
+                <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Visit Us" data-i18n-ar="زرنا">Visit Us</p>
+                <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" class="mt-0.5 block text-charcoal-800 hover:text-gold-600" data-i18n-en="B Ring Road · Street 220 · Building 100" data-i18n-ar="طريق الدائري ب · شارع 220 · مبنى 100">
+                  B Ring Road · Street 220 · Building 100
+                </a>
+                <p class="text-sm text-ink-soft" data-i18n-en={`Zone 15, Unit 1 · ${site.address.neighbourhood}, Doha`} data-i18n-ar="منطقة 15، وحدة 1 · الدوحة الجديدة، الدوحة">Zone 15, Unit 1 · {site.address.neighbourhood}, Doha</p>
+                <p class="text-xs text-ink-muted mt-1" dir="ltr">Plus code: {site.address.plusCode}</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-gold-500 text-gold-500">
+                <Icon name="email" size={18} />
+              </span>
+              <div>
+                <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Email Us" data-i18n-ar="راسلنا">Email Us</p>
+                <a href={mailtoLink()} class="mt-0.5 block text-charcoal-800 hover:text-gold-600">{site.email}</a>
+              </div>
+            </div>
+            <div class="flex items-start gap-4">
+              <span class="inline-flex h-11 w-11 shrink-0 items-center justify-center border border-gold-500 text-gold-500">
+                <Icon name="clock" size={18} />
+              </span>
+              <div>
+                <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Open Hours" data-i18n-ar="ساعات العمل">Open Hours</p>
+                <p class="mt-0.5 text-charcoal-800" data-i18n-en={site.hoursDisplay.weekdays} data-i18n-ar="الإثنين–السبت: 9ص – 8م">{site.hoursDisplay.weekdays}</p>
+                <p class="text-ink-soft text-sm" data-i18n-en={site.hoursDisplay.weekend} data-i18n-ar="الأحد: 9ص – 6م">{site.hoursDisplay.weekend}</p>
+              </div>
             </div>
           </div>
-          <div class="relative">
-            <ServiceDetailIllustration />
+
+          <!-- Embedded Google Map -->
+          <div class="mt-8 border border-charcoal-100 overflow-hidden">
+            <iframe
+              src={site.mapsEmbedUrl}
+              width="100%"
+              height="260"
+              style="border:0;"
+              loading="lazy"
+              allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Tamara Men Salon on Google Maps"
+              class="block"
+            ></iframe>
+            <a href={site.mapsUrl} target="_blank" rel="noopener noreferrer" class="block px-4 py-3 bg-white text-xs font-condensed uppercase tracking-widest text-charcoal-700 hover:text-gold-600 transition-colors text-center border-t border-charcoal-100">
+              <span data-i18n-en="Open in Google Maps →" data-i18n-ar="افتح في خرائط Google →">Open in Google Maps →</span>
+            </a>
           </div>
         </div>
-      </div>
 
-      <div class="mt-12 text-center">
-        <a
-          href="/services"
-          class="inline-flex items-center gap-2 text-brand-700 font-bold hover:gap-3 transition-all"
-        >
-          See all 11 services
-          <Icon name="arrowRight" size={18} />
-        </a>
-      </div>
-    </div>
-  </section>
+        <div class="lg:col-span-7">
+          <!-- Quick-book chips -->
+          <div class="mb-5">
+            <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted mb-3" data-i18n-en="Quick book" data-i18n-ar="حجز سريع">Quick book</p>
+            <div class="flex flex-wrap gap-2" id="quick-chips">
+              <button type="button" class="quick-chip" data-service="Classic Haircut" data-day-offset="1" data-time="15:00" data-i18n-en="Haircut · Tomorrow 3 PM" data-i18n-ar="قصة شعر · غداً 3م">Haircut · Tomorrow 3 PM</button>
+              <button type="button" class="quick-chip" data-service="Beard Trim" data-day-offset="0" data-time="17:00" data-i18n-en="Beard trim · Today 5 PM" data-i18n-ar="تشذيب لحية · اليوم 5م">Beard trim · Today 5 PM</button>
+              <button type="button" class="quick-chip" data-service="Hot Towel Shave" data-day-offset="2" data-time="11:00" data-i18n-en="Hot shave · Friday 11 AM" data-i18n-ar="حلاقة ساخنة · 11ص">Hot shave · Friday 11 AM</button>
+              <button type="button" class="quick-chip" data-service="Deluxe Haircut" data-day-offset="3" data-time="18:00" data-i18n-en="Deluxe cut · 6 PM" data-i18n-ar="قصة فاخرة · 6م">Deluxe cut · 6 PM</button>
+            </div>
+          </div>
 
-  <!-- ============= TEAM ============= -->
-  <section class="relative isolate bg-white py-16 sm:py-24">
-    <div class="container-page relative">
-      <div class="text-center">
-        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-          Our Team Member
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-        </p>
-        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink">
-          Our Professional Expert Team
-        </h2>
-        <p class="mt-4 max-w-2xl mx-auto text-ink-soft">
-          The people behind every visit — vetted, trained, and proud of the work.
-        </p>
-      </div>
+          <form
+            id="booking-form"
+            class="bg-white border border-charcoal-100 p-6 sm:p-8 lg:p-10"
+            data-whatsapp-number={site.whatsappNumber}
+            novalidate
+          >
+            <div class="grid sm:grid-cols-2 gap-5">
+              <label class="block sm:col-span-2">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Full Name *" data-i18n-ar="الاسم الكامل *">Full Name *</span>
+                <input
+                  type="text"
+                  name="name"
+                  required
+                  class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0 placeholder:text-ink-muted/60"
+                  placeholder="Your full name"
+                  data-ph-en="Your full name"
+                  data-ph-ar="اسمك الكامل"
+                />
+              </label>
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Phone (optional)" data-i18n-ar="الهاتف (اختياري)">Phone (optional)</span>
+                <input
+                  type="tel"
+                  name="phone"
+                  value="+974 "
+                  inputmode="tel"
+                  autocomplete="tel"
+                  class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0 placeholder:text-ink-muted/60"
+                  placeholder="+974 …"
+                />
+              </label>
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Service *" data-i18n-ar="الخدمة *">Service *</span>
+                <select
+                  name="service"
+                  required
+                  class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+                >
+                  <option value="">Choose a service…</option>
+                  <option>Classic Haircut</option>
+                  <option>Deluxe Haircut</option>
+                  <option>Buzz Cut</option>
+                  <option>Kids' Cut</option>
+                  <option>Beard Trim</option>
+                  <option>Hot Towel Shave</option>
+                  <option>Straight Razor Trim</option>
+                  <option>Mustache Trim</option>
+                  <option>Hair Color</option>
+                  <option>Full Facial</option>
+                  <option>Hair Wash & Blow</option>
+                  <option>Other (note below)</option>
+                </select>
+              </label>
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Preferred Date *" data-i18n-ar="التاريخ المفضل *">Preferred Date *</span>
+                <input
+                  type="date"
+                  name="date"
+                  required
+                  class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+                />
+              </label>
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Preferred Time *" data-i18n-ar="الوقت المفضل *">Preferred Time *</span>
+                <input
+                  type="time"
+                  name="time"
+                  required
+                  step="900"
+                  class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+                />
+                <p id="time-hint" class="mt-1.5 text-xs text-ink-muted"></p>
+              </label>
+            </div>
+            <label class="block mt-5">
+              <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted" data-i18n-en="Notes (optional)" data-i18n-ar="ملاحظات (اختياري)">Notes (optional)</span>
+              <textarea
+                name="notes"
+                rows="3"
+                class="mt-1.5 w-full border border-charcoal-200 bg-transparent px-3 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0 placeholder:text-ink-muted/60"
+                placeholder="Preferred barber, style references, anything we should know…"
+                data-ph-en="Preferred barber, style references, anything we should know…"
+                data-ph-ar="الحلاق المفضل، صور لأسلوب الشعر، أي ملاحظات…"
+              ></textarea>
+            </label>
 
-      <div class="mt-14 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-        {team.map((m) => <TeamCard member={m} />)}
-      </div>
-    </div>
-  </section>
+            <p
+              id="booking-error"
+              class="hidden mt-4 text-sm text-red-600 font-condensed uppercase tracking-widest"
+              role="alert"
+              data-i18n-en="Please fill the required fields."
+              data-i18n-ar="يرجى تعبئة الحقول المطلوبة."
+            >
+              Please fill the required fields.
+            </p>
 
-  <!-- ============= PROJECTS ============= -->
-  <section class="relative isolate bg-slate-50 py-16 sm:py-24">
-    <div class="container-page relative">
-      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
-        <div>
-          <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-            <span class="inline-block h-px w-8 bg-brand-600"></span>
-            Latest Projects
-          </p>
-          <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink leading-tight">
-            Recent Completed Projects
-          </h2>
+            <div class="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+              <p class="text-xs text-ink-muted" data-i18n-en="Your booking summary opens in WhatsApp — send it and we'll confirm." data-i18n-ar="ملخص حجزك سيُفتح في واتساب — أرسله ونؤكد لك.">
+                Your booking summary opens in WhatsApp — send it and we'll confirm.
+              </p>
+              <button type="submit" class="btn-primary">
+                <Icon name="whatsapp" size={16} />
+                <span data-i18n-en="Send to WhatsApp" data-i18n-ar="أرسل عبر واتساب">Send to WhatsApp</span>
+              </button>
+            </div>
+          </form>
         </div>
-        <p class="lg:max-w-md text-ink-soft">
-          A snapshot of the homes, towers and offices across Qatar we've delivered for over the past month.
-        </p>
-      </div>
-
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {projects.map((p) => <ProjectCard project={p} />)}
       </div>
     </div>
   </section>
 
-  <!-- ============= PRICING ============= -->
-  <section class="relative isolate bg-white py-16 sm:py-24" id="pricing">
-    <div class="container-page relative" data-pricing-root>
-      <div class="text-center max-w-2xl mx-auto">
-        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-          Pricing Plans
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-        </p>
-        <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink">
-          Choose Your Pricing Plan
-        </h2>
-        <p class="mt-4 text-ink-soft">
-          Transparent flat-rate pricing. No per-hour surprises, supplies always included.
-          Custom quotes available on WhatsApp.
-        </p>
+  <style>
+    .quick-chip {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.5rem 0.9rem;
+      background: white;
+      border: 1px solid rgba(184, 151, 88, 0.4);
+      color: #1F1D1A;
+      font-family: 'Oswald', 'Bebas Neue', Impact, sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .quick-chip:hover {
+      background: #B89758;
+      color: #FBF8F1;
+      border-color: #B89758;
+    }
+  </style>
 
-        <!-- Billing toggle -->
-        <div class="mt-8 inline-flex flex-wrap items-center gap-1 p-1 rounded-full bg-slate-100 border border-slate-200 shadow-inner" role="tablist" aria-label="Billing period">
-          <button
-            type="button"
-            data-billing="hourly"
-            class="px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all text-ink-soft hover:text-ink"
-            aria-selected="false"
-            role="tab"
-          >
-            Hourly
-          </button>
-          <button
-            type="button"
-            data-billing="monthly"
-            class="px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all bg-brand-600 text-white shadow-md"
-            aria-selected="true"
-            role="tab"
-          >
-            Monthly
-          </button>
-          <button
-            type="button"
-            data-billing="annual"
-            class="px-5 py-2 rounded-full font-bold text-sm uppercase tracking-wider transition-all text-ink-soft hover:text-ink"
-            aria-selected="false"
-            role="tab"
-          >
-            Annually <span class="ml-1 px-2 py-0.5 rounded-full bg-accent-400 text-ink text-[10px]">Save 10%</span>
-          </button>
-        </div>
-      </div>
+  <script is:inline define:vars={{ hoursByDay: site.hoursByDay }}>
+    (function () {
+      var form = document.getElementById('booking-form');
+      if (!form) return;
+      var errorEl = document.getElementById('booking-error');
+      var hint = document.getElementById('time-hint');
+      var dateInput = form.querySelector('input[name="date"]');
+      var timeInput = form.querySelector('input[name="time"]');
+      var serviceSelect = form.querySelector('select[name="service"]');
+      var number = form.dataset.whatsappNumber;
 
-      <!-- Subscription plans (monthly + annual share these cards) -->
-      <div class="mt-14 grid gap-8 lg:grid-cols-3 items-stretch" data-grid-subscription>
-        {plans.map((plan) => <PricingCard plan={plan} />)}
-      </div>
+      function pad(n) { return n < 10 ? '0' + n : '' + n; }
+      function toISODate(d) {
+        return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+      }
 
-      <!-- Hourly tiers (separate grid, shown when Hourly is selected) -->
-      <div class="mt-14 grid gap-8 lg:grid-cols-3 items-stretch hidden" data-grid-hourly>
-        {hourlyPlans.map((plan) => <HourlyCard plan={plan} />)}
-      </div>
+      // Min = today; default to today on first render
+      var today = new Date();
+      var todayStr = toISODate(today);
+      if (dateInput) {
+        dateInput.min = todayStr;
+        if (!dateInput.value) dateInput.value = todayStr;
+      }
 
-      <p class="mt-10 text-center text-sm text-ink-muted" data-note-subscription>
-        Subscription plans bundle 4 visits per month with the same crew rotation. Prices are starting estimates in QAR for Greater Doha. Outlying areas may include a small travel fee — quoted up front.
-      </p>
-      <p class="mt-10 text-center text-sm text-ink-muted hidden" data-note-hourly>
-        Hourly bookings have a 1-hour minimum — pay only for the time you use. Rates are starting estimates in QAR for Greater Doha. Custom multi-visit packages available — WhatsApp us.
-      </p>
-    </div>
-
-    <script is:inline>
-      (function () {
-        const root = document.querySelector('[data-pricing-root]');
-        if (!root) return;
-        const buttons = root.querySelectorAll('[data-billing]');
-        const subscriptionGrid = root.querySelector('[data-grid-subscription]');
-        const hourlyGrid = root.querySelector('[data-grid-hourly]');
-        const noteSub = root.querySelector('[data-note-subscription]');
-        const noteHour = root.querySelector('[data-note-hourly]');
-
-        const apply = (mode) => {
-          // Toggle button visual state
-          buttons.forEach((b) => {
-            const active = b.dataset.billing === mode;
-            b.setAttribute('aria-selected', String(active));
-            if (active) {
-              b.classList.add('bg-brand-600', 'text-white', 'shadow-md');
-              b.classList.remove('text-ink-soft');
-            } else {
-              b.classList.remove('bg-brand-600', 'text-white', 'shadow-md');
-              b.classList.add('text-ink-soft');
-            }
-          });
-
-          // Swap grids
-          if (subscriptionGrid && hourlyGrid) {
-            const showHourly = mode === 'hourly';
-            subscriptionGrid.classList.toggle('hidden', showHourly);
-            subscriptionGrid.classList.toggle('grid', !showHourly);
-            hourlyGrid.classList.toggle('hidden', !showHourly);
-            hourlyGrid.classList.toggle('grid', showHourly);
+      function applyTimeBoundsForDate() {
+        if (!dateInput || !timeInput || !dateInput.value) return;
+        var d = new Date(dateInput.value + 'T00:00:00');
+        var dow = d.getDay();
+        var slot = hoursByDay[dow] || hoursByDay[1];
+        if (slot) {
+          timeInput.min = slot.open;
+          timeInput.max = slot.close;
+          if (hint) {
+            var lang = document.documentElement.lang === 'ar' ? 'ar' : 'en';
+            hint.textContent = lang === 'ar'
+              ? 'ساعات هذا اليوم: ' + slot.open + ' – ' + slot.close
+              : 'Hours that day: ' + slot.open + ' – ' + slot.close;
           }
-          if (noteSub) noteSub.classList.toggle('hidden', mode === 'hourly');
-          if (noteHour) noteHour.classList.toggle('hidden', mode !== 'hourly');
-
-          // Subscription price switch
-          root.querySelectorAll('[data-price-monthly]').forEach((el) => {
-            el.classList.toggle('hidden', mode !== 'monthly');
-            el.classList.toggle('flex', mode === 'monthly');
-          });
-          root.querySelectorAll('[data-price-annual]').forEach((el) => {
-            el.classList.toggle('hidden', mode !== 'annual');
-            el.classList.toggle('flex', mode === 'annual');
-          });
-          root.querySelectorAll('[data-bill-monthly]').forEach((el) => {
-            el.classList.toggle('hidden', mode !== 'monthly');
-          });
-          root.querySelectorAll('[data-bill-annual]').forEach((el) => {
-            el.classList.toggle('hidden', mode !== 'annual');
-          });
-        };
-        buttons.forEach((b) => b.addEventListener('click', () => apply(b.dataset.billing)));
-        apply('monthly');
-      })();
-    </script>
-  </section>
-
-  <!-- ============= BOOKING ============= -->
-  <BookingBanner />
-
-  <!-- ============= AREAS ============= -->
-  <section class="py-16 sm:py-24 bg-white">
-    <div class="container-page">
-      <SectionHeading
-        eyebrow="Where we work"
-        title="Service areas across Qatar"
-        intro="From the towers of West Bay and The Pearl to the family compounds of Al Wakrah and Al Khor — we cover all major Qatar communities."
-      />
-
-      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {
-          areas.map((area) => (
-            <AreaCard href={`/areas/${area.slug}`} name={area.name} description={area.blurb} />
-          ))
         }
-      </div>
-    </div>
-  </section>
-
-  <!-- ============= TESTIMONIALS ============= -->
-  <section class="relative isolate py-16 sm:py-24 bg-slate-50">
-    <div class="container-page relative">
-      <SectionHeading
-        eyebrow="Customer stories"
-        title="What our clients say about us"
-        intro="Real feedback from villa owners, tenants, and office managers across Doha."
-        center
-      />
-
-      <div class="mt-12 grid gap-5 md:grid-cols-3">
-        {
-          testimonials.map((t) => (
-            <TestimonialCard quote={t.quote} name={t.name} role={t.role} />
-          ))
+        // If user already chose a time outside range, clear it
+        if (timeInput.value && (timeInput.value < timeInput.min || timeInput.value > timeInput.max)) {
+          timeInput.value = '';
         }
-      </div>
-    </div>
-  </section>
+      }
+      if (dateInput) dateInput.addEventListener('change', applyTimeBoundsForDate);
+      applyTimeBoundsForDate();
 
-  <!-- ============= BLOG ============= -->
-  <section class="relative isolate bg-white py-16 sm:py-24">
-    <div class="container-page relative">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-6">
-        <div>
-          <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-            <span class="inline-block h-px w-8 bg-brand-600"></span>
-            Latest News and Blog
-          </p>
-          <h2 class="mt-4 font-display text-4xl sm:text-5xl font-extrabold text-ink leading-tight">
-            Read our tips and stories
-          </h2>
-        </div>
-        <a
-          href="#"
-          class="inline-flex items-center gap-2 text-brand-700 font-bold hover:gap-3 transition-all"
-        >
-          See all posts
-          <Icon name="arrowRight" size={18} />
-        </a>
-      </div>
+      // Quick-book chips → pre-fill form fields
+      var chips = document.querySelectorAll('.quick-chip');
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function () {
+          var svc = chip.dataset.service;
+          var offset = parseInt(chip.dataset.dayOffset || '0', 10);
+          var time = chip.dataset.time;
+          if (svc && serviceSelect) {
+            var opt = Array.prototype.find.call(serviceSelect.options, function (o) {
+              return o.value === svc || o.textContent === svc;
+            });
+            if (opt) serviceSelect.value = opt.value || opt.textContent;
+          }
+          if (dateInput) {
+            var d = new Date();
+            d.setDate(d.getDate() + offset);
+            dateInput.value = toISODate(d);
+            applyTimeBoundsForDate();
+          }
+          if (time && timeInput) {
+            // Only apply if within hours
+            if ((!timeInput.min || time >= timeInput.min) && (!timeInput.max || time <= timeInput.max)) {
+              timeInput.value = time;
+            } else {
+              timeInput.value = timeInput.min || time;
+            }
+          }
+          // Smooth-scroll form into view on mobile
+          if (window.innerWidth < 768) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
 
-      <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {blogPosts.map((p, i) => <BlogCard post={p} hue={blogHues[i % blogHues.length]} />)}
-      </div>
-    </div>
-  </section>
+      function formatDate(value) {
+        if (!value) return value;
+        try {
+          var d = new Date(value + 'T00:00:00');
+          if (isNaN(d.getTime())) return value;
+          var locale = document.documentElement.lang === 'ar' ? 'ar-QA' : 'en-GB';
+          return d.toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+        } catch (_e) {
+          return value;
+        }
+      }
 
-  <!-- ============= OTHER BRANDS ============= -->
-  <section class="py-16 sm:py-24 bg-slate-50">
-    <div class="container-page">
-      <div class="text-center max-w-2xl mx-auto">
-        <p class="inline-flex items-center gap-2 text-sm uppercase tracking-[0.2em] font-semibold text-brand-600">
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-          From The Same Team
-          <span class="inline-block h-px w-8 bg-brand-600"></span>
-        </p>
-        <h2 class="mt-4 font-display text-3xl sm:text-4xl font-extrabold text-ink">
-          Other ventures by Samuel Daniel
-        </h2>
-        <p class="mt-4 text-ink-soft">
-          The trust we earned cleaning your home extends to the other companies we run.
-          Take a look — you might find something useful.
-        </p>
-      </div>
+      function formatTime(value) {
+        if (!value) return value;
+        var parts = value.split(':');
+        if (parts.length < 2) return value;
+        var h = parseInt(parts[0], 10);
+        var m = parts[1];
+        var ampm = h >= 12 ? 'PM' : 'AM';
+        var hour = ((h + 11) % 12) + 1;
+        return hour + ':' + m + ' ' + ampm;
+      }
 
-      <div class="mt-12 grid gap-6 lg:grid-cols-2 items-stretch">
-        {brands.map((b) => <BrandCard brand={b} />)}
-      </div>
-    </div>
-  </section>
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var data = new FormData(form);
+        var name = (data.get('name') || '').toString().trim();
+        var service = (data.get('service') || '').toString().trim();
+        var date = (data.get('date') || '').toString().trim();
+        var time = (data.get('time') || '').toString().trim();
+        var phone = (data.get('phone') || '').toString().trim();
+        var notes = (data.get('notes') || '').toString().trim();
 
-  <Faq items={homeFaqs} intro="Quick answers to the questions we get most often on WhatsApp." />
+        if (!name || !service || !date || !time) {
+          if (errorEl) errorEl.classList.remove('hidden');
+          return;
+        }
+        if (errorEl) errorEl.classList.add('hidden');
+
+        var lines = [
+          'Hello Tamara Men Salon, I would like to book an appointment.',
+          '',
+          '• Name: ' + name,
+          '• Service: ' + service,
+          '• Date: ' + formatDate(date),
+          '• Time: ' + formatTime(time),
+        ];
+        // Strip the "+974 " prefix if the user didn't type anything after it
+        var phoneClean = phone.replace(/^\+?974\s*$/, '');
+        if (phoneClean) lines.push('• Phone: ' + phone);
+        if (notes) lines.push('• Notes: ' + notes);
+
+        var url = 'https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n'));
+        window.open(url, '_blank', 'noopener,noreferrer');
+      });
+    })();
+  </script>
 </BaseLayout>

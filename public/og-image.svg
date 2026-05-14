@@ -1,18 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
   <defs>
     <linearGradient id="bg" x1="0" x2="1" y1="0" y2="1">
-      <stop offset="0" stop-color="#1F3A5F"/>
-      <stop offset="1" stop-color="#12243B"/>
+      <stop offset="0" stop-color="#161412"/>
+      <stop offset="1" stop-color="#070605"/>
     </linearGradient>
   </defs>
   <rect width="1200" height="630" fill="url(#bg)"/>
-  <circle cx="980" cy="120" r="240" fill="#7BA4C4" fill-opacity="0.18"/>
-  <circle cx="160" cy="520" r="180" fill="#7BA4C4" fill-opacity="0.14"/>
-  <g transform="translate(80,180)" fill="#F5EFE6" font-family="'Plus Jakarta Sans', Inter, sans-serif">
-    <text font-size="34" font-weight="600" opacity="0.85">Tamara Cleaning Services</text>
-    <text y="100" font-size="78" font-weight="800">Professional Cleaning</text>
-    <text y="190" font-size="78" font-weight="800">in Doha, Qatar</text>
-    <text y="280" font-size="30" font-weight="500" opacity="0.9">Villa · Apartment · Office · Deep Cleaning</text>
-    <text y="350" font-size="24" font-weight="500" opacity="0.75">CR 226690 · WhatsApp +974 3019 2270</text>
+  <!-- Decorative gold corner accents -->
+  <g stroke="#B89758" stroke-width="2" fill="none">
+    <path d="M40 40 L40 100 M40 40 L100 40"/>
+    <path d="M1160 40 L1160 100 M1160 40 L1100 40"/>
+    <path d="M40 590 L40 530 M40 590 L100 590"/>
+    <path d="M1160 590 L1160 530 M1160 590 L1100 590"/>
+  </g>
+  <g transform="translate(600,250)" text-anchor="middle">
+    <text font-family="'Playfair Display', Georgia, serif" font-style="italic" font-size="36" fill="#B89758">Shaves &amp; Trims</text>
+    <text y="100" font-family="'Oswald', Impact, sans-serif" font-size="92" font-weight="700" fill="#FBF8F1" letter-spacing="4">TAMARA MEN SALON</text>
+    <text y="160" font-family="'Oswald', Impact, sans-serif" font-size="38" font-weight="500" fill="#F5EFE2" letter-spacing="6">WE KNOW YOUR STYLE BETTER</text>
+    <line x1="-200" y1="200" x2="200" y2="200" stroke="#B89758" stroke-width="1"/>
+    <text y="240" font-family="Inter, sans-serif" font-size="22" fill="#E9D8A6" letter-spacing="3">DOHA · QATAR · EST. 1991</text>
   </g>
 </svg>

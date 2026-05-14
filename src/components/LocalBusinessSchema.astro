@@ -1,6 +1,5 @@
 ---
 import { site } from '../data/site';
-import { services } from '../data/services';
 
 interface Props {
   url?: string;
@@ -8,10 +7,14 @@ interface Props {
 const { url } = Astro.props;
 const businessUrl = url ?? new URL(Astro.url.pathname, site.url).toString();
 
-// LocalBusiness — every page carries this so search engines have consistent NAP across the site.
+const dayMap: Record<string, string> = {
+  Sun: 'Sunday', Mon: 'Monday', Tue: 'Tuesday', Wed: 'Wednesday',
+  Thu: 'Thursday', Fri: 'Friday', Sat: 'Saturday',
+};
+
 const schema = {
   '@context': 'https://schema.org',
-  '@type': 'CleaningService',
+  '@type': 'HairSalon',
   '@id': `${site.url}#business`,
   name: site.name,
   legalName: site.legalName,
@@ -19,17 +22,11 @@ const schema = {
   image: new URL('/og-image.png', site.url).toString(),
   logo: new URL('/icon-512.png', site.url).toString(),
   description:
-    'Professional cleaning company in Doha, Qatar offering villa, apartment, office, deep, and specialist cleaning services across all of Qatar.',
+    "Tamara Men Salon — premium men's grooming, haircuts, beard trims, hot towel shaves and styling in Doha, Qatar.",
   telephone: site.phoneIntl,
   email: site.email,
-  priceRange: 'QAR',
-  founder: { '@type': 'Person', name: site.owner },
+  priceRange: '$$',
   foundingDate: site.established,
-  identifier: {
-    '@type': 'PropertyValue',
-    name: 'Commercial Registration (CR)',
-    value: site.cr,
-  },
   address: {
     '@type': 'PostalAddress',
     streetAddress: site.address.streetAddress,
@@ -45,32 +42,14 @@ const schema = {
   areaServed: [
     { '@type': 'Country', name: 'Qatar' },
     { '@type': 'City', name: 'Doha' },
-    { '@type': 'City', name: 'Lusail' },
-    { '@type': 'City', name: 'Al Wakrah' },
-    { '@type': 'City', name: 'Al Rayyan' },
-    { '@type': 'City', name: 'Al Khor' },
-    { '@type': 'Place', name: 'The Pearl-Qatar' },
-    { '@type': 'Place', name: 'West Bay' },
   ],
   openingHoursSpecification: site.openingHours.map((slot) => ({
     '@type': 'OpeningHoursSpecification',
-    dayOfWeek: slot.days.map((d) => `https://schema.org/${d === 'Sun' ? 'Sunday' : d === 'Mon' ? 'Monday' : d === 'Tue' ? 'Tuesday' : d === 'Wed' ? 'Wednesday' : d === 'Thu' ? 'Thursday' : d === 'Fri' ? 'Friday' : 'Saturday'}`),
+    dayOfWeek: slot.days.map((d) => `https://schema.org/${dayMap[d]}`),
     opens: slot.opens,
     closes: slot.closes,
   })),
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Cleaning services',
-    itemListElement: services.map((s) => ({
-      '@type': 'Offer',
-      itemOffered: {
-        '@type': 'Service',
-        name: s.shortTitle,
-        url: `${site.url}/services/${s.slug}`,
-      },
-    })),
-  },
-  sameAs: [site.social.instagram, site.social.facebook].filter(Boolean),
+  sameAs: [site.social.instagram, site.social.facebook, site.social.googleReview].filter(Boolean),
 };
 ---
 <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />

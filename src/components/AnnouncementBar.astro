@@ -1,0 +1,13 @@
+---
+import { site } from '../data/site';
+---
+<div class="bg-charcoal-800 text-cream-100 text-xs sm:text-sm border-b border-gold-500/30">
+  <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-center gap-2 py-2 text-center">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold-400 animate-pulse shrink-0"></span>
+      <span class="font-condensed uppercase tracking-widest text-gold-400 hidden sm:inline">New</span>
+      <span data-lang="en" class="leading-tight">{site.promo.en}</span>
+      <span data-lang="ar" class="leading-tight">{site.promo.ar}</span>
+    </div>
+  </div>
+</div>

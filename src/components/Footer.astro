@@ -1,151 +1,106 @@
 ---
 import Icon from './Icon.astro';
 import { site, whatsappLink, mailtoLink } from '../data/site';
-import { services } from '../data/services';
-import { areas } from '../data/areas';
-import { brands } from '../data/brands';
 
 const year = new Date().getFullYear();
+
+const navItems = [
+  { href: '#home', en: 'Home', ar: 'الرئيسية' },
+  { href: '#services', en: 'Services', ar: 'خدماتنا' },
+  { href: '#gallery', en: 'Gallery', ar: 'المعرض' },
+  { href: '#team', en: 'Team', ar: 'الفريق' },
+  { href: '#pricing', en: 'Pricing', ar: 'الأسعار' },
+  { href: '#book', en: 'Book', ar: 'احجز' },
+];
 ---
-<footer class="bg-navy-900 text-sand-100 mt-0">
-  <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8 py-14">
-    <div class="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-      <div>
-        <div class="inline-flex items-center bg-white rounded-xl px-4 py-3 shadow-soft">
-          <img
-            src="/logo.png"
-            alt="Tamara Cleaning Services logo"
-            width="220"
-            height="68"
-            loading="lazy"
-            decoding="async"
-            class="h-12 w-auto"
-          />
-        </div>
-        <p class="mt-4 text-sm leading-relaxed text-sand-100/80">
-          Professional cleaning services across Doha and Qatar — trained crews, eco-friendly products,
-          and routines built for the local climate.
-        </p>
-        <div class="mt-5 space-y-2 text-sm">
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="inline-flex items-center gap-2 text-sand-100 hover:text-white"
-          >
-            <Icon name="whatsapp" size={18} />
-            <span>{site.phone}</span>
-          </a>
-          <a
-            href={mailtoLink()}
-            class="flex items-center gap-2 text-sand-100 hover:text-white"
-          >
-            <Icon name="email" size={18} />
-            <span>{site.email}</span>
-          </a>
-          <p class="flex items-start gap-2 text-sand-100/80">
-            <Icon name="mapPin" size={18} />
-            <span>Doha, Qatar — serving all of Qatar</span>
-          </p>
-        </div>
-      </div>
+<footer class="bg-charcoal-800 text-cream-100">
+  <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="flex flex-col items-center text-center">
+      <img
+        src="/logo.svg"
+        alt="Tamara Men Salon"
+        width="280"
+        height="86"
+        loading="lazy"
+        decoding="async"
+        class="h-16 w-auto invert brightness-200 contrast-75"
+      />
+      <p class="mt-5 max-w-xl text-sm text-cream-100/70 font-sans" data-i18n-en="Premium men's grooming in Doha — precision haircuts, hot towel shaves, beard styling and skin care." data-i18n-ar="عناية رجالية فاخرة في الدوحة — قصات دقيقة، حلاقة بالمناشف الساخنة، تنسيق اللحية والعناية بالبشرة.">
+        Premium men's grooming in Doha — precision haircuts, hot towel shaves, beard styling and skin care.
+      </p>
 
-      <div>
-        <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">
-          Services
-        </h2>
-        <ul class="mt-4 space-y-2 text-sm">
-          {
-            services.slice(0, 8).map((service) => (
-              <li>
-                <a
-                  href={`/services/${service.slug}`}
-                  class="text-sand-100/80 hover:text-white"
-                >
-                  {service.shortTitle}
-                </a>
-              </li>
-            ))
-          }
-          <li>
-            <a href="/services" class="text-brand-300 hover:text-white font-medium">
-              All services →
+      <nav class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-3" aria-label="Footer">
+        {
+          navItems.map((item) => (
+            <a
+              href={item.href}
+              data-i18n-en={item.en}
+              data-i18n-ar={item.ar}
+              class="font-condensed uppercase tracking-widest text-xs text-cream-100/75 hover:text-gold-400 transition-colors"
+            >
+              {item.en}
             </a>
-          </li>
-        </ul>
+          ))
+        }
+      </nav>
+
+      <div class="mt-8 flex flex-wrap items-center justify-center gap-5 text-sm">
+        <a href={`tel:${site.phoneIntl}`} class="inline-flex items-center gap-2 text-cream-100 hover:text-gold-400">
+          <Icon name="phone" size={16} class="text-gold-400" />
+          <span>{site.phone}</span>
+        </a>
+        <a href={mailtoLink()} class="inline-flex items-center gap-2 text-cream-100 hover:text-gold-400">
+          <Icon name="email" size={16} class="text-gold-400" />
+          <span>{site.email}</span>
+        </a>
+        <span class="inline-flex items-center gap-2 text-cream-100/80">
+          <Icon name="mapPin" size={16} class="text-gold-400" />
+          <span data-i18n-en="Doha, Qatar" data-i18n-ar="الدوحة، قطر">Doha, Qatar</span>
+        </span>
       </div>
 
-      <div>
-        <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">
-          Areas We Cover
-        </h2>
-        <ul class="mt-4 space-y-2 text-sm">
-          {
-            areas.map((area) => (
-              <li>
-                <a href={`/areas/${area.slug}`} class="text-sand-100/80 hover:text-white">
-                  Cleaning in {area.name}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="font-display text-sm font-semibold uppercase tracking-wider text-white">
-          Company
-        </h2>
-        <ul class="mt-4 space-y-2 text-sm">
-          <li><a href="/about" class="text-sand-100/80 hover:text-white">About us</a></li>
-          <li><a href="/contact" class="text-sand-100/80 hover:text-white">Contact</a></li>
-          <li><a href="/services" class="text-sand-100/80 hover:text-white">Services</a></li>
-          <li>
-            <a href="/careers" class="inline-flex items-center gap-1.5 text-accent-300 hover:text-white font-semibold">
-              We're hiring
-              <span class="inline-block h-1.5 w-1.5 rounded-full bg-accent-300 animate-pulse"></span>
-            </a>
-          </li>
-          <li class="pt-2 text-sand-100/60 text-xs">
-            <span class="block font-medium text-sand-100/80">Commercial Registration</span>
-            CR {site.cr}
-          </li>
-          <li class="text-sand-100/60 text-xs">
-            <span class="block font-medium text-sand-100/80">Legal form</span>
-            Limited Liability Company (One Person)
-          </li>
-        </ul>
+      <div class="mt-8 flex items-center gap-3">
+        <a
+          href={site.social.instagram}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          class="inline-flex h-10 w-10 items-center justify-center border border-cream-100/30 hover:border-gold-400 hover:text-gold-400 transition-colors"
+        >
+          <Icon name="instagram" size={18} />
+        </a>
+        <a
+          href={site.social.facebook}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Facebook"
+          class="inline-flex h-10 w-10 items-center justify-center border border-cream-100/30 hover:border-gold-400 hover:text-gold-400 transition-colors"
+        >
+          <Icon name="facebook" size={18} />
+        </a>
+        <a
+          href={whatsappLink()}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="WhatsApp"
+          class="inline-flex h-10 w-10 items-center justify-center border border-cream-100/30 hover:border-gold-400 hover:text-gold-400 transition-colors"
+        >
+          <Icon name="whatsapp" size={18} />
+        </a>
+        <a
+          href={site.social.googleReview}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Review on Google"
+          class="inline-flex h-10 w-10 items-center justify-center border border-cream-100/30 hover:border-gold-400 hover:text-gold-400 transition-colors"
+        >
+          <Icon name="google" size={18} />
+        </a>
       </div>
     </div>
 
-    <div class="mt-12 pt-6 border-t border-sand-100/15">
-      <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-sand-100/60">
-        <span class="font-semibold text-sand-100/80 uppercase tracking-wider">
-          Also from <a href={site.ownerLinkedIn} target="_blank" rel="noopener noreferrer" class="text-accent-300 hover:text-white">{site.owner}</a>
-        </span>
-        <div class="flex flex-wrap items-center gap-x-5 gap-y-2">
-          {
-            brands.map((b) => (
-              <a
-                href={b.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="inline-flex items-center gap-1.5 text-sand-100/80 hover:text-white"
-              >
-                <span class="font-bold">{b.name}</span>
-                <span class="text-sand-100/40">·</span>
-                <span class="hidden sm:inline">{b.tagline.replace(/[.!]$/, '')}</span>
-                <span class="inline-block text-accent-300">↗</span>
-              </a>
-            ))
-          }
-        </div>
-      </div>
-
-      <div class="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between text-xs text-sand-100/60">
-        <p>© {year} {site.legalName}. All rights reserved.</p>
-        <p>CR {site.cr} · Established {site.established} · Doha, Qatar</p>
-      </div>
+    <div class="mt-12 pt-6 border-t border-cream-100/10 text-center text-xs text-cream-100/50">
+      <p>© {year} {site.legalName}. <span data-i18n-en="All rights reserved. — Crafted in Doha, Qatar." data-i18n-ar="جميع الحقوق محفوظة. — صُنع في الدوحة، قطر.">All rights reserved. — Crafted in Doha, Qatar.</span></p>
     </div>
   </div>
 </footer>

@@ -22,3 +22,6 @@ pnpm-debug.log*
 .vscode/
 .idea/
 .vercel
+
+# Claude Code worktree preview config
+.claude/

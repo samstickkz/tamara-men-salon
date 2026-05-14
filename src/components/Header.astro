@@ -1,164 +1,105 @@
 ---
 import Icon from './Icon.astro';
-import { site, whatsappLink, mailtoLink } from '../data/site';
+import LangToggle from './LangToggle.astro';
+import { site } from '../data/site';
 
 const navItems = [
-  { href: '/', label: 'Home' },
-  { href: '/services', label: 'Services' },
-  { href: '/areas/doha', label: 'Areas' },
-  { href: '/about', label: 'About' },
-  { href: '/careers', label: 'Careers' },
-  { href: '/contact', label: 'Contact' },
+  { href: '#home', en: 'Home', ar: 'الرئيسية' },
+  { href: '#services', en: 'Services', ar: 'خدماتنا' },
+  { href: '#gallery', en: 'Gallery', ar: 'المعرض' },
+  { href: '#team', en: 'Team', ar: 'الفريق' },
+  { href: '#pricing', en: 'Pricing', ar: 'الأسعار' },
+  { href: '#book', en: 'Book', ar: 'احجز' },
 ];
-
-const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
-const isActive = (href: string) => {
-  if (href === '/') return pathname === '/';
-  if (href === '/services') return pathname === '/services' || pathname.startsWith('/services/');
-  if (href === '/areas/doha') return pathname.startsWith('/areas/');
-  if (href === '/careers') return pathname.startsWith('/careers');
-  return pathname === href;
-};
 ---
-<header class="sticky top-0 z-40">
-  <!-- Utility bar -->
-  <div class="bg-brand-600 text-white text-sm">
-    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between gap-4 py-2.5">
-        <a href="/" class="flex items-center gap-2 shrink-0">
-          <img
-            src="/logo.png"
-            alt="Tamara Cleaning Services logo"
-            width="180"
-            height="40"
-            class="h-8 w-auto bg-white rounded-md px-2 py-1"
-            decoding="async"
-            fetchpriority="high"
-          />
-          <span class="hidden md:inline font-display font-bold tracking-wide text-white/95">
-            Tamara Cleaning
-          </span>
-        </a>
+<header class="sticky top-0 z-40 bg-cream-50/95 backdrop-blur border-b border-charcoal-100">
+  <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20 lg:h-24">
+      <a href="#home" class="shrink-0 flex items-center">
+        <img
+          src="/logo.svg"
+          alt="Tamara Men Salon"
+          width="220"
+          height="68"
+          class="h-12 lg:h-14 w-auto"
+          decoding="async"
+          fetchpriority="high"
+        />
+      </a>
 
-        <div class="hidden md:flex items-center gap-6">
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="flex items-center gap-2 hover:text-accent-300 transition-colors"
-          >
-            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-accent-300">
-              <Icon name="phone" size={18} />
-            </span>
-            <span class="flex flex-col leading-tight">
-              <span class="text-xs uppercase tracking-wider text-white/70">Call Us</span>
-              <span class="font-semibold text-white">{site.phone}</span>
-            </span>
-          </a>
-          <a
-            href={mailtoLink()}
-            class="flex items-center gap-2 hover:text-accent-300 transition-colors"
-          >
-            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-accent-300">
-              <Icon name="email" size={18} />
-            </span>
-            <span class="flex flex-col leading-tight">
-              <span class="text-xs uppercase tracking-wider text-white/70">Email Us</span>
-              <span class="font-semibold text-white">{site.email}</span>
-            </span>
-          </a>
-          <div class="hidden lg:flex items-center gap-2">
-            <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/15 text-accent-300">
-              <Icon name="mapPin" size={18} />
-            </span>
-            <span class="flex flex-col leading-tight">
-              <span class="text-xs uppercase tracking-wider text-white/70">Office</span>
-              <span class="font-semibold text-white">Doha, Qatar</span>
-            </span>
-          </div>
-          <a
-            href="/careers"
-            class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-accent-500 text-ink font-bold text-xs uppercase tracking-wider hover:bg-accent-400 transition-colors"
-          >
-            <span class="inline-block h-2 w-2 rounded-full bg-brand-700 animate-pulse"></span>
-            We're Hiring
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Main nav -->
-  <div class="bg-white border-b border-slate-100 shadow-sm">
-    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-16 lg:h-[72px]">
-        <nav class="hidden lg:flex items-center gap-1" aria-label="Primary">
-          {
-            navItems.map((item) => (
-              <a
-                href={item.href}
-                class:list={[
-                  'px-4 py-2 rounded-md text-[15px] font-semibold uppercase tracking-wide transition-colors',
-                  isActive(item.href)
-                    ? 'text-brand-600'
-                    : 'text-ink hover:text-brand-600',
-                ]}
-              >
-                {item.label}
-              </a>
-            ))
-          }
-        </nav>
-
-        <div class="flex items-center gap-3 ml-auto">
-          <a
-            href="/contact"
-            class="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-accent-500 hover:bg-accent-400 text-ink font-bold uppercase tracking-wide text-sm shadow-md hover:shadow-lg transition-all"
-          >
-            Get A Quote
-            <Icon name="arrowRight" size={16} />
-          </a>
-
-          <button
-            type="button"
-            id="mobile-nav-toggle"
-            class="lg:hidden inline-flex items-center justify-center h-11 w-11 rounded-md text-ink hover:text-brand-600 hover:bg-brand-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-600"
-            aria-controls="mobile-nav"
-            aria-expanded="false"
-          >
-            <span class="sr-only">Open menu</span>
-            <Icon name="menu" size={24} />
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div id="mobile-nav" class="lg:hidden hidden border-t border-slate-100 bg-white">
-      <nav class="max-w-container mx-auto px-4 py-4 flex flex-col gap-1" aria-label="Mobile">
+      <nav class="hidden xl:flex items-center gap-1" aria-label="Primary" id="primary-nav">
         {
           navItems.map((item) => (
             <a
               href={item.href}
-              class:list={[
-                'px-3 py-2.5 rounded-md text-base font-semibold uppercase tracking-wide',
-                isActive(item.href)
-                  ? 'text-brand-600 bg-brand-50'
-                  : 'text-ink hover:text-brand-600 hover:bg-brand-50',
-              ]}
+              data-nav-link={item.href}
+              data-i18n-en={item.en}
+              data-i18n-ar={item.ar}
+              class="px-3 py-2 font-condensed uppercase tracking-widest text-[13px] text-charcoal-700 hover:text-gold-600 transition-colors"
             >
-              {item.label}
+              {item.en}
             </a>
           ))
         }
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <LangToggle />
+
         <a
           href={`tel:${site.phoneIntl}`}
-          class="mt-2 pt-3 border-t border-slate-100 flex items-center gap-2 px-3 py-2 text-sm font-medium text-ink"
+          class="hidden md:inline-flex items-center gap-2 text-charcoal-700 hover:text-gold-600 transition-colors"
         >
-          <Icon name="phone" size={18} class="text-brand-600" />
-          <span>{site.phone}</span>
+          <span class="inline-flex h-10 w-10 items-center justify-center rounded-full border border-gold-500 text-gold-500">
+            <Icon name="phone" size={18} />
+          </span>
+          <span class="flex flex-col leading-tight text-left">
+            <span class="text-[10px] uppercase tracking-widest text-ink-muted font-condensed" data-i18n-en="Call Us" data-i18n-ar="اتصل بنا">Call Us</span>
+            <span class="font-semibold text-sm text-charcoal-700">{site.phone}</span>
+          </span>
         </a>
-      </nav>
+
+        <a href="#book" class="hidden sm:inline-flex btn-primary !py-3 !px-5">
+          <span data-i18n-en="Book Appointment" data-i18n-ar="احجز موعدك">Book Appointment</span>
+        </a>
+
+        <button
+          type="button"
+          id="mobile-nav-toggle"
+          class="xl:hidden inline-flex items-center justify-center h-11 w-11 text-charcoal-700 hover:text-gold-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold-500"
+          aria-controls="mobile-nav"
+          aria-expanded="false"
+        >
+          <span class="sr-only">Open menu</span>
+          <Icon name="menu" size={26} />
+        </button>
+      </div>
     </div>
+  </div>
+
+  <div id="mobile-nav" class="xl:hidden hidden border-t border-charcoal-100 bg-cream-50">
+    <nav class="max-w-container mx-auto px-4 py-4 flex flex-col gap-1" aria-label="Mobile">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            data-nav-link={item.href}
+            data-i18n-en={item.en}
+            data-i18n-ar={item.ar}
+            class="px-3 py-2.5 font-condensed uppercase tracking-widest text-sm text-charcoal-700 hover:text-gold-600 hover:bg-cream-100"
+          >
+            {item.en}
+          </a>
+        ))
+      }
+      <a
+        href={`tel:${site.phoneIntl}`}
+        class="mt-2 pt-3 border-t border-charcoal-100 flex items-center gap-2 px-3 py-2 text-sm font-medium text-charcoal-700"
+      >
+        <Icon name="phone" size={18} class="text-gold-500" />
+        <span>{site.phone}</span>
+      </a>
+    </nav>
   </div>
 </header>
 
@@ -171,5 +112,39 @@ const isActive = (href: string) => {
       menu.classList.toggle('hidden');
       toggle.setAttribute('aria-expanded', String(!isOpen));
     });
+    menu.querySelectorAll('a').forEach((a) =>
+      a.addEventListener('click', () => {
+        menu.classList.add('hidden');
+        toggle.setAttribute('aria-expanded', 'false');
+      })
+    );
+  }
+
+  // Active-section nav highlighting via IntersectionObserver
+  const navLinks = Array.from(document.querySelectorAll('[data-nav-link]')) as HTMLAnchorElement[];
+  const sectionIds = Array.from(new Set(navLinks.map((a) => a.getAttribute('data-nav-link') || ''))).filter(Boolean);
+  const sections = sectionIds
+    .map((id) => document.querySelector(id))
+    .filter((el): el is Element => el !== null);
+
+  if (sections.length && 'IntersectionObserver' in window) {
+    const setActive = (id: string) => {
+      navLinks.forEach((link) => {
+        const isActive = link.getAttribute('data-nav-link') === id;
+        link.classList.toggle('nav-active', isActive);
+      });
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        // Pick the most visible intersecting section
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive('#' + visible.target.id);
+      },
+      { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    sections.forEach((s) => io.observe(s));
   }
 </script>

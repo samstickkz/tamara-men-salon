@@ -1,50 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 200" role="img" aria-label="Tamara Cleaning Services">
-  <defs>
-    <linearGradient id="waveGrad" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stop-color="#1F3A5F"/>
-      <stop offset="0.55" stop-color="#466B92"/>
-      <stop offset="1" stop-color="#7BA4C4"/>
-    </linearGradient>
-    <linearGradient id="waveGrad2" x1="0" x2="1" y1="0" y2="0">
-      <stop offset="0" stop-color="#7BA4C4"/>
-      <stop offset="1" stop-color="#C2D1E1"/>
-    </linearGradient>
-  </defs>
-
-  <!-- House mark -->
-  <g transform="translate(232,18)">
-    <!-- Roof + chimney -->
-    <path d="M14 70 L18 70 L18 36 L34 36 L34 60 L84 14 L150 70 L142 70 L84 26 Z" fill="#1F3A5F"/>
-    <!-- House body outline -->
-    <path d="M40 70 L84 32 L128 70 L128 84 L40 84 Z" fill="none" stroke="#1F3A5F" stroke-width="3.5" stroke-linejoin="round"/>
-    <!-- Window -->
-    <rect x="74" y="56" width="20" height="20" fill="#1F3A5F"/>
-    <line x1="84" y1="56" x2="84" y2="76" stroke="#FFFFFF" stroke-width="2"/>
-    <line x1="74" y1="66" x2="94" y2="66" stroke="#FFFFFF" stroke-width="2"/>
-
-    <!-- Sparkles -->
-    <g fill="#1F3A5F">
-      <path d="M170 14 l3 8 l8 3 l-8 3 l-3 8 l-3 -8 l-8 -3 l8 -3 z"/>
-      <path d="M186 30 l2 5 l5 2 l-5 2 l-2 5 l-2 -5 l-5 -2 l5 -2 z"/>
-      <path d="M158 32 l1.5 4 l4 1.5 l-4 1.5 l-1.5 4 l-1.5 -4 l-4 -1.5 l4 -1.5 z"/>
-    </g>
-
-    <!-- Wave under house -->
-    <path d="M-30 96 C 40 70, 80 120, 150 96 C 200 80, 230 110, 240 96 L 240 110 C 230 120, 200 90, 150 110 C 80 134, 40 84, -30 110 Z" fill="url(#waveGrad)"/>
-    <path d="M40 116 C 90 100, 130 138, 200 118 L 200 128 C 130 148, 90 110, 40 126 Z" fill="url(#waveGrad2)" opacity="0.85"/>
-    <!-- Tiny sparkle dots on wave -->
-    <g fill="#FFFFFF" opacity="0.85">
-      <circle cx="60" cy="108" r="1.2"/>
-      <circle cx="90" cy="118" r="0.9"/>
-      <circle cx="120" cy="112" r="1.1"/>
-      <circle cx="160" cy="118" r="0.9"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 220" role="img" aria-label="Tamara Men Salon">
+  <!-- Barber pole emblem (left of wordmark) -->
+  <g transform="translate(20,40)">
+    <!-- Scissors mark -->
+    <g fill="none" stroke="#B89758" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="30" cy="100" r="14"/>
+      <circle cx="30" cy="40" r="14"/>
+      <line x1="42" y1="50" x2="135" y2="118"/>
+      <line x1="42" y1="90" x2="135" y2="22"/>
+      <line x1="135" y1="118" x2="150" y2="128"/>
+      <line x1="135" y1="22" x2="150" y2="12"/>
     </g>
   </g>
 
   <!-- Wordmark -->
-  <g font-family="'Plus Jakarta Sans', 'Inter', system-ui, sans-serif" font-weight="700">
-    <text x="320" y="170" text-anchor="middle" font-size="64" letter-spacing="-1">
-      <tspan fill="#1F3A5F">Tamara</tspan><tspan fill="#7BA4C4" font-weight="500">cleaning</tspan>
-    </text>
+  <g font-family="'Playfair Display', 'Cormorant Garamond', Georgia, serif">
+    <text x="200" y="110" font-size="72" font-weight="700" fill="#161412" letter-spacing="2">Tamara</text>
+    <text x="200" y="170" font-size="28" font-weight="500" fill="#B89758" letter-spacing="12" font-family="'Oswald', 'Bebas Neue', Impact, sans-serif">MEN SALON</text>
+  </g>
+
+  <!-- Underline rule with diamond -->
+  <g transform="translate(200,180)">
+    <line x1="0" y1="0" x2="320" y2="0" stroke="#B89758" stroke-width="1.5"/>
+    <rect x="155" y="-5" width="10" height="10" fill="#FBF8F1" stroke="#B89758" stroke-width="1.5" transform="rotate(45 160 0)"/>
   </g>
 </svg>

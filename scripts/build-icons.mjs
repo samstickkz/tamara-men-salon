@@ -1,19 +1,5 @@
 #!/usr/bin/env node
-// Build all branded image assets from a single source of truth.
-//
-// Flow:
-//   1. If public/logo.png exists, use it as the master logo (your real artwork).
-//      Otherwise rasterize public/logo.svg into public/logo.png so the rest of
-//      the pipeline always has a PNG master to work from.
-//   2. From public/logo.png, generate square favicon / app icon variants
-//      (the logo is centered with padding on a navy background, so a horizontal
-//      wordmark still looks deliberate as a small square).
-//   3. Render og-image.png (1200×630) from og-image.svg — kept separate because
-//      it carries marketing copy, not just the logo.
-//   4. Write site.webmanifest for PWA install.
-//
-// Re-run any time you swap public/logo.png or edit the source SVGs:
-//   npm run icons
+// Build branded image assets from a single source of truth.
 
 import sharp from 'sharp';
 import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
@@ -40,34 +26,27 @@ const ogSvgPath = resolve(publicDir, 'og-image.svg');
 
 await mkdir(publicDir, { recursive: true });
 
-// 1) Ensure public/logo.png exists. If the user has provided their own, leave it
-//    alone. Otherwise build it from logo.svg at a print-friendly density.
-if (!(await exists(logoPng))) {
-  if (!(await exists(logoSvg))) {
-    console.error('ERROR: neither public/logo.png nor public/logo.svg exists.');
-    process.exit(1);
-  }
+// 1) Always rebuild logo.png from logo.svg so we pick up brand changes.
+if (await exists(logoSvg)) {
   const svg = await readFile(logoSvg);
   await sharp(svg, { density: 384 })
     .resize({ width: 1280, withoutEnlargement: false })
     .png({ compressionLevel: 9 })
     .toFile(logoPng);
   console.log('wrote public/logo.png  (rasterized from logo.svg)');
-} else {
-  console.log('using existing public/logo.png as master');
+} else if (!(await exists(logoPng))) {
+  console.error('ERROR: neither public/logo.png nor public/logo.svg exists.');
+  process.exit(1);
 }
 
-// 2) Square icon variants. We center the wide logo on a navy square with
-//    breathing room — works whether the source is a horizontal lockup or a
-//    pre-cropped mark.
-const NAVY = { r: 0x1f, g: 0x3a, b: 0x5f, alpha: 1 };
+// 2) Square icon variants — center logo on charcoal square with breathing room.
+const CHARCOAL = { r: 0x16, g: 0x14, b: 0x12, alpha: 1 };
 const buildSquareIcon = async (size, outFile) => {
   const inner = Math.round(size * 0.78);
   const innerBuf = await sharp(logoPng)
     .resize({ width: inner, height: inner, fit: 'contain', background: { r: 0, g: 0, b: 0, alpha: 0 } })
-    // Brighten the logo against navy: dark navy glyphs would disappear, so we
-    // tint the artwork to a sand-cream so it reads on the navy field.
-    .tint({ r: 0xf5, g: 0xef, b: 0xe6 })
+    // Tint to gold so the dark wordmark reads on the charcoal field.
+    .tint({ r: 0xb8, g: 0x97, b: 0x58 })
     .png()
     .toBuffer();
 
@@ -76,7 +55,7 @@ const buildSquareIcon = async (size, outFile) => {
       width: size,
       height: size,
       channels: 4,
-      background: NAVY,
+      background: CHARCOAL,
     },
   })
     .composite([{ input: innerBuf, gravity: 'center' }])
@@ -103,13 +82,13 @@ if (await exists(ogSvgPath)) {
 
 // 4) PWA manifest.
 const manifest = {
-  name: 'Tamara Cleaning Services',
-  short_name: 'Tamara Cleaning',
-  description: 'Professional cleaning services in Doha, Qatar.',
+  name: 'Tamara Men Salon',
+  short_name: 'Tamara Men',
+  description: "Premium men's grooming in Doha, Qatar.",
   start_url: '/',
   display: 'standalone',
-  background_color: '#F5EFE6',
-  theme_color: '#1F3A5F',
+  background_color: '#161412',
+  theme_color: '#B89758',
   icons: [
     { src: '/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any maskable' },
     { src: '/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any maskable' },

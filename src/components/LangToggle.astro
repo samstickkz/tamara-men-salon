@@ -1,0 +1,52 @@
+---
+// EN/AR language switcher. JS lives in the script below.
+---
+<button
+  type="button"
+  id="lang-toggle"
+  aria-label="Switch language"
+  class="inline-flex items-center gap-2 px-3 py-1.5 border border-charcoal-200 text-charcoal-700 hover:border-gold-500 hover:text-gold-600 font-condensed uppercase tracking-widest text-[11px] transition-colors"
+>
+  <span data-lang="en">عربي</span>
+  <span data-lang="ar">EN</span>
+</button>
+
+<script is:inline>
+  (function () {
+    var STORAGE_KEY = 'tamara.lang';
+    var btn = document.getElementById('lang-toggle');
+    if (!btn) return;
+
+    var html = document.documentElement;
+
+    function apply(lang) {
+      var nextDir = lang === 'ar' ? 'rtl' : 'ltr';
+      html.lang = lang;
+      html.dir = nextDir;
+      // Swap text content for [data-i18n-en]/[data-i18n-ar] elements
+      document.querySelectorAll('[data-i18n-en]').forEach(function (el) {
+        var t = el.getAttribute('data-i18n-' + lang);
+        if (t != null) el.textContent = t;
+      });
+      // Swap placeholders
+      document.querySelectorAll('[data-ph-en]').forEach(function (el) {
+        var t = el.getAttribute('data-ph-' + lang);
+        if (t != null) el.setAttribute('placeholder', t);
+      });
+    }
+
+    function toggle() {
+      var cur = html.lang === 'ar' ? 'en' : 'ar';
+      apply(cur);
+      try { localStorage.setItem(STORAGE_KEY, cur); } catch (_e) {}
+    }
+
+    btn.addEventListener('click', toggle);
+
+    // Restore preference on load
+    try {
+      var saved = localStorage.getItem(STORAGE_KEY);
+      if (saved === 'ar') apply('ar');
+    } catch (_e) {}
+  })();
+</script>

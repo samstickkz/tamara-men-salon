@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tamara-cleaning-qa.vercel.app/sitemap-index.xml
+Sitemap: https://tamara-men-salon.vercel.app/sitemap-index.xml

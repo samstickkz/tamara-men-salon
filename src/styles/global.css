@@ -6,13 +6,36 @@
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+    /* Anchor scrolling accounts for sticky header height */
+    scroll-padding-top: 6rem;
   }
   body {
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    /* Reserve space for the mobile sticky book bar */
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  @media (max-width: 639px) {
+    body { padding-bottom: calc(env(safe-area-inset-bottom) + 4rem); }
   }
   ::selection {
-    background-color: #1F3A5F;
+    background-color: #B89758;
     color: #ffffff;
+  }
+
+  /* Language switching: show only the version matching html[lang] */
+  html[lang="ar"] [data-lang="en"],
+  html[lang="en"] [data-lang="ar"] {
+    display: none !important;
+  }
+  /* RTL helpers — flip arrow icons and reorder some flex rows */
+  html[dir="rtl"] .rtl-flip { transform: scaleX(-1); }
+  html[lang="ar"] {
+    font-family: 'Tajawal', 'Cairo', 'Noto Naskh Arabic', system-ui, sans-serif;
+  }
+  html[lang="ar"] .font-display,
+  html[lang="ar"] .font-condensed {
+    font-family: 'Tajawal', 'Cairo', 'Noto Naskh Arabic', sans-serif;
+    letter-spacing: 0;
   }
 }
 
@@ -20,26 +43,43 @@
   .container-page {
     @apply max-w-container mx-auto px-4 sm:px-6 lg:px-8;
   }
-  .prose-clean p {
-    @apply text-ink-soft leading-relaxed;
+  /* Divider rule used between sections — thin gold line with center mark, classic barber shop feel */
+  .rule-gold {
+    @apply relative h-px w-full bg-gold-500/40;
   }
-  .prose-clean p + p {
-    @apply mt-4;
-  }
-  .prose-clean h2 {
-    @apply font-display text-2xl sm:text-3xl font-bold text-ink mt-10 mb-4;
-  }
-  .prose-clean h3 {
-    @apply font-display text-xl font-bold text-ink mt-8 mb-3;
-  }
-  .prose-clean ul {
-    @apply mt-3 space-y-2 text-ink-soft;
-  }
-  .prose-clean ul li {
-    @apply pl-6 relative;
-  }
-  .prose-clean ul li::before {
+  .rule-gold::before,
+  .rule-gold::after {
     content: '';
-    @apply absolute left-0 top-2.5 h-2 w-2 rounded-full bg-brand-600;
+    @apply absolute top-1/2 -translate-y-1/2 h-2 w-2 rotate-45 border border-gold-500 bg-cream-50;
+  }
+  .rule-gold::before { left: calc(50% - 6px); }
+  .rule-gold::after { display: none; }
+
+  /* Tagline / eyebrow text used above all section headings */
+  .eyebrow {
+    @apply inline-block font-display italic text-gold-500 text-lg sm:text-xl;
+  }
+  /* Section headings — large condensed all-caps in the template */
+  .h-section {
+    @apply font-condensed uppercase font-bold tracking-wide text-charcoal-700 text-4xl sm:text-5xl lg:text-6xl leading-[1.05];
+  }
+  /* Active-section nav link */
+  .nav-active {
+    @apply text-gold-600 relative;
+  }
+  .nav-active::after {
+    content: '';
+    @apply absolute left-3 right-3 -bottom-0.5 h-[2px] bg-gold-500;
+  }
+
+  /* Buttons */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 bg-gold-500 hover:bg-gold-400 text-charcoal-800 font-condensed uppercase tracking-widest text-sm shadow-gold transition-colors;
+  }
+  .btn-outline-dark {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-charcoal-700 text-charcoal-700 hover:bg-charcoal-700 hover:text-cream-50 font-condensed uppercase tracking-widest text-sm transition-colors;
+  }
+  .btn-outline-light {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3.5 border border-cream-100 text-cream-50 hover:bg-cream-50 hover:text-charcoal-800 font-condensed uppercase tracking-widest text-sm transition-colors;
   }
 }

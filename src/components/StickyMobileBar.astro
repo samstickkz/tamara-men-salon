@@ -1,0 +1,29 @@
+---
+import Icon from './Icon.astro';
+import { site, whatsappLink } from '../data/site';
+---
+<div class="fixed bottom-0 inset-x-0 z-40 sm:hidden bg-charcoal-800/95 backdrop-blur border-t border-gold-500/30 flex" style="padding-bottom: env(safe-area-inset-bottom);">
+  <a
+    href={`tel:${site.phoneIntl}`}
+    class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 text-cream-50 hover:text-gold-400 transition-colors"
+  >
+    <Icon name="phone" size={18} />
+    <span class="font-condensed uppercase tracking-widest text-[10px]" data-i18n-en="Call" data-i18n-ar="اتصل">Call</span>
+  </a>
+  <a
+    href={whatsappLink()}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 text-cream-50 hover:text-gold-400 transition-colors border-x border-cream-100/10"
+  >
+    <Icon name="whatsapp" size={18} />
+    <span class="font-condensed uppercase tracking-widest text-[10px]">WhatsApp</span>
+  </a>
+  <a
+    href="#book"
+    class="flex-[1.4] flex items-center justify-center gap-2 py-2.5 bg-gold-500 text-charcoal-800 font-condensed uppercase tracking-widest text-xs"
+  >
+    <span data-i18n-en="Book Now" data-i18n-ar="احجز الآن">Book Now</span>
+    <Icon name="arrowRight" size={16} class="rtl-flip" />
+  </a>
+</div>

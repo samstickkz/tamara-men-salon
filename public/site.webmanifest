@@ -1,11 +1,11 @@
 {
-  "name": "Tamara Cleaning Services",
-  "short_name": "Tamara Cleaning",
-  "description": "Professional cleaning services in Doha, Qatar.",
+  "name": "Tamara Men Salon",
+  "short_name": "Tamara Men",
+  "description": "Premium men's grooming in Doha, Qatar.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#F5EFE6",
-  "theme_color": "#1F3A5F",
+  "background_color": "#161412",
+  "theme_color": "#B89758",
   "icons": [
     {
       "src": "/icon-192.png",

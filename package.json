@@ -1,8 +1,8 @@
 {
-  "name": "tamara-cleaning-services",
+  "name": "tamara-men-salon",
   "type": "module",
   "version": "1.0.0",
-  "description": "Tamara Cleaning Services — Doha, Qatar. Astro + Tailwind static marketing site.",
+  "description": "Tamara Men Salon — Doha, Qatar. Astro + Tailwind single-page marketing site.",
   "private": true,
   "scripts": {
     "dev": "astro dev",
