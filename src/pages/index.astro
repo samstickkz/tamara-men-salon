@@ -525,15 +525,20 @@ const gallery = [
   <!-- BOOK -->
   <section id="book" class="bg-cream-50 py-20 lg:py-24">
     <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-12 gap-12">
-        <div class="lg:col-span-5">
-          <p class="eyebrow" data-i18n-en="Reserve Your Chair" data-i18n-ar="احجز كرسيك">Reserve Your Chair</p>
-          <h2 class="mt-3 h-section" data-i18n-en="Book Now" data-i18n-ar="احجز الآن">Book Now</h2>
-          <p class="mt-5 text-ink-soft leading-relaxed" data-i18n-en="Fill in the details and hit Send to WhatsApp — your request is delivered straight to our barbers, and we'll confirm your slot within minutes." data-i18n-ar="املأ التفاصيل واضغط أرسل عبر واتساب — يصل طلبك مباشرة إلى حلاقينا، ونؤكد موعدك خلال دقائق.">
-            Fill in the details and hit <span class="text-charcoal-800 font-semibold">Send to WhatsApp</span> — your
-            request is delivered straight to our barbers, and we'll confirm your slot within minutes.
-          </p>
-          <a href={`tel:${site.phoneIntl}`} class="mt-6 inline-flex items-center gap-3 font-condensed text-2xl sm:text-3xl text-gold-600 hover:text-gold-500 transition-colors" dir="ltr">
+      <!-- Heading + intro stay at the top on every viewport -->
+      <div class="max-w-2xl mx-auto lg:mx-0 text-center lg:text-left">
+        <p class="eyebrow" data-i18n-en="Reserve Your Chair" data-i18n-ar="احجز كرسيك">Reserve Your Chair</p>
+        <h2 class="mt-3 h-section" data-i18n-en="Book Now" data-i18n-ar="احجز الآن">Book Now</h2>
+        <p class="mt-5 text-ink-soft leading-relaxed" data-i18n-en="Fill in the details and hit Send to WhatsApp — your request is delivered straight to our barbers, and we'll confirm your slot within minutes." data-i18n-ar="املأ التفاصيل واضغط أرسل عبر واتساب — يصل طلبك مباشرة إلى حلاقينا، ونؤكد موعدك خلال دقائق.">
+          Fill in the details and hit <span class="text-charcoal-800 font-semibold">Send to WhatsApp</span> — your
+          request is delivered straight to our barbers, and we'll confirm your slot within minutes.
+        </p>
+      </div>
+
+      <div class="mt-10 grid lg:grid-cols-12 gap-12">
+        <!-- Left column: phone CTA + contact details + map. On mobile, falls BELOW the form. -->
+        <div class="lg:col-span-5 order-2 lg:order-1">
+          <a href={`tel:${site.phoneIntl}`} class="inline-flex items-center gap-3 font-condensed text-2xl sm:text-3xl text-gold-600 hover:text-gold-500 transition-colors" dir="ltr">
             <Icon name="phone" size={22} />
             {site.phone}
           </a>
@@ -592,7 +597,7 @@ const gallery = [
           </div>
         </div>
 
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7 order-1 lg:order-2">
           <!-- Quick-book chips -->
           <div class="mb-5">
             <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted mb-3" data-i18n-en="Quick book" data-i18n-ar="حجز سريع">Quick book</p>
