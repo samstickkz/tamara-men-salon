@@ -483,35 +483,43 @@ const gallery = [
       </div>
 
       <!-- PRIZE IMAGE -->
-      <div class="mt-10 max-w-xl mx-auto">
-        <div class="relative aspect-[16/10] overflow-hidden border border-gold-500/40">
-          <img
-            src="/prize-scooter.svg"
-            alt="A premium scooter — grand prize in the Tamara Men Salon raffle"
-            width="1200"
-            height="750"
-            class="absolute inset-0 h-full w-full object-cover"
-            loading="lazy"
-            decoding="async"
-          />
-          <!-- Gradient overlay for legibility -->
-          <div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/90 via-charcoal-900/30 to-transparent"></div>
-          <!-- Prize labels -->
+      <div class="mt-10 max-w-md mx-auto">
+        <div class="relative aspect-[3/4] overflow-hidden border border-gold-500/40">
+          <picture>
+            <source srcset="/prize-scooter.avif" type="image/avif" />
+            <img
+              src="/prize-scooter.jpg"
+              alt="A premium scooter — grand prize in the Tamara Men Salon raffle"
+              width="900"
+              height="1603"
+              class="absolute inset-0 h-full w-full object-cover object-center"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+          <!-- Gradient overlay for legibility (only bottom, keep scooter clean) -->
+          <div class="absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-charcoal-900/95 via-charcoal-900/60 to-transparent"></div>
+          <!-- Top corner badge -->
+          <div class="absolute top-4 left-4 inline-flex items-center gap-2 px-3 py-1.5 bg-gold-500 text-charcoal-800 font-condensed uppercase tracking-widest text-[11px]">
+            <span class="inline-block h-1.5 w-1.5 rounded-full bg-charcoal-800 animate-pulse"></span>
+            <span data-i18n-en="Grand Prize" data-i18n-ar="الجائزة الكبرى">Grand Prize</span>
+          </div>
+          <!-- Bottom labels -->
           <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6 flex items-end justify-between gap-3">
             <div>
               <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-400">
-                <span data-i18n-en="Grand Prize" data-i18n-ar="الجائزة الكبرى">Grand Prize</span>
+                <span data-i18n-en="One winner takes" data-i18n-ar="يفوز شخص واحد بـ">One winner takes</span>
               </p>
-              <p class="font-condensed uppercase tracking-widest text-cream-50 text-xl sm:text-2xl mt-1">
+              <p class="font-condensed uppercase tracking-widest text-cream-50 text-2xl sm:text-3xl mt-1 leading-tight">
                 <span data-i18n-en="A Brand-New Scooter" data-i18n-ar="سكوتر جديد">A Brand-New Scooter</span>
               </p>
             </div>
-            <div class="text-right">
+            <div class="text-right shrink-0">
               <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-400">
                 <span data-i18n-en="Or" data-i18n-ar="أو">Or</span>
               </p>
               <p class="font-condensed uppercase tracking-widest text-cream-50 text-xl sm:text-2xl mt-1">
-                <span data-i18n-en="Cash Equivalent" data-i18n-ar="قيمتها نقداً">Cash Equivalent</span>
+                <span data-i18n-en="Cash" data-i18n-ar="نقداً">Cash</span>
               </p>
             </div>
           </div>
