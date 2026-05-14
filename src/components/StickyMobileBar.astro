@@ -1,14 +1,14 @@
 ---
 import Icon from './Icon.astro';
-import { site, whatsappLink } from '../data/site';
+import { whatsappLink } from '../data/site';
 ---
 <div class="fixed bottom-0 inset-x-0 z-40 sm:hidden bg-charcoal-800/95 backdrop-blur border-t border-gold-500/30 flex" style="padding-bottom: env(safe-area-inset-bottom);">
   <a
-    href={`tel:${site.phoneIntl}`}
+    href="/#raffle"
     class="flex-1 flex flex-col items-center justify-center gap-0.5 py-2.5 text-cream-50 hover:text-gold-400 transition-colors"
   >
-    <Icon name="phone" size={18} />
-    <span class="font-condensed uppercase tracking-widest text-[10px]" data-i18n-en="Call" data-i18n-ar="اتصل">Call</span>
+    <Icon name="star" size={18} />
+    <span class="font-condensed uppercase tracking-widest text-[10px]" data-i18n-en="Raffle" data-i18n-ar="السحب">Raffle</span>
   </a>
   <a
     href={whatsappLink()}
@@ -20,7 +20,7 @@ import { site, whatsappLink } from '../data/site';
     <span class="font-condensed uppercase tracking-widest text-[10px]">WhatsApp</span>
   </a>
   <a
-    href="#book"
+    href="/#book"
     class="flex-[1.4] flex items-center justify-center gap-2 py-2.5 bg-gold-500 text-charcoal-800 font-condensed uppercase tracking-widest text-xs"
   >
     <span data-i18n-en="Book Now" data-i18n-ar="احجز الآن">Book Now</span>
