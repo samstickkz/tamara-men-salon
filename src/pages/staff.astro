@@ -1,0 +1,476 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'Staff Tracker · Tamara Men Salon';
+const description = 'Admin-only staff job tracker.';
+---
+<BaseLayout title={title} description={description} noindex>
+  <section class="bg-cream-50 py-16 lg:py-20 min-h-[80vh]">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-5xl mx-auto">
+        <p class="eyebrow">Admin</p>
+        <h1 class="mt-2 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-4xl sm:text-5xl">Staff Tracker</h1>
+        <p class="mt-3 text-ink-soft">Log every cut as it happens — see who's bringing in what.</p>
+
+        <!-- PASSWORD GATE -->
+        <form id="staff-login" class="mt-10 bg-white border border-charcoal-100 p-6 sm:p-8 max-w-md">
+          <label class="block">
+            <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Staff password</span>
+            <input
+              type="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+            />
+          </label>
+          <p id="login-error" class="hidden mt-3 text-sm text-red-600"></p>
+          <button type="submit" class="mt-5 btn-primary">
+            Unlock
+            <Icon name="arrowRight" size={16} />
+          </button>
+          <p class="mt-4 text-xs text-ink-muted">
+            Default password is <span class="font-mono">tamara-staff-2026</span>. Change it from the panel once you're in.
+          </p>
+        </form>
+
+        <!-- ADMIN PANEL -->
+        <div id="staff-panel" class="hidden mt-10 space-y-8">
+
+          <!-- LOG NEW JOB -->
+          <div class="bg-white border border-charcoal-100">
+            <div class="px-6 py-4 border-b border-charcoal-100">
+              <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">Log new job</p>
+            </div>
+            <form id="log-form" class="px-6 py-6">
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <label class="block">
+                  <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Staff *</span>
+                  <select name="staff_id" required id="log-staff" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0">
+                    <option value="">Loading staff…</option>
+                  </select>
+                </label>
+                <label class="block">
+                  <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Service *</span>
+                  <select name="service" required id="log-service" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0">
+                    <option value="">Choose service…</option>
+                  </select>
+                </label>
+                <label class="block">
+                  <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Amount (QAR) *</span>
+                  <input type="number" name="amount_qar" min="0" step="1" required id="log-amount" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0" />
+                </label>
+                <label class="block">
+                  <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">When *</span>
+                  <input type="datetime-local" name="performed_at" required id="log-performed" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0" />
+                </label>
+                <label class="block">
+                  <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Customer name (optional)</span>
+                  <input type="text" name="customer_name" id="log-customer" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0" />
+                </label>
+                <label class="block">
+                  <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Notes (optional)</span>
+                  <input type="text" name="notes" id="log-notes" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0" />
+                </label>
+              </div>
+              <p id="log-error" class="hidden mt-3 text-sm text-red-600"></p>
+              <p id="log-success" class="hidden mt-3 text-sm text-green-700"></p>
+              <div class="mt-5 flex flex-col sm:flex-row sm:items-center gap-3">
+                <button type="submit" class="btn-primary" id="log-submit">
+                  Log Job
+                  <Icon name="arrowRight" size={16} />
+                </button>
+                <button type="button" id="log-reset" class="text-xs font-condensed uppercase tracking-widest text-ink-muted hover:text-charcoal-800">Reset form</button>
+              </div>
+            </form>
+          </div>
+
+          <!-- PERIOD FILTER -->
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">Performance</p>
+            <div class="inline-flex border border-charcoal-200" role="group" aria-label="Period filter">
+              <button data-period="today" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest">Today</button>
+              <button data-period="7" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">7 days</button>
+              <button data-period="30" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">30 days</button>
+              <button data-period="all" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">All time</button>
+            </div>
+          </div>
+
+          <!-- PER-STAFF STATS -->
+          <div id="stats-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+          <!-- RECENT JOBS TABLE -->
+          <div class="bg-white border border-charcoal-100">
+            <div class="px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
+              <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">Logged jobs</p>
+              <button id="jobs-refresh" class="text-xs font-condensed uppercase tracking-widest text-gold-600 hover:text-gold-500">Refresh</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-cream-100 text-ink-muted">
+                  <tr>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">When</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Staff</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Service</th>
+                    <th class="text-right px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Amount</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Customer</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Notes</th>
+                    <th class="px-4 py-2.5"></th>
+                  </tr>
+                </thead>
+                <tbody id="jobs-body" class="divide-y divide-charcoal-100"></tbody>
+              </table>
+            </div>
+            <p id="jobs-empty" class="hidden px-6 py-12 text-center text-sm text-ink-muted">No jobs logged for this period.</p>
+          </div>
+
+          <!-- ADD STAFF -->
+          <details class="bg-white border border-charcoal-100">
+            <summary class="px-6 py-4 cursor-pointer font-condensed uppercase tracking-widest text-sm text-charcoal-800">Add staff member</summary>
+            <form id="add-staff-form" class="px-6 pb-6 grid grid-cols-1 sm:grid-cols-3 gap-4 items-end">
+              <label class="block sm:col-span-1">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Name *</span>
+                <input type="text" name="name" required class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 focus:border-gold-500 focus:ring-0" />
+              </label>
+              <label class="block sm:col-span-1">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Role</span>
+                <input type="text" name="role" placeholder="Barber" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 focus:border-gold-500 focus:ring-0" />
+              </label>
+              <div>
+                <button type="submit" class="btn-outline-dark !text-charcoal-800">Add</button>
+                <p id="add-staff-msg" class="hidden mt-2 text-xs"></p>
+              </div>
+            </form>
+          </details>
+
+          <!-- CHANGE PASSWORD -->
+          <details class="bg-white border border-charcoal-100">
+            <summary class="px-6 py-4 cursor-pointer font-condensed uppercase tracking-widest text-sm text-charcoal-800">Change staff password</summary>
+            <form id="change-password" class="px-6 pb-6 space-y-4">
+              <label class="block max-w-xs">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">New password (min 6 chars)</span>
+                <input type="password" name="new" required minlength="6" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 focus:border-gold-500 focus:ring-0" />
+              </label>
+              <p id="pw-msg" class="hidden text-sm"></p>
+              <button type="submit" class="btn-outline-dark !text-charcoal-800">Update Password</button>
+            </form>
+          </details>
+
+          <button id="lock" class="text-xs font-condensed uppercase tracking-widest text-ink-muted hover:text-charcoal-800">← Lock again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .period-btn { background: #fff; color: #1F1D1A; }
+    .period-btn.active { background: #1F1D1A; color: #FBF8F1; }
+    .stat-card { background: #fff; border: 1px solid #E6E4E0; padding: 1.25rem; }
+  </style>
+
+  <script>
+    import { getSupabase } from '../lib/supabase';
+
+    // Service catalogue used to pre-fill amount
+    const SERVICES: Array<{ name: string; price: number | null }> = [
+      { name: 'Classic Haircut', price: 25 },
+      { name: 'Deluxe Haircut', price: 35 },
+      { name: 'Buzz Cut', price: 15 },
+      { name: "Kids' Cut", price: 20 },
+      { name: 'Beard Trim', price: 20 },
+      { name: 'Hot Towel Shave', price: 35 },
+      { name: 'Straight Razor Trim', price: 25 },
+      { name: 'Mustache Trim', price: 15 },
+      { name: 'Hair Color', price: 25 },
+      { name: 'Full Facial', price: 35 },
+      { name: 'Hair Wash & Blow', price: 20 },
+      { name: 'Combo (custom)', price: null },
+      { name: 'Other (custom)', price: null },
+    ];
+
+    const loginForm = document.getElementById('staff-login') as HTMLFormElement | null;
+    const panel = document.getElementById('staff-panel') as HTMLElement | null;
+    const loginError = document.getElementById('login-error') as HTMLElement | null;
+    const logForm = document.getElementById('log-form') as HTMLFormElement | null;
+    const logError = document.getElementById('log-error') as HTMLElement | null;
+    const logSuccess = document.getElementById('log-success') as HTMLElement | null;
+    const logStaff = document.getElementById('log-staff') as HTMLSelectElement | null;
+    const logService = document.getElementById('log-service') as HTMLSelectElement | null;
+    const logAmount = document.getElementById('log-amount') as HTMLInputElement | null;
+    const logPerformed = document.getElementById('log-performed') as HTMLInputElement | null;
+    const logReset = document.getElementById('log-reset') as HTMLButtonElement | null;
+    const logSubmit = document.getElementById('log-submit') as HTMLButtonElement | null;
+    const jobsBody = document.getElementById('jobs-body') as HTMLElement | null;
+    const jobsEmpty = document.getElementById('jobs-empty') as HTMLElement | null;
+    const jobsRefresh = document.getElementById('jobs-refresh') as HTMLButtonElement | null;
+    const statsGrid = document.getElementById('stats-grid') as HTMLElement | null;
+    const lockBtn = document.getElementById('lock') as HTMLButtonElement | null;
+    const addStaffForm = document.getElementById('add-staff-form') as HTMLFormElement | null;
+    const addStaffMsg = document.getElementById('add-staff-msg') as HTMLElement | null;
+    const changePwForm = document.getElementById('change-password') as HTMLFormElement | null;
+    const pwMsg = document.getElementById('pw-msg') as HTMLElement | null;
+    const periodBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.period-btn'));
+
+    const sb = getSupabase();
+    let password = '';
+    let currentPeriod: 'today' | '7' | '30' | 'all' = 'today';
+
+    // Populate service select
+    if (logService) {
+      logService.innerHTML = '<option value="">Choose service…</option>' +
+        SERVICES.map((s) => `<option data-price="${s.price ?? ''}">${s.name}</option>`).join('');
+    }
+    logService?.addEventListener('change', () => {
+      const opt = logService!.selectedOptions[0];
+      const price = opt?.dataset.price;
+      if (price && logAmount && !logAmount.value) {
+        logAmount.value = price;
+      } else if (price && logAmount) {
+        // Always update so secretary doesn't have to clear an old value
+        logAmount.value = price;
+      }
+    });
+
+    function nowLocal(): string {
+      const d = new Date();
+      d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+      return d.toISOString().slice(0, 16);
+    }
+    function resetLogForm() {
+      logForm?.reset();
+      if (logPerformed) logPerformed.value = nowLocal();
+    }
+    if (logPerformed) logPerformed.value = nowLocal();
+    logReset?.addEventListener('click', resetLogForm);
+
+    function periodSince(): string | null {
+      if (currentPeriod === 'all') return null;
+      const d = new Date();
+      if (currentPeriod === 'today') d.setHours(0, 0, 0, 0);
+      else d.setDate(d.getDate() - parseInt(currentPeriod, 10));
+      return d.toISOString();
+    }
+
+    function fmtDateTime(iso?: string | null) {
+      if (!iso) return '—';
+      try {
+        return new Date(iso).toLocaleString('en-GB', {
+          day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit',
+        });
+      } catch { return iso; }
+    }
+    function esc(s: any): string {
+      const div = document.createElement('div');
+      div.textContent = String(s ?? '');
+      return div.innerHTML;
+    }
+
+    async function loadStaff() {
+      if (!sb) return;
+      const { data, error } = await sb.rpc('list_staff');
+      if (error || !data || !logStaff) return;
+      logStaff.innerHTML = '<option value="">Choose staff…</option>' +
+        (data as any[]).map((s) => `<option value="${s.id}">${esc(s.name)} — ${esc(s.role)}</option>`).join('');
+    }
+
+    async function loadStats() {
+      if (!sb || !statsGrid) return;
+      const { data, error } = await sb.rpc('staff_stats', { p_password: password, p_since: periodSince() });
+      if (error) {
+        statsGrid.innerHTML = `<p class="text-red-600 text-sm">${esc(error.message)}</p>`;
+        return;
+      }
+      statsGrid.innerHTML = (data as any[]).map((s) => `
+        <div class="stat-card">
+          <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-600">${esc(s.staff_role)}</p>
+          <p class="mt-1 font-display text-xl text-charcoal-800">${esc(s.staff_name)}</p>
+          <div class="mt-4 grid grid-cols-2 gap-2">
+            <div>
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Jobs</p>
+              <p class="font-display text-3xl text-charcoal-800">${Number(s.job_count)}</p>
+            </div>
+            <div class="text-right">
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Revenue</p>
+              <p class="font-display text-3xl text-gold-600">QAR ${Number(s.total_qar)}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function loadJobs() {
+      if (!sb || !jobsBody) return;
+      const { data, error } = await sb.rpc('list_jobs', { p_password: password, p_since: periodSince() });
+      if (error) {
+        jobsBody.innerHTML = '';
+        if (jobsEmpty) {
+          jobsEmpty.textContent = error.message;
+          jobsEmpty.classList.remove('hidden');
+        }
+        return;
+      }
+      const rows = data as any[];
+      if (rows.length === 0) {
+        jobsBody.innerHTML = '';
+        jobsEmpty?.classList.remove('hidden');
+        return;
+      }
+      jobsEmpty?.classList.add('hidden');
+      jobsBody.innerHTML = rows.map((r) => `
+        <tr>
+          <td class="px-4 py-2.5 whitespace-nowrap text-ink-muted">${esc(fmtDateTime(r.performed_at))}</td>
+          <td class="px-4 py-2.5">${esc(r.staff_name)}</td>
+          <td class="px-4 py-2.5">${esc(r.service)}</td>
+          <td class="px-4 py-2.5 text-right font-mono text-gold-600">${Number(r.amount_qar)}</td>
+          <td class="px-4 py-2.5">${esc(r.customer_name || '—')}</td>
+          <td class="px-4 py-2.5 text-ink-muted">${esc(r.notes || '')}</td>
+          <td class="px-4 py-2.5 text-right">
+            <button data-delete="${r.id}" class="text-xs font-condensed uppercase tracking-widest text-red-600 hover:text-red-700">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+      // Hook up delete buttons
+      jobsBody.querySelectorAll<HTMLButtonElement>('[data-delete]').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.getAttribute('data-delete');
+          if (!id) return;
+          if (!confirm('Delete this job?')) return;
+          const { error: delErr } = await sb.rpc('delete_job', { p_password: password, p_job_id: id });
+          if (delErr) { alert(delErr.message); return; }
+          await Promise.all([loadJobs(), loadStats()]);
+        });
+      });
+    }
+
+    function setActivePeriodBtn() {
+      periodBtns.forEach((b) => {
+        b.classList.toggle('active', b.dataset.period === currentPeriod);
+      });
+    }
+    periodBtns.forEach((b) => b.addEventListener('click', async () => {
+      currentPeriod = (b.dataset.period as any) || 'today';
+      setActivePeriodBtn();
+      await Promise.all([loadJobs(), loadStats()]);
+    }));
+
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb) {
+        if (loginError) { loginError.textContent = 'Supabase not configured.'; loginError.classList.remove('hidden'); }
+        return;
+      }
+      loginError?.classList.add('hidden');
+      const pw = String(new FormData(loginForm).get('password') || '');
+      // Verify password by attempting a list query
+      const { error } = await sb.rpc('list_jobs', { p_password: pw, p_since: new Date(Date.now() - 86400000).toISOString() });
+      if (error) {
+        if (loginError) { loginError.textContent = 'Wrong password.'; loginError.classList.remove('hidden'); }
+        return;
+      }
+      password = pw;
+      loginForm.classList.add('hidden');
+      panel?.classList.remove('hidden');
+      currentPeriod = 'today';
+      setActivePeriodBtn();
+      await loadStaff();
+      await Promise.all([loadJobs(), loadStats()]);
+    });
+
+    logForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb || !password) return;
+      logError?.classList.add('hidden');
+      logSuccess?.classList.add('hidden');
+      if (logSubmit) logSubmit.disabled = true;
+
+      const fd = new FormData(logForm);
+      const staffId = String(fd.get('staff_id') || '');
+      const service = String(fd.get('service') || '');
+      const amount = Number(fd.get('amount_qar') || 0);
+      const customer = String(fd.get('customer_name') || '');
+      const notes = String(fd.get('notes') || '');
+      const performedLocal = String(fd.get('performed_at') || '');
+      const performedISO = performedLocal ? new Date(performedLocal).toISOString() : null;
+
+      const { error } = await sb.rpc('log_job', {
+        p_password: password,
+        p_staff_id: staffId,
+        p_service: service,
+        p_amount_qar: amount,
+        p_customer_name: customer || null,
+        p_notes: notes || null,
+        p_performed_at: performedISO,
+      });
+
+      if (logSubmit) logSubmit.disabled = false;
+
+      if (error) {
+        if (logError) { logError.textContent = error.message; logError.classList.remove('hidden'); }
+        return;
+      }
+      if (logSuccess) {
+        logSuccess.textContent = `Logged ${service} — QAR ${amount}`;
+        logSuccess.classList.remove('hidden');
+      }
+      // Reset service/amount/customer/notes but keep staff selected for batch entries
+      if (logService) logService.value = '';
+      if (logAmount) logAmount.value = '';
+      const customerEl = document.getElementById('log-customer') as HTMLInputElement | null;
+      const notesEl = document.getElementById('log-notes') as HTMLInputElement | null;
+      if (customerEl) customerEl.value = '';
+      if (notesEl) notesEl.value = '';
+      if (logPerformed) logPerformed.value = nowLocal();
+      await Promise.all([loadJobs(), loadStats()]);
+    });
+
+    jobsRefresh?.addEventListener('click', () => Promise.all([loadJobs(), loadStats()]));
+
+    addStaffForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb || !password) return;
+      const fd = new FormData(addStaffForm);
+      const name = String(fd.get('name') || '').trim();
+      const role = String(fd.get('role') || '').trim() || 'Barber';
+      const { error } = await sb.rpc('add_staff', { p_password: password, p_name: name, p_role: role });
+      if (addStaffMsg) {
+        if (error) {
+          addStaffMsg.textContent = error.message;
+          addStaffMsg.className = 'mt-2 text-xs text-red-600';
+        } else {
+          addStaffMsg.textContent = 'Added.';
+          addStaffMsg.className = 'mt-2 text-xs text-green-700';
+          addStaffForm.reset();
+          await Promise.all([loadStaff(), loadStats()]);
+        }
+        addStaffMsg.classList.remove('hidden');
+      }
+    });
+
+    changePwForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb || !password) return;
+      const newPw = String(new FormData(changePwForm).get('new') || '');
+      const { error } = await sb.rpc('set_staff_password', { p_current: password, p_new: newPw });
+      if (pwMsg) {
+        if (error) {
+          pwMsg.textContent = error.message;
+          pwMsg.className = 'text-sm text-red-600';
+        } else {
+          pwMsg.textContent = 'Password updated.';
+          pwMsg.className = 'text-sm text-green-700';
+          password = newPw;
+          changePwForm.reset();
+        }
+        pwMsg.classList.remove('hidden');
+      }
+    });
+
+    lockBtn?.addEventListener('click', () => {
+      password = '';
+      panel?.classList.add('hidden');
+      loginForm?.classList.remove('hidden');
+      if (loginForm) loginForm.reset();
+    });
+  </script>
+</BaseLayout>
