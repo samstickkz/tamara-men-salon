@@ -456,6 +456,214 @@ const gallery = [
     </div>
   </section>
 
+  <!-- RAFFLE PROMO -->
+  <section id="raffle" class="relative overflow-hidden bg-charcoal-800 text-cream-50 py-20 lg:py-24">
+    <!-- Decorative gold corner accents -->
+    <div class="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
+      <div class="absolute top-6 left-6 h-12 w-12 border-l border-t border-gold-500"></div>
+      <div class="absolute top-6 right-6 h-12 w-12 border-r border-t border-gold-500"></div>
+      <div class="absolute bottom-6 left-6 h-12 w-12 border-l border-b border-gold-500"></div>
+      <div class="absolute bottom-6 right-6 h-12 w-12 border-r border-b border-gold-500"></div>
+    </div>
+
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8 relative">
+      <div class="text-center max-w-2xl mx-auto">
+        <p class="eyebrow" data-i18n-en="Limited-time promo" data-i18n-ar="عرض لفترة محدودة">Limited-time promo</p>
+        <h2 class="mt-3 font-condensed uppercase font-bold tracking-wide text-cream-50 text-4xl sm:text-5xl lg:text-6xl leading-[1.05]" data-i18n-en="Win a Scooter or Cash Prize" data-i18n-ar="اربح سكوتر أو جائزة نقدية">
+          Win a Scooter or Cash Prize
+        </h2>
+        <p class="mt-5 text-cream-100/80 leading-relaxed" data-i18n-en="Any cut over QAR 30 makes you eligible. Drop your name and phone below to get your unique entry code — one entry per phone, one winner picked at random when the promo closes." data-i18n-ar="أي قصة فوق 30 ريال تؤهلك للدخول. أدخل اسمك ورقمك أدناه للحصول على كود مشاركة فريد — مشاركة واحدة لكل رقم، يتم اختيار الفائز عشوائياً عند انتهاء العرض.">
+          Any cut over QAR 30 makes you eligible. Drop your name and phone below to get your unique entry code — one entry per phone, one winner picked at random when the promo closes.
+        </p>
+
+        <p class="mt-6 inline-flex items-center gap-2 font-condensed uppercase tracking-widest text-xs text-gold-400" id="raffle-counter">
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-gold-400 animate-pulse"></span>
+          <span data-i18n-en="Loading entries…" data-i18n-ar="جاري التحميل…">Loading entries…</span>
+        </p>
+      </div>
+
+      <!-- FORM -->
+      <form id="raffle-form" class="mt-10 max-w-xl mx-auto bg-charcoal-700/60 border border-gold-500/30 p-6 sm:p-8">
+        <div class="grid sm:grid-cols-2 gap-5">
+          <label class="block sm:col-span-2">
+            <span class="font-condensed uppercase tracking-widest text-xs text-cream-100/70" data-i18n-en="Full Name *" data-i18n-ar="الاسم الكامل *">Full Name *</span>
+            <input
+              type="text"
+              name="name"
+              required
+              class="mt-1.5 w-full border-0 border-b border-cream-100/30 bg-transparent px-0 py-2.5 text-cream-50 focus:border-gold-400 focus:ring-0 placeholder:text-cream-100/40"
+              placeholder="Your full name"
+              data-ph-en="Your full name"
+              data-ph-ar="اسمك الكامل"
+            />
+          </label>
+          <label class="block sm:col-span-2">
+            <span class="font-condensed uppercase tracking-widest text-xs text-cream-100/70" data-i18n-en="Phone *" data-i18n-ar="الهاتف *">Phone *</span>
+            <input
+              type="tel"
+              name="phone"
+              required
+              inputmode="tel"
+              value="+974 "
+              class="mt-1.5 w-full border-0 border-b border-cream-100/30 bg-transparent px-0 py-2.5 text-cream-50 focus:border-gold-400 focus:ring-0 placeholder:text-cream-100/40"
+            />
+          </label>
+          <label class="block">
+            <span class="font-condensed uppercase tracking-widest text-xs text-cream-100/70" data-i18n-en="Service taken" data-i18n-ar="الخدمة">Service taken</span>
+            <select
+              name="service"
+              class="mt-1.5 w-full border-0 border-b border-cream-100/30 bg-transparent px-0 py-2.5 text-cream-50 focus:border-gold-400 focus:ring-0"
+            >
+              <option value="" class="bg-charcoal-800">Select…</option>
+              <option class="bg-charcoal-800">Deluxe Haircut</option>
+              <option class="bg-charcoal-800">Hot Towel Shave</option>
+              <option class="bg-charcoal-800">Hair Color</option>
+              <option class="bg-charcoal-800">Full Facial</option>
+              <option class="bg-charcoal-800">Beard Trim + Cut Combo</option>
+              <option class="bg-charcoal-800">Straight Razor Trim</option>
+              <option class="bg-charcoal-800">Other</option>
+            </select>
+          </label>
+          <label class="block">
+            <span class="font-condensed uppercase tracking-widest text-xs text-cream-100/70" data-i18n-en="Visit date" data-i18n-ar="تاريخ الزيارة">Visit date</span>
+            <input
+              type="date"
+              name="visit_date"
+              class="mt-1.5 w-full border-0 border-b border-cream-100/30 bg-transparent px-0 py-2.5 text-cream-50 focus:border-gold-400 focus:ring-0"
+            />
+          </label>
+        </div>
+
+        <p id="raffle-error" class="hidden mt-4 text-sm text-red-400 font-condensed uppercase tracking-widest" role="alert"></p>
+
+        <div class="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+          <p class="text-xs text-cream-100/60" data-i18n-en="By entering you confirm your cut was QAR 30 or more." data-i18n-ar="بإدخالك تؤكد أن قيمة القصة كانت 30 ريال أو أكثر.">
+            By entering you confirm your cut was QAR 30 or more.
+          </p>
+          <button type="submit" class="btn-primary" id="raffle-submit">
+            <span data-i18n-en="Enter the Raffle" data-i18n-ar="ادخل السحب">Enter the Raffle</span>
+            <Icon name="arrowRight" size={16} class="rtl-flip" />
+          </button>
+        </div>
+      </form>
+
+      <!-- SUCCESS CARD (hidden until form submit succeeds) -->
+      <div id="raffle-success" class="hidden mt-10 max-w-xl mx-auto bg-gold-500 text-charcoal-800 p-6 sm:p-8 text-center">
+        <p class="font-condensed uppercase tracking-widest text-xs" data-i18n-en="You're in!" data-i18n-ar="تمت مشاركتك!">You're in!</p>
+        <p class="mt-3 font-condensed uppercase tracking-[0.15em] text-xs text-charcoal-700/80" data-i18n-en="Your entry code" data-i18n-ar="كود مشاركتك">Your entry code</p>
+        <p id="raffle-code" class="mt-1 font-display text-4xl sm:text-5xl tracking-widest text-charcoal-900">TMS-XXXXXX</p>
+        <p class="mt-4 text-sm text-charcoal-800/90" data-i18n-en="Save this code or take a screenshot. We'll WhatsApp the winner directly when the draw happens." data-i18n-ar="احفظ هذا الكود أو خذ لقطة شاشة. سنتواصل مع الفائز مباشرة عبر واتساب عند السحب.">
+          Save this code or take a screenshot. We'll WhatsApp the winner directly when the draw happens.
+        </p>
+        <button type="button" id="raffle-copy" class="mt-5 inline-flex items-center gap-2 px-5 py-2.5 border border-charcoal-800 hover:bg-charcoal-800 hover:text-cream-50 font-condensed uppercase tracking-widest text-xs transition-colors">
+          <span data-i18n-en="Copy Code" data-i18n-ar="نسخ الكود">Copy Code</span>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { getSupabase } from '../lib/supabase';
+
+    const form = document.getElementById('raffle-form') as HTMLFormElement | null;
+    const errorEl = document.getElementById('raffle-error');
+    const successEl = document.getElementById('raffle-success');
+    const codeEl = document.getElementById('raffle-code');
+    const copyBtn = document.getElementById('raffle-copy');
+    const submitBtn = document.getElementById('raffle-submit') as HTMLButtonElement | null;
+    const counterEl = document.getElementById('raffle-counter')?.querySelector('span[data-i18n-en]') as HTMLElement | null;
+
+    const sb = getSupabase();
+
+    async function refreshCounter() {
+      if (!sb || !counterEl) return;
+      const { data, error } = await sb.rpc('get_raffle_stats');
+      if (error || !data || !data[0]) return;
+      const total = Number(data[0].total_entries);
+      const en = total === 1 ? '1 entry so far · enter to join!' : `${total} entries so far · enter to join!`;
+      const ar = total === 1 ? 'مشاركة واحدة حتى الآن · شارك الآن!' : `${total} مشاركة حتى الآن · شارك الآن!`;
+      counterEl.setAttribute('data-i18n-en', en);
+      counterEl.setAttribute('data-i18n-ar', ar);
+      counterEl.textContent = document.documentElement.lang === 'ar' ? ar : en;
+    }
+    refreshCounter();
+
+    if (form && sb) {
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (errorEl) errorEl.classList.add('hidden');
+        if (submitBtn) submitBtn.disabled = true;
+
+        const data = new FormData(form);
+        const name = String(data.get('name') || '').trim();
+        const phoneRaw = String(data.get('phone') || '').trim();
+        const phone = phoneRaw.replace(/\s+/g, '');
+        const service = String(data.get('service') || '').trim() || null;
+        const visit_date = String(data.get('visit_date') || '').trim() || null;
+
+        if (!name || !/^\+?\d{6,}$/.test(phone)) {
+          if (errorEl) {
+            errorEl.textContent = document.documentElement.lang === 'ar'
+              ? 'يرجى إدخال اسم ورقم هاتف صحيحين.'
+              : 'Please enter a valid name and phone number.';
+            errorEl.classList.remove('hidden');
+          }
+          if (submitBtn) submitBtn.disabled = false;
+          return;
+        }
+
+        const { data: code, error } = await sb.rpc('submit_raffle_entry', {
+          p_name: name,
+          p_phone: phone,
+          p_service: service,
+          p_visit_date: visit_date,
+        });
+
+        if (error || !code) {
+          if (errorEl) {
+            const msg = error?.message || 'Something went wrong. Please try again.';
+            errorEl.textContent = /already entered/i.test(msg)
+              ? (document.documentElement.lang === 'ar' ? 'هذا الرقم مشارك بالفعل في السحب.' : 'This phone number has already entered the raffle.')
+              : msg;
+            errorEl.classList.remove('hidden');
+          }
+          if (submitBtn) submitBtn.disabled = false;
+          return;
+        }
+
+        if (codeEl) codeEl.textContent = String(code);
+        form.classList.add('hidden');
+        successEl?.classList.remove('hidden');
+        successEl?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        refreshCounter();
+
+        if (typeof (window as any).gtag === 'function') {
+          (window as any).gtag('event', 'raffle_entry', { event_category: 'engagement', event_label: service || 'unspecified' });
+        }
+      });
+    } else if (form && !sb) {
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (errorEl) {
+          errorEl.textContent = 'Raffle is not configured yet — please try again later.';
+          errorEl.classList.remove('hidden');
+        }
+      });
+    }
+
+    copyBtn?.addEventListener('click', () => {
+      const code = codeEl?.textContent || '';
+      if (!code) return;
+      navigator.clipboard?.writeText(code).then(() => {
+        const span = copyBtn.querySelector('span');
+        if (!span) return;
+        const orig = span.textContent;
+        span.textContent = document.documentElement.lang === 'ar' ? 'تم النسخ ✓' : 'Copied ✓';
+        setTimeout(() => { span.textContent = orig; }, 1800);
+      });
+    });
+  </script>
+
   <!-- TESTIMONIAL -->
   <section id="testimonials" class="bg-charcoal-800 text-cream-100 py-20 lg:py-28">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

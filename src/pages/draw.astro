@@ -1,0 +1,260 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'Raffle Draw · Tamara Men Salon';
+const description = 'Admin-only raffle draw page.';
+---
+<BaseLayout title={title} description={description} noindex>
+  <section class="bg-cream-50 py-16 lg:py-20 min-h-[80vh]">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <p class="eyebrow">Admin</p>
+        <h1 class="mt-2 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-4xl sm:text-5xl">Raffle Draw</h1>
+        <p class="mt-3 text-ink-soft">List of all entries and a one-click random draw.</p>
+
+        <!-- PASSWORD GATE -->
+        <form id="draw-login" class="mt-10 bg-white border border-charcoal-100 p-6 sm:p-8 max-w-md">
+          <label class="block">
+            <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Draw password</span>
+            <input
+              type="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+            />
+          </label>
+          <p id="login-error" class="hidden mt-3 text-sm text-red-600"></p>
+          <button type="submit" class="mt-5 btn-primary">
+            Unlock
+            <Icon name="arrowRight" size={16} />
+          </button>
+          <p class="mt-4 text-xs text-ink-muted">
+            Default password is set in Supabase. Change it any time at the bottom of this page once you're in.
+          </p>
+        </form>
+
+        <!-- ADMIN PANEL -->
+        <div id="draw-panel" class="hidden mt-10 space-y-8">
+          <!-- Stats + draw button -->
+          <div class="bg-white border border-charcoal-100 p-6 sm:p-8">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+              <div>
+                <p class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Total entries</p>
+                <p id="stat-total" class="mt-1 font-display text-4xl text-charcoal-800">—</p>
+                <p id="stat-winners" class="text-sm text-ink-soft">0 winner(s) drawn</p>
+              </div>
+              <button id="pick-winner" class="btn-primary">
+                <Icon name="star" size={16} />
+                Pick Random Winner
+              </button>
+            </div>
+            <p id="pick-error" class="hidden mt-3 text-sm text-red-600"></p>
+          </div>
+
+          <!-- Winner showcase (hidden until a winner is picked this session) -->
+          <div id="winner-card" class="hidden bg-gold-500 text-charcoal-800 p-6 sm:p-8 text-center">
+            <p class="font-condensed uppercase tracking-widest text-xs">Winner!</p>
+            <p id="winner-code" class="mt-2 font-display text-4xl sm:text-5xl tracking-widest">TMS-XXXXXX</p>
+            <p id="winner-name" class="mt-2 text-xl font-semibold"></p>
+            <p id="winner-phone" class="mt-1 text-sm"></p>
+            <p id="winner-service" class="mt-1 text-sm opacity-80"></p>
+          </div>
+
+          <!-- Entries table -->
+          <div class="bg-white border border-charcoal-100">
+            <div class="px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
+              <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">All Entries</p>
+              <button id="refresh-list" class="text-xs font-condensed uppercase tracking-widest text-gold-600 hover:text-gold-500">Refresh</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-cream-100 text-ink-muted">
+                  <tr>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Code</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Name</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Phone</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Service</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Date</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Status</th>
+                  </tr>
+                </thead>
+                <tbody id="entries-body" class="divide-y divide-charcoal-100"></tbody>
+              </table>
+            </div>
+            <p id="entries-empty" class="hidden px-6 py-12 text-center text-sm text-ink-muted">No entries yet.</p>
+          </div>
+
+          <!-- Change password -->
+          <details class="bg-white border border-charcoal-100">
+            <summary class="px-6 py-4 cursor-pointer font-condensed uppercase tracking-widest text-sm text-charcoal-800">Change draw password</summary>
+            <form id="change-password" class="px-6 pb-6 space-y-4">
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">New password (min 6 chars)</span>
+                <input type="password" name="new" required minlength="6" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 focus:border-gold-500 focus:ring-0" />
+              </label>
+              <p id="pw-msg" class="hidden text-sm"></p>
+              <button type="submit" class="btn-outline-dark !text-charcoal-800">Update Password</button>
+            </form>
+          </details>
+
+          <button id="lock" class="text-xs font-condensed uppercase tracking-widest text-ink-muted hover:text-charcoal-800">← Lock again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { getSupabase } from '../lib/supabase';
+
+    const loginForm = document.getElementById('draw-login') as HTMLFormElement | null;
+    const panel = document.getElementById('draw-panel') as HTMLElement | null;
+    const loginError = document.getElementById('login-error') as HTMLElement | null;
+    const pickBtn = document.getElementById('pick-winner') as HTMLButtonElement | null;
+    const pickError = document.getElementById('pick-error') as HTMLElement | null;
+    const winnerCard = document.getElementById('winner-card') as HTMLElement | null;
+    const winnerCode = document.getElementById('winner-code') as HTMLElement | null;
+    const winnerName = document.getElementById('winner-name') as HTMLElement | null;
+    const winnerPhone = document.getElementById('winner-phone') as HTMLElement | null;
+    const winnerService = document.getElementById('winner-service') as HTMLElement | null;
+    const entriesBody = document.getElementById('entries-body') as HTMLElement | null;
+    const entriesEmpty = document.getElementById('entries-empty') as HTMLElement | null;
+    const statTotal = document.getElementById('stat-total') as HTMLElement | null;
+    const statWinners = document.getElementById('stat-winners') as HTMLElement | null;
+    const refreshBtn = document.getElementById('refresh-list') as HTMLButtonElement | null;
+    const lockBtn = document.getElementById('lock') as HTMLButtonElement | null;
+    const changePwForm = document.getElementById('change-password') as HTMLFormElement | null;
+    const pwMsg = document.getElementById('pw-msg') as HTMLElement | null;
+
+    const sb = getSupabase();
+    let password = '';
+
+    function fmtDate(iso?: string | null) {
+      if (!iso) return '—';
+      try { return new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', year: '2-digit', hour: '2-digit', minute: '2-digit' }); }
+      catch { return iso; }
+    }
+    function esc(s: any): string {
+      const div = document.createElement('div');
+      div.textContent = String(s ?? '');
+      return div.innerHTML;
+    }
+
+    async function loadEntries() {
+      if (!sb) return;
+      const { data, error } = await sb.rpc('list_raffle_entries', { p_password: password });
+      if (error || !data) {
+        if (entriesBody) entriesBody.innerHTML = '';
+        if (entriesEmpty) {
+          entriesEmpty.textContent = error?.message || 'Could not load entries.';
+          entriesEmpty.classList.remove('hidden');
+        }
+        return;
+      }
+      const rows = data as any[];
+      if (statTotal) statTotal.textContent = String(rows.length);
+      const winners = rows.filter((r) => r.is_winner).length;
+      if (statWinners) statWinners.textContent = `${winners} winner(s) drawn`;
+
+      if (rows.length === 0) {
+        if (entriesBody) entriesBody.innerHTML = '';
+        entriesEmpty?.classList.remove('hidden');
+        return;
+      }
+      entriesEmpty?.classList.add('hidden');
+      if (entriesBody) {
+        entriesBody.innerHTML = rows
+          .map((r) => `
+            <tr class="${r.is_winner ? 'bg-gold-50' : ''}">
+              <td class="px-4 py-2.5 font-mono text-charcoal-800 whitespace-nowrap">${esc(r.entry_code)}</td>
+              <td class="px-4 py-2.5">${esc(r.name)}</td>
+              <td class="px-4 py-2.5"><a href="tel:${esc(r.phone)}" class="text-gold-600 hover:underline">${esc(r.phone)}</a></td>
+              <td class="px-4 py-2.5">${esc(r.service || '—')}</td>
+              <td class="px-4 py-2.5 whitespace-nowrap text-ink-muted">${esc(fmtDate(r.created_at))}</td>
+              <td class="px-4 py-2.5">${r.is_winner ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-gold-500 text-charcoal-800 font-condensed uppercase tracking-widest text-[10px]">Winner</span>' : '<span class="text-ink-muted">—</span>'}</td>
+            </tr>
+          `)
+          .join('');
+      }
+    }
+
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb) {
+        if (loginError) {
+          loginError.textContent = 'Supabase not configured.';
+          loginError.classList.remove('hidden');
+        }
+        return;
+      }
+      loginError?.classList.add('hidden');
+      const pw = String(new FormData(loginForm).get('password') || '');
+      // Verify by attempting to list entries
+      const { error } = await sb.rpc('list_raffle_entries', { p_password: pw });
+      if (error) {
+        if (loginError) {
+          loginError.textContent = 'Wrong password.';
+          loginError.classList.remove('hidden');
+        }
+        return;
+      }
+      password = pw;
+      loginForm.classList.add('hidden');
+      panel?.classList.remove('hidden');
+      loadEntries();
+    });
+
+    pickBtn?.addEventListener('click', async () => {
+      if (!sb || !password) return;
+      pickError?.classList.add('hidden');
+      pickBtn.disabled = true;
+      const { data, error } = await sb.rpc('pick_raffle_winner', { p_password: password });
+      pickBtn.disabled = false;
+      if (error || !data || !data[0]) {
+        if (pickError) {
+          pickError.textContent = error?.message || 'Could not pick winner.';
+          pickError.classList.remove('hidden');
+        }
+        return;
+      }
+      const w = data[0];
+      if (winnerCode) winnerCode.textContent = w.entry_code;
+      if (winnerName) winnerName.textContent = w.name;
+      if (winnerPhone) winnerPhone.textContent = w.phone;
+      if (winnerService) winnerService.textContent = w.service || '';
+      winnerCard?.classList.remove('hidden');
+      winnerCard?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      loadEntries();
+    });
+
+    refreshBtn?.addEventListener('click', () => loadEntries());
+
+    lockBtn?.addEventListener('click', () => {
+      password = '';
+      panel?.classList.add('hidden');
+      loginForm?.classList.remove('hidden');
+      winnerCard?.classList.add('hidden');
+      if (loginForm) loginForm.reset();
+    });
+
+    changePwForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb || !password) return;
+      const newPw = String(new FormData(changePwForm).get('new') || '');
+      const { error } = await sb.rpc('set_draw_password', { p_current: password, p_new: newPw });
+      if (pwMsg) {
+        if (error) {
+          pwMsg.textContent = error.message;
+          pwMsg.className = 'text-sm text-red-600';
+        } else {
+          pwMsg.textContent = 'Password updated.';
+          pwMsg.className = 'text-sm text-green-700';
+          password = newPw;
+          changePwForm.reset();
+        }
+        pwMsg.classList.remove('hidden');
+      }
+    });
+  </script>
+</BaseLayout>
