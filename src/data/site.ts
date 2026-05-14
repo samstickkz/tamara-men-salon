@@ -63,6 +63,7 @@ export const site = {
   social: {
     instagram: 'https://instagram.com/',
     facebook: 'https://facebook.com/',
+    tiktok: 'https://www.tiktok.com/@tamara_salon_qatar',
     googleReview: 'https://g.page/r/Cd8MxeVUg974EBM/review',
   },
 } as const;
