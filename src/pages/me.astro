@@ -1,0 +1,222 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'My Work · Tamara Men Salon';
+const description = 'Per-staff portal — see your own logged jobs.';
+---
+<BaseLayout title={title} description={description} noindex>
+  <section class="bg-cream-50 py-16 lg:py-20 min-h-[80vh]">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto">
+        <p class="eyebrow">Staff portal</p>
+        <h1 class="mt-2 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-4xl sm:text-5xl">My Work</h1>
+        <p class="mt-3 text-ink-soft">Sign in with your personal password to see your logged jobs and totals.</p>
+
+        <!-- LOGIN -->
+        <form id="me-login" class="mt-10 bg-white border border-charcoal-100 p-6 sm:p-8 max-w-md">
+          <label class="block">
+            <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Personal password</span>
+            <input
+              type="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+            />
+          </label>
+          <p id="login-error" class="hidden mt-3 text-sm text-red-600"></p>
+          <button type="submit" class="mt-5 btn-primary">
+            Unlock
+            <Icon name="arrowRight" size={16} />
+          </button>
+          <p class="mt-4 text-xs text-ink-muted">
+            Ask the owner if you don't have your password yet.
+          </p>
+        </form>
+
+        <!-- DASHBOARD -->
+        <div id="me-panel" class="hidden mt-10 space-y-8">
+          <div class="bg-white border border-charcoal-100 p-6 sm:p-8">
+            <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-600" id="me-role">—</p>
+            <p class="mt-1 font-display text-3xl text-charcoal-800" id="me-name">—</p>
+          </div>
+
+          <!-- Period -->
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">My performance</p>
+            <div class="inline-flex border border-charcoal-200" role="group" aria-label="Period filter">
+              <button data-period="today" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest">Today</button>
+              <button data-period="7" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">7 days</button>
+              <button data-period="30" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">30 days</button>
+              <button data-period="all" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">All time</button>
+            </div>
+          </div>
+
+          <!-- Stats -->
+          <div class="grid grid-cols-2 gap-4">
+            <div class="bg-white border border-charcoal-100 p-5">
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Jobs</p>
+              <p id="me-jobs" class="mt-1 font-display text-4xl text-charcoal-800">—</p>
+            </div>
+            <div class="bg-white border border-charcoal-100 p-5">
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Revenue (QAR)</p>
+              <p id="me-revenue" class="mt-1 font-display text-4xl text-gold-600">—</p>
+            </div>
+          </div>
+
+          <!-- Jobs list -->
+          <div class="bg-white border border-charcoal-100">
+            <div class="px-6 py-4 border-b border-charcoal-100">
+              <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">My jobs</p>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm">
+                <thead class="bg-cream-100 text-ink-muted">
+                  <tr>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">When</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Service</th>
+                    <th class="text-right px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">QAR</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Customer</th>
+                    <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="me-body" class="divide-y divide-charcoal-100"></tbody>
+              </table>
+            </div>
+            <p id="me-empty" class="hidden px-6 py-12 text-center text-sm text-ink-muted">No jobs logged in this period.</p>
+          </div>
+
+          <!-- Change password -->
+          <details class="bg-white border border-charcoal-100">
+            <summary class="px-6 py-4 cursor-pointer font-condensed uppercase tracking-widest text-sm text-charcoal-800">Change my password</summary>
+            <form id="me-change-password" class="px-6 pb-6 space-y-4 max-w-sm">
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">New password (min 6 chars)</span>
+                <input type="password" name="new" required minlength="6" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 focus:border-gold-500 focus:ring-0" />
+              </label>
+              <p id="pw-msg" class="hidden text-sm"></p>
+              <button type="submit" class="btn-outline-dark !text-charcoal-800">Update Password</button>
+            </form>
+          </details>
+
+          <button id="lock" class="text-xs font-condensed uppercase tracking-widest text-ink-muted hover:text-charcoal-800">← Sign out</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .period-btn { background: #fff; color: #1F1D1A; }
+    .period-btn.active { background: #1F1D1A; color: #FBF8F1; }
+  </style>
+
+  <script>
+    import { getSupabase } from '../lib/supabase';
+
+    const loginForm = document.getElementById('me-login') as HTMLFormElement | null;
+    const loginError = document.getElementById('login-error') as HTMLElement | null;
+    const panel = document.getElementById('me-panel') as HTMLElement | null;
+    const meName = document.getElementById('me-name') as HTMLElement | null;
+    const meRole = document.getElementById('me-role') as HTMLElement | null;
+    const meJobs = document.getElementById('me-jobs') as HTMLElement | null;
+    const meRevenue = document.getElementById('me-revenue') as HTMLElement | null;
+    const body = document.getElementById('me-body') as HTMLElement | null;
+    const empty = document.getElementById('me-empty') as HTMLElement | null;
+    const lockBtn = document.getElementById('lock') as HTMLButtonElement | null;
+    const changePwForm = document.getElementById('me-change-password') as HTMLFormElement | null;
+    const pwMsg = document.getElementById('pw-msg') as HTMLElement | null;
+    const periodBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.period-btn'));
+
+    const sb = getSupabase();
+    let password = '';
+    let currentPeriod: 'today' | '7' | '30' | 'all' = 'today';
+
+    function periodSince(): string | null {
+      if (currentPeriod === 'all') return null;
+      const d = new Date();
+      if (currentPeriod === 'today') d.setHours(0, 0, 0, 0);
+      else d.setDate(d.getDate() - parseInt(currentPeriod, 10));
+      return d.toISOString();
+    }
+    function fmtDateTime(iso?: string | null) {
+      if (!iso) return '—';
+      try { return new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
+      catch { return iso; }
+    }
+    function esc(s: any): string { const d = document.createElement('div'); d.textContent = String(s ?? ''); return d.innerHTML; }
+    function setActivePeriodBtn() { periodBtns.forEach((b) => b.classList.toggle('active', b.dataset.period === currentPeriod)); }
+
+    async function loadStats() {
+      if (!sb) return;
+      const { data, error } = await sb.rpc('my_stats', { p_password: password, p_since: periodSince() });
+      if (error || !data) return;
+      const r = data[0] || { job_count: 0, total_qar: 0 };
+      if (meJobs) meJobs.textContent = String(r.job_count);
+      if (meRevenue) meRevenue.textContent = String(r.total_qar);
+    }
+    async function loadJobs() {
+      if (!sb || !body) return;
+      const { data, error } = await sb.rpc('my_jobs', { p_password: password, p_since: periodSince() });
+      if (error) { body.innerHTML = ''; if (empty) { empty.textContent = error.message; empty.classList.remove('hidden'); } return; }
+      const rows = data as any[];
+      if (!rows.length) { body.innerHTML = ''; empty?.classList.remove('hidden'); return; }
+      empty?.classList.add('hidden');
+      body.innerHTML = rows.map((r) => `
+        <tr>
+          <td class="px-4 py-2.5 whitespace-nowrap text-ink-muted">${esc(fmtDateTime(r.performed_at))}</td>
+          <td class="px-4 py-2.5">${esc(r.service)}</td>
+          <td class="px-4 py-2.5 text-right font-mono text-gold-600">${Number(r.amount_qar)}</td>
+          <td class="px-4 py-2.5">${esc(r.customer_name || '—')}</td>
+          <td class="px-4 py-2.5 text-ink-muted">${esc(r.notes || '')}</td>
+        </tr>
+      `).join('');
+    }
+
+    periodBtns.forEach((b) => b.addEventListener('click', async () => {
+      currentPeriod = (b.dataset.period as any) || 'today';
+      setActivePeriodBtn();
+      await Promise.all([loadStats(), loadJobs()]);
+    }));
+
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb) { if (loginError) { loginError.textContent = 'Supabase not configured.'; loginError.classList.remove('hidden'); } return; }
+      loginError?.classList.add('hidden');
+      const pw = String(new FormData(loginForm).get('password') || '');
+      const { data, error } = await sb.rpc('staff_login', { p_password: pw });
+      if (error || !data || !data[0]) {
+        if (loginError) { loginError.textContent = error?.message || 'Wrong password.'; loginError.classList.remove('hidden'); }
+        return;
+      }
+      password = pw;
+      const me = data[0];
+      if (meName) meName.textContent = me.name;
+      if (meRole) meRole.textContent = me.role;
+      loginForm.classList.add('hidden');
+      panel?.classList.remove('hidden');
+      currentPeriod = 'today';
+      setActivePeriodBtn();
+      await Promise.all([loadStats(), loadJobs()]);
+    });
+
+    changePwForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb || !password) return;
+      const newPw = String(new FormData(changePwForm).get('new') || '');
+      const { error } = await sb.rpc('set_my_password', { p_current: password, p_new: newPw });
+      if (pwMsg) {
+        if (error) { pwMsg.textContent = error.message; pwMsg.className = 'text-sm text-red-600'; }
+        else { pwMsg.textContent = 'Password updated.'; pwMsg.className = 'text-sm text-green-700'; password = newPw; changePwForm.reset(); }
+        pwMsg.classList.remove('hidden');
+      }
+    });
+
+    lockBtn?.addEventListener('click', () => {
+      password = '';
+      panel?.classList.add('hidden');
+      loginForm?.classList.remove('hidden');
+      if (loginForm) loginForm.reset();
+    });
+  </script>
+</BaseLayout>

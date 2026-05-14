@@ -1,0 +1,399 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Icon from '../components/Icon.astro';
+
+const title = 'Owner Admin · Tamara Men Salon';
+const description = 'Owner-only master dashboard.';
+---
+<BaseLayout title={title} description={description} noindex>
+  <section class="bg-cream-50 py-16 lg:py-20 min-h-[80vh]">
+    <div class="max-w-container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="max-w-6xl mx-auto">
+        <p class="eyebrow">Owner</p>
+        <h1 class="mt-2 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-4xl sm:text-5xl">Admin</h1>
+        <p class="mt-3 text-ink-soft">Raffle entries, every staff member's work, and staff management — one place.</p>
+
+        <!-- PASSWORD GATE -->
+        <form id="admin-login" class="mt-10 bg-white border border-charcoal-100 p-6 sm:p-8 max-w-md">
+          <label class="block">
+            <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">Owner password</span>
+            <input
+              type="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 text-charcoal-800 focus:border-gold-500 focus:ring-0"
+            />
+          </label>
+          <p id="login-error" class="hidden mt-3 text-sm text-red-600"></p>
+          <button type="submit" class="mt-5 btn-primary">Unlock <Icon name="arrowRight" size={16} /></button>
+          <p class="mt-4 text-xs text-ink-muted">Default password is <span class="font-mono">tamara-owner-2026</span>. Change it once you're in.</p>
+        </form>
+
+        <!-- PANEL -->
+        <div id="admin-panel" class="hidden mt-10 space-y-12">
+
+          <!-- ============== RAFFLE ============== -->
+          <section>
+            <div class="flex items-end justify-between gap-3 flex-wrap mb-4">
+              <div>
+                <p class="eyebrow">Promo</p>
+                <h2 class="mt-1 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-2xl">Raffle Entries</h2>
+              </div>
+              <button id="pick-winner" class="btn-primary">
+                <Icon name="star" size={16} />
+                Pick Random Winner
+              </button>
+            </div>
+            <p id="pick-error" class="hidden text-sm text-red-600 mb-3"></p>
+
+            <div class="grid sm:grid-cols-3 gap-4 mb-6">
+              <div class="bg-white border border-charcoal-100 p-5">
+                <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Total entries</p>
+                <p id="raffle-total" class="mt-1 font-display text-4xl text-charcoal-800">—</p>
+              </div>
+              <div class="bg-white border border-charcoal-100 p-5">
+                <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Winners drawn</p>
+                <p id="raffle-winners" class="mt-1 font-display text-4xl text-charcoal-800">—</p>
+              </div>
+              <div class="bg-white border border-charcoal-100 p-5">
+                <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Eligible to win</p>
+                <p id="raffle-eligible" class="mt-1 font-display text-4xl text-charcoal-800">—</p>
+              </div>
+            </div>
+
+            <!-- Latest winner card -->
+            <div id="winner-card" class="hidden mb-6 bg-gold-500 text-charcoal-800 p-6 text-center">
+              <p class="font-condensed uppercase tracking-widest text-xs">Latest Winner</p>
+              <p id="winner-code" class="mt-2 font-display text-4xl tracking-widest">—</p>
+              <p id="winner-name" class="mt-2 text-xl font-semibold">—</p>
+              <p id="winner-phone" class="mt-1 text-sm">—</p>
+            </div>
+
+            <div class="bg-white border border-charcoal-100">
+              <div class="px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
+                <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">All entries</p>
+                <button id="raffle-refresh" class="text-xs font-condensed uppercase tracking-widest text-gold-600 hover:text-gold-500">Refresh</button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-cream-100 text-ink-muted">
+                    <tr>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Code</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Name</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Phone</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Service</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Date</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="raffle-body" class="divide-y divide-charcoal-100"></tbody>
+                </table>
+              </div>
+              <p id="raffle-empty" class="hidden px-6 py-12 text-center text-sm text-ink-muted">No entries yet.</p>
+            </div>
+          </section>
+
+          <!-- ============== STAFF PERFORMANCE ============== -->
+          <section>
+            <div class="flex items-end justify-between gap-3 flex-wrap mb-4">
+              <div>
+                <p class="eyebrow">Staff</p>
+                <h2 class="mt-1 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-2xl">Performance</h2>
+              </div>
+              <div class="inline-flex border border-charcoal-200" role="group" aria-label="Period filter">
+                <button data-period="today" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest">Today</button>
+                <button data-period="7" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">7 days</button>
+                <button data-period="30" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">30 days</button>
+                <button data-period="all" class="period-btn px-3 py-1.5 text-xs font-condensed uppercase tracking-widest border-l border-charcoal-200">All time</button>
+              </div>
+            </div>
+
+            <div id="stats-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6"></div>
+
+            <div class="bg-white border border-charcoal-100">
+              <div class="px-6 py-4 border-b border-charcoal-100 flex items-center justify-between">
+                <p class="font-condensed uppercase tracking-widest text-sm text-charcoal-800">All logged jobs</p>
+                <button id="jobs-refresh" class="text-xs font-condensed uppercase tracking-widest text-gold-600 hover:text-gold-500">Refresh</button>
+              </div>
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                  <thead class="bg-cream-100 text-ink-muted">
+                    <tr>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">When</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Staff</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Service</th>
+                      <th class="text-right px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">QAR</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Customer</th>
+                      <th class="text-left px-4 py-2.5 font-condensed uppercase tracking-widest text-[11px]">Notes</th>
+                    </tr>
+                  </thead>
+                  <tbody id="jobs-body" class="divide-y divide-charcoal-100"></tbody>
+                </table>
+              </div>
+              <p id="jobs-empty" class="hidden px-6 py-12 text-center text-sm text-ink-muted">No jobs in this period.</p>
+            </div>
+          </section>
+
+          <!-- ============== STAFF MANAGEMENT ============== -->
+          <section>
+            <div class="mb-4">
+              <p class="eyebrow">Manage</p>
+              <h2 class="mt-1 font-condensed uppercase font-bold tracking-wide text-charcoal-800 text-2xl">Staff Accounts</h2>
+              <p class="mt-2 text-sm text-ink-soft">Rename a staff member or reset their personal password — they use that password to sign in at <a href="/me" class="text-gold-600 hover:underline font-medium">/me</a> and see their own jobs.</p>
+            </div>
+            <div id="staff-mgmt" class="space-y-4"></div>
+          </section>
+
+          <!-- ============== CHANGE OWNER PASSWORD ============== -->
+          <details class="bg-white border border-charcoal-100">
+            <summary class="px-6 py-4 cursor-pointer font-condensed uppercase tracking-widest text-sm text-charcoal-800">Change owner password</summary>
+            <form id="change-owner-password" class="px-6 pb-6 space-y-4 max-w-sm">
+              <label class="block">
+                <span class="font-condensed uppercase tracking-widest text-xs text-ink-muted">New password (min 6 chars)</span>
+                <input type="password" name="new" required minlength="6" class="mt-1.5 w-full border-0 border-b border-charcoal-200 bg-transparent px-0 py-2.5 focus:border-gold-500 focus:ring-0" />
+              </label>
+              <p id="pw-msg" class="hidden text-sm"></p>
+              <button type="submit" class="btn-outline-dark !text-charcoal-800">Update Password</button>
+            </form>
+          </details>
+
+          <button id="lock" class="text-xs font-condensed uppercase tracking-widest text-ink-muted hover:text-charcoal-800">← Lock again</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <style>
+    .period-btn { background: #fff; color: #1F1D1A; }
+    .period-btn.active { background: #1F1D1A; color: #FBF8F1; }
+  </style>
+
+  <script>
+    import { getSupabase } from '../lib/supabase';
+
+    const loginForm = document.getElementById('admin-login') as HTMLFormElement | null;
+    const loginError = document.getElementById('login-error') as HTMLElement | null;
+    const panel = document.getElementById('admin-panel') as HTMLElement | null;
+
+    const raffleTotal = document.getElementById('raffle-total') as HTMLElement | null;
+    const raffleWinners = document.getElementById('raffle-winners') as HTMLElement | null;
+    const raffleEligible = document.getElementById('raffle-eligible') as HTMLElement | null;
+    const raffleBody = document.getElementById('raffle-body') as HTMLElement | null;
+    const raffleEmpty = document.getElementById('raffle-empty') as HTMLElement | null;
+    const raffleRefresh = document.getElementById('raffle-refresh') as HTMLButtonElement | null;
+    const pickBtn = document.getElementById('pick-winner') as HTMLButtonElement | null;
+    const pickError = document.getElementById('pick-error') as HTMLElement | null;
+    const winnerCard = document.getElementById('winner-card') as HTMLElement | null;
+    const winnerCode = document.getElementById('winner-code') as HTMLElement | null;
+    const winnerName = document.getElementById('winner-name') as HTMLElement | null;
+    const winnerPhone = document.getElementById('winner-phone') as HTMLElement | null;
+
+    const statsGrid = document.getElementById('stats-grid') as HTMLElement | null;
+    const jobsBody = document.getElementById('jobs-body') as HTMLElement | null;
+    const jobsEmpty = document.getElementById('jobs-empty') as HTMLElement | null;
+    const jobsRefresh = document.getElementById('jobs-refresh') as HTMLButtonElement | null;
+    const periodBtns = Array.from(document.querySelectorAll<HTMLButtonElement>('.period-btn'));
+
+    const staffMgmt = document.getElementById('staff-mgmt') as HTMLElement | null;
+    const changePwForm = document.getElementById('change-owner-password') as HTMLFormElement | null;
+    const pwMsg = document.getElementById('pw-msg') as HTMLElement | null;
+    const lockBtn = document.getElementById('lock') as HTMLButtonElement | null;
+
+    const sb = getSupabase();
+    let password = '';
+    let currentPeriod: 'today' | '7' | '30' | 'all' = 'today';
+
+    function periodSince(): string | null {
+      if (currentPeriod === 'all') return null;
+      const d = new Date();
+      if (currentPeriod === 'today') d.setHours(0, 0, 0, 0);
+      else d.setDate(d.getDate() - parseInt(currentPeriod, 10));
+      return d.toISOString();
+    }
+    function fmtDateTime(iso?: string | null) {
+      if (!iso) return '—';
+      try { return new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); }
+      catch { return iso; }
+    }
+    function esc(s: any): string { const d = document.createElement('div'); d.textContent = String(s ?? ''); return d.innerHTML; }
+    function setActivePeriodBtn() { periodBtns.forEach((b) => b.classList.toggle('active', b.dataset.period === currentPeriod)); }
+
+    // ===== Raffle =====
+    async function loadRaffle() {
+      if (!sb || !raffleBody) return;
+      const { data, error } = await sb.rpc('admin_list_raffle_entries', { p_password: password });
+      if (error) {
+        raffleBody.innerHTML = '';
+        if (raffleEmpty) { raffleEmpty.textContent = error.message; raffleEmpty.classList.remove('hidden'); }
+        return;
+      }
+      const rows = data as any[];
+      const winners = rows.filter((r) => r.is_winner);
+      if (raffleTotal) raffleTotal.textContent = String(rows.length);
+      if (raffleWinners) raffleWinners.textContent = String(winners.length);
+      if (raffleEligible) raffleEligible.textContent = String(rows.length - winners.length);
+
+      if (winners.length > 0 && winnerCard && winnerCode && winnerName && winnerPhone) {
+        const latest = winners.sort((a, b) => new Date(b.won_at).getTime() - new Date(a.won_at).getTime())[0];
+        winnerCode.textContent = latest.entry_code;
+        winnerName.textContent = latest.name;
+        winnerPhone.textContent = latest.phone;
+        winnerCard.classList.remove('hidden');
+      }
+
+      if (!rows.length) { raffleBody.innerHTML = ''; raffleEmpty?.classList.remove('hidden'); return; }
+      raffleEmpty?.classList.add('hidden');
+      raffleBody.innerHTML = rows.map((r) => `
+        <tr class="${r.is_winner ? 'bg-gold-50' : ''}">
+          <td class="px-4 py-2.5 font-mono whitespace-nowrap">${esc(r.entry_code)}</td>
+          <td class="px-4 py-2.5">${esc(r.name)}</td>
+          <td class="px-4 py-2.5"><a href="tel:${esc(r.phone)}" class="text-gold-600 hover:underline">${esc(r.phone)}</a></td>
+          <td class="px-4 py-2.5">${esc(r.service || '—')}</td>
+          <td class="px-4 py-2.5 whitespace-nowrap text-ink-muted">${esc(fmtDateTime(r.created_at))}</td>
+          <td class="px-4 py-2.5">${r.is_winner ? '<span class="inline-flex items-center gap-1 px-2 py-0.5 bg-gold-500 text-charcoal-800 font-condensed uppercase tracking-widest text-[10px]">Winner</span>' : '<span class="text-ink-muted">—</span>'}</td>
+        </tr>
+      `).join('');
+    }
+
+    pickBtn?.addEventListener('click', async () => {
+      if (!sb || !password) return;
+      pickError?.classList.add('hidden');
+      pickBtn.disabled = true;
+      const { data, error } = await sb.rpc('admin_pick_raffle_winner', { p_password: password });
+      pickBtn.disabled = false;
+      if (error || !data || !data[0]) {
+        if (pickError) { pickError.textContent = error?.message || 'Could not pick winner.'; pickError.classList.remove('hidden'); }
+        return;
+      }
+      await loadRaffle();
+      winnerCard?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+    raffleRefresh?.addEventListener('click', () => loadRaffle());
+
+    // ===== Jobs =====
+    async function loadStats() {
+      if (!sb || !statsGrid) return;
+      const { data, error } = await sb.rpc('admin_staff_stats', { p_password: password, p_since: periodSince() });
+      if (error) { statsGrid.innerHTML = `<p class="text-red-600 text-sm">${esc(error.message)}</p>`; return; }
+      statsGrid.innerHTML = (data as any[]).map((s) => `
+        <div class="bg-white border border-charcoal-100 p-5">
+          <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-600">${esc(s.staff_role)}</p>
+          <p class="mt-1 font-display text-xl text-charcoal-800">${esc(s.staff_name)}</p>
+          <div class="mt-4 grid grid-cols-2 gap-2">
+            <div>
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Jobs</p>
+              <p class="font-display text-3xl text-charcoal-800">${Number(s.job_count)}</p>
+            </div>
+            <div class="text-right">
+              <p class="font-condensed uppercase tracking-widest text-[10px] text-ink-muted">Revenue</p>
+              <p class="font-display text-3xl text-gold-600">QAR ${Number(s.total_qar)}</p>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+    async function loadJobs() {
+      if (!sb || !jobsBody) return;
+      const { data, error } = await sb.rpc('admin_list_jobs', { p_password: password, p_since: periodSince() });
+      if (error) { jobsBody.innerHTML = ''; if (jobsEmpty) { jobsEmpty.textContent = error.message; jobsEmpty.classList.remove('hidden'); } return; }
+      const rows = data as any[];
+      if (!rows.length) { jobsBody.innerHTML = ''; jobsEmpty?.classList.remove('hidden'); return; }
+      jobsEmpty?.classList.add('hidden');
+      jobsBody.innerHTML = rows.map((r) => `
+        <tr>
+          <td class="px-4 py-2.5 whitespace-nowrap text-ink-muted">${esc(fmtDateTime(r.performed_at))}</td>
+          <td class="px-4 py-2.5">${esc(r.staff_name)}</td>
+          <td class="px-4 py-2.5">${esc(r.service)}</td>
+          <td class="px-4 py-2.5 text-right font-mono text-gold-600">${Number(r.amount_qar)}</td>
+          <td class="px-4 py-2.5">${esc(r.customer_name || '—')}</td>
+          <td class="px-4 py-2.5 text-ink-muted">${esc(r.notes || '')}</td>
+        </tr>
+      `).join('');
+    }
+    periodBtns.forEach((b) => b.addEventListener('click', async () => {
+      currentPeriod = (b.dataset.period as any) || 'today';
+      setActivePeriodBtn();
+      await Promise.all([loadStats(), loadJobs()]);
+    }));
+    jobsRefresh?.addEventListener('click', () => Promise.all([loadStats(), loadJobs()]));
+
+    // ===== Staff management =====
+    async function loadStaffMgmt() {
+      if (!sb || !staffMgmt) return;
+      const { data, error } = await sb.rpc('admin_staff_stats', { p_password: password, p_since: null });
+      if (error) { staffMgmt.innerHTML = `<p class="text-red-600 text-sm">${esc(error.message)}</p>`; return; }
+      staffMgmt.innerHTML = (data as any[]).map((s) => `
+        <div class="bg-white border border-charcoal-100 p-5 flex flex-col md:flex-row md:items-center gap-4">
+          <div class="flex-1">
+            <p class="font-condensed uppercase tracking-widest text-[10px] text-gold-600">${esc(s.staff_role)}</p>
+            <p class="font-display text-xl text-charcoal-800">${esc(s.staff_name)}</p>
+            <p class="text-xs text-ink-muted">${Number(s.job_count)} jobs · QAR ${Number(s.total_qar)} · ${s.has_personal_password ? 'has personal password' : 'no personal password set'}</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button class="rename-btn text-xs font-condensed uppercase tracking-widest text-charcoal-800 hover:text-gold-600" data-id="${s.staff_id}" data-name="${esc(s.staff_name)}" data-role="${esc(s.staff_role)}">Rename</button>
+            <button class="reset-btn text-xs font-condensed uppercase tracking-widest text-charcoal-800 hover:text-gold-600" data-id="${s.staff_id}" data-name="${esc(s.staff_name)}">Reset password</button>
+          </div>
+        </div>
+      `).join('');
+
+      staffMgmt.querySelectorAll<HTMLButtonElement>('.rename-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.id; if (!id) return;
+          const newName = prompt('New name', btn.dataset.name || '');
+          if (newName === null) return;
+          const newRole = prompt('Role (Barber, Senior Stylist, etc.)', btn.dataset.role || 'Barber');
+          if (newRole === null) return;
+          const { error } = await sb.rpc('admin_rename_staff', { p_password: password, p_staff_id: id, p_name: newName, p_role: newRole });
+          if (error) { alert(error.message); return; }
+          await Promise.all([loadStats(), loadJobs(), loadStaffMgmt()]);
+        });
+      });
+      staffMgmt.querySelectorAll<HTMLButtonElement>('.reset-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const id = btn.dataset.id; if (!id) return;
+          const newPw = prompt(`Set a new personal password for ${btn.dataset.name} (min 6 chars).\n\nGive them this password — they sign in at /me with it.`);
+          if (!newPw) return;
+          const { error } = await sb.rpc('admin_reset_staff_password', { p_password: password, p_staff_id: id, p_new_personal: newPw });
+          if (error) { alert(error.message); return; }
+          alert(`Set. Tell ${btn.dataset.name}: their new password is "${newPw}"`);
+          await loadStaffMgmt();
+        });
+      });
+    }
+
+    changePwForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb || !password) return;
+      const newPw = String(new FormData(changePwForm).get('new') || '');
+      const { error } = await sb.rpc('set_owner_password', { p_current: password, p_new: newPw });
+      if (pwMsg) {
+        if (error) { pwMsg.textContent = error.message; pwMsg.className = 'text-sm text-red-600'; }
+        else { pwMsg.textContent = 'Password updated.'; pwMsg.className = 'text-sm text-green-700'; password = newPw; changePwForm.reset(); }
+        pwMsg.classList.remove('hidden');
+      }
+    });
+
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!sb) { if (loginError) { loginError.textContent = 'Supabase not configured.'; loginError.classList.remove('hidden'); } return; }
+      loginError?.classList.add('hidden');
+      const pw = String(new FormData(loginForm).get('password') || '');
+      const { error } = await sb.rpc('admin_list_raffle_entries', { p_password: pw });
+      if (error) { if (loginError) { loginError.textContent = 'Wrong password.'; loginError.classList.remove('hidden'); } return; }
+      password = pw;
+      loginForm.classList.add('hidden');
+      panel?.classList.remove('hidden');
+      currentPeriod = 'today';
+      setActivePeriodBtn();
+      await Promise.all([loadRaffle(), loadStats(), loadJobs(), loadStaffMgmt()]);
+    });
+
+    lockBtn?.addEventListener('click', () => {
+      password = '';
+      panel?.classList.add('hidden');
+      loginForm?.classList.remove('hidden');
+      if (loginForm) loginForm.reset();
+    });
+  </script>
+</BaseLayout>
