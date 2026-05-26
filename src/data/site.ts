@@ -26,12 +26,13 @@ export const site = {
     postalCode: '',
     addressCountry: 'QA',
   },
-  mapsUrl: 'https://www.google.com/maps/place/Tamara+Men+Salon/@25.2738921,51.5161336,17z',
+  mapsUrl:
+    'https://www.google.com/maps/place/Tamara+Men+Salon/@25.2750625,51.5349375,17z/data=!4m6!3m5!1s0x3e45c55796c09ae7:0xf8de8354e5c50cdf!8m2!3d25.2750625!4d51.5349375!16s%2Fg%2F11n44vrx6t',
   mapsEmbedUrl:
-    'https://www.google.com/maps?q=Tamara+Men+Salon,+B+Ring+Road,+Doha,+Qatar&output=embed',
+    'https://www.google.com/maps?q=Tamara+Men+Salon,+B+Ring+Road,+Doha,+Qatar&ll=25.2750625,51.5349375&z=17&output=embed',
   geo: {
-    latitude: 25.2738,
-    longitude: 51.5161,
+    latitude: 25.2750625,
+    longitude: 51.5349375,
   },
   openingHours: [
     { days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], opens: '09:00', closes: '20:00' },
